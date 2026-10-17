@@ -1,0 +1,15 @@
+{
+  "name": "tkho-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TKHO Wellness Azure Functions API",
+  "main": "src/functions/*.js",
+  "scripts": {
+    "start": "func start",
+    "test": "node --check src/shared/auth.js && node --check src/shared/cosmos.js && node --check src/functions/profile.js && node --check src/functions/moods.js && node --check src/functions/bookings.js && node --check src/functions/therapists.js"
+  },
+  "dependencies": {
+    "@azure/cosmos": "^4.2.0",
+    "@azure/functions": "^4.6.0"
+  }
+}

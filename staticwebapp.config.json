@@ -1,0 +1,26 @@
+{
+  "routes": [
+    {
+      "route": "/api/profile",
+      "allowedRoles": ["authenticated"]
+    },
+    {
+      "route": "/api/moods",
+      "allowedRoles": ["authenticated"]
+    },
+    {
+      "route": "/api/bookings",
+      "allowedRoles": ["authenticated"]
+    },
+    {
+      "route": "/api/therapists",
+      "allowedRoles": ["anonymous"]
+    }
+  ],
+  "responseOverrides": {
+    "401": {
+      "statusCode": 302,
+      "redirect": "/.auth/login/aad?post_login_redirect_uri=/"
+    }
+  }
+}
