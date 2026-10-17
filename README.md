@@ -12,14 +12,14 @@ The public patient site is in the project root. The therapist portal is availabl
 
 ## Deployment
 
-This project is suitable for Azure Static Web Apps. The repository includes a GitHub Actions workflow at `.github/workflows/azure-static-web-apps.yml`.
+This project is suitable for Azure Static Web Apps. The repository includes an Azure-generated GitHub Actions workflow under `.github/workflows/` that deploys the frontend and `api/` Functions.
 
 ### Azure Static Web Apps setup
 
 1. In the Azure portal, create a **Static Web App** using the **Free** plan.
 2. Select GitHub and choose `TKHO-dev-alt/TKHO-Official`.
 3. Set the branch to `master`, app location to `/`, and leave the API and output locations empty.
-4. Azure will create the `AZURE_STATIC_WEB_APPS_API_TOKEN` GitHub secret. If you create the resource manually, copy its deployment token into that repository secret.
+4. Azure will create a resource-specific deployment secret and reference it from the generated workflow. If you create the resource manually, regenerate or update the workflow from the Static Web Apps deployment settings.
 5. After the first deployment, open **Custom domains** in the Static Web App and add your Get.tech domain.
 6. At Get.tech, add the DNS records shown by Azure. Use the validation CNAME first; then add the final CNAME or ALIAS record Azure provides.
 
