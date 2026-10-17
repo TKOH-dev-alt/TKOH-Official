@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TKOH Wellness — Therapist Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="therapist-styles.css">
+<style>
+html,body{overflow-x:hidden;}
+#dashboard{display:none;background:var(--bg);min-height:100vh;}
+#dashboard.is-visible{display:block!important;}
+#main-content{margin-left:var(--sb-width);min-height:100vh;display:flex;flex-direction:column;width:calc(100% - var(--sb-width));overflow-x:hidden;}
+.module-area{flex:1;padding:28px 32px;overflow-x:hidden;background:var(--bg);}
+.module{display:none;width:100%;}
+.module.active{display:block;animation:fadeUp .28s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.stats-grid{min-width:0;}.stat-card{min-width:0;overflow:hidden;}.card{min-width:0;}.ov-grid{min-width:0;}
+.topbar{width:100%;box-sizing:border-box;}
+@media(max-width:900px){#main-content{margin-left:0;width:100%;}#sidebar{position:fixed;z-index:300;}}
+@media(max-width:1200px){.stats-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:700px){.stats-grid{grid-template-columns:1fr 1fr;}.ov-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ AUTH SCREEN ══════════════ -->
+<div id="auth-screen">
+  <div class="auth-bg">
+    <canvas id="auth-canvas"></canvas>
+    <div class="auth-breath-ring auth-ring-1"></div>
+    <div class="auth-breath-ring auth-ring-2"></div>
+    <div class="auth-breath-ring auth-ring-3"></div>
+    <div class="auth-gradient-overlay"></div>
+  </div>
+
+  <div class="auth-center" id="auth-center">
+    <!-- LOGO — never touched -->
+    <div class="auth-logo auth-anim-item">
+      <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/wAARCAMeAxMDASIAAhEBAxEB/8QAHAABAQACAwEBAAAAAAAAAAAAAAEGBwIEBQMI/8QAVBAAAgEDAgMEBgUEDAsIAwEAAAECAwQRBQYSITEHQVFhEyJxgZGxFDJCocEjUnPRCBUWJDM2YnJ0krLhFyUmN0NTVFVjgqInNDVkZZPw8USDo0X/xAAbAQEAAgMBAQAAAAAAAAAAAAAAAQUCAwQGB//EADcRAQACAgEDAgUCBAUDBQEAAAABAgMRBBIhMQVBEyIyUXEzYRQjgaE0QlOx0VKRwRUkQ+Hw8f/aAAwDAQACEQMRAD8A/YYAAAAgAAAAAAAAA" alt="TKOH" class="auth-logo-img">
+      <div>
+        <div class="auth-logo-name">TKOH Wellness</div>
+        <div class="auth-logo-tag">Therapist Portal</div>
+      </div>
+    </div>
+
+    <div class="auth-card" id="auth-card">
+      <!-- LOGIN VIEW -->
+      <div id="login-view">
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="showLogin()">Login</button>
+          <button class="auth-tab" onclick="showRegister()">Register</button>
+        </div>
+        <div class="auth-body">
+          <h2 class="auth-title auth-anim-item">Welcome Back</h2>
+          <p class="auth-sub auth-anim-item">Sign in to your therapist dashboard</p>
+          <div class="af auth-anim-item">
+            <label class="al">Email Address</label>
+            <input type="email" class="ai" id="login-email" placeholder="doc@tkoh.com">
+          </div>
+          <div class="af auth-anim-item">
+            <label class="al">Password</label>
+            <input type="password" class="ai" id="login-password" placeholder="pass123">
+          </div>
+          <div class="auth-hint auth-anim-item">
+            <span class="hint-icon">🔑</span>
+            <span>Demo: <strong>doc@tkoh.com</strong> / <strong>pass123</strong></span>
+          </div>
+          <button class="auth-btn auth-anim-item" onclick="doAuthLogin()">Login to Dashboard →</button>
+          <div class="auth-footer-link auth-anim-item">New therapist? <span onclick="showRegister()">Create account</span></div>
+        </div>
+      </div>
+
+      <!-- REGISTER VIEW -->
+      <div id="register-view" style="display:none">
+        <div class="auth-tabs">
+          <button class="auth-tab" onclick="showLogin()">Login</button>
+          <button class="auth-tab active" onclick="showRegister()">Register</button>
+        </div>
+        <div class="auth-body">
+          <h2 class="auth-title reg-anim-item">Join TKOH</h2>
+          <p class="auth-sub reg-anim-item">Create your therapist account</p>
+          <div class="auth-row-2 reg-anim-item">
+            <div class="af"><label class="al">First Name</label><input class="ai" id="reg-fname" placeholder="Dr. Priya"></div>
+            <div class="af"><label class="al">Last Name</label><input class="ai" id="reg-lname" placeholder="Sharma"></div>
+          </div>
+          <div class="af reg-anim-item"><label class="al">Email</label><input type="email" class="ai" id="reg-email" placeholder="you@example.com"></div>
+          <div class="af reg-anim-item"><label class="al">Specialty</label>
+            <select class="ai ai-select" id="reg-specialty">
+              <option>Anxiety &amp; Stress</option>
+              <option>Depression &amp; Mood</option>
+              <option>Trauma &amp; PTSD</option>
+              <option>Relationships</option>
+              <option>Child &amp; Adolescent</option>
+            </select>
+          </div>
+          <div class="af reg-anim-item"><label class="al">Password</label><input type="password" class="ai" id="reg-pass" placeholder="Create strong password"></div>
+
+          <!-- WEEK AVAILABILITY SELECTOR -->
+          <div class="af reg-anim-item">
+            <label class="al">Your Weekly Availability</label>
+            <p style="font-size:12px;color:var(--text-2);margin-bottom:10px">Select the days you are available for sessions</p>
+            <div class="reg-avail-grid" id="reg-avail-grid">
+              <label class="reg-day-toggle"><input type="checkbox" value="Mon" checked><span>Mon</span></label>
+              <label class="reg-day-toggle"><input type="checkbox" value="Tue" checked><span>Tue</span></label>
+              <label class="reg-day-toggle"><input type="checkbox" value="Wed" checked><span>Wed</span></label>
+              <label class="reg-day-toggle"><input type="checkbox" value="Thu" checked><span>Thu</span></label>
+              <label class="reg-day-toggle"><input type="checkbox" value="Fri" checked><span>Fri</span></label>
+              <label class="reg-day-toggle"><input type="checkbox" value="Sat"><span>Sat</span></label>
+              <label class="reg-day-toggle"><input type="checkbox" value="Sun"><span>Sun</span></label>
+            </div>
+          </div>
+          <div class="af reg-anim-item">
+            <label class="al">Default Session Time Slots</label>
+            <p style="font-size:12px;color:var(--text-2);margin-bottom:10px">Pick your preferred slots</p>
+            <div class="reg-avail-grid">
+              <label class="reg-day-toggle"><input type="checkbox" value="9 AM" checked><span>9 AM</span></label>
+              <label class="reg-day-toggle"><input type="checkbox" value="11 AM" checked><span>11 AM</span></label>
+              <label class="reg-day-toggle"><input type="checkbox" value="2 PM" checked><span>2 PM</span></label>
+              <label class="reg-day-toggle"><input type="checkbox" value="4 PM"><span>4 PM</span></label>
+              <label class="reg-day-toggle"><input type="checkbox" value="6 PM"><span>6 PM</span></label>
+            </div>
+          </div>
+
+          <button class="auth-btn reg-anim-item" onclick="doAuthRegister()">Create Account →</button>
+          <div class="auth-footer-link reg-anim-item">Already registered? <span onclick="showLogin()">Sign in</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ LIVE SESSION MODAL ══════════════ -->
+<div id="live-modal" class="live-modal-overlay" style="display:none">
+  <div class="live-modal">
+    <div class="live-modal-header">
+      <div>
+        <h2 class="live-modal-title">Live Therapy Session</h2>
+        <span class="live-badge">🔴 LIVE</span>
+      </div>
+      <div class="live-modal-timer" id="live-timer">00:00</div>
+    </div>
+    <div class="live-layout">
+      <div class="live-video-area">
+        <div class="video-feed video-main">
+          <div class="video-inner">
+            <div class="video-pulse-av">👩‍⚕️</div>
+            <div class="video-spinner"></div>
+            <p class="video-text">Connecting to patient...</p>
+          </div>
+          <div class="video-label">Dr. <span id="live-doc-name">Ananya Gupta</span> — Therapist</div>
+          <div class="video-audio"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="video-feed video-local">
+          <div class="video-inner"><div class="cam-off"><div style="font-size:32px">📷</div><p>Patient camera off</p></div></div>
+          <div class="video-label"><span id="live-patient-name">Patient</span> — Remote</div>
+        </div>
+        <div class="live-controls">
+          <button class="lc-btn" title="Mute" onclick="this.classList.toggle('muted')">🎙️</button>
+          <button class="lc-btn" title="Camera" onclick="this.classList.toggle('muted')">📹</button>
+          <button class="lc-btn" title="Screen Share">🖥️</button>
+          <button class="lc-btn" title="Chat">💬</button>
+          <button class="lc-btn" title="Record">⏺️</button>
+          <button class="lc-btn danger" title="Emergency">🆘</button>
+          <button class="lc-btn end" onclick="endLiveSession()">📵 End</button>
+        </div>
+      </div>
+      <div class="live-panel">
+        <div class="card">
+          <div class="card-header"><span class="card-title">👤 Patient Info</span></div>
+          <div class="patient-mini">
+            <div class="pm-row"><span>Name</span><strong id="lp-name">—</strong></div>
+            <div class="pm-row"><span>Diagnosis</span><strong id="lp-diag">—</strong></div>
+            <div class="pm-row"><span>Sessions</span><strong id="lp-sess">—</strong></div>
+            <div class="pm-row"><span>Risk</span><strong id="lp-risk">—</strong></div>
+          </div>
+        </div>
+        <div class="card" style="flex:1">
+          <div class="card-header"><span class="card-title">📝 Session Notes</span></div>
+          <div class="soap-tabs">
+            <button class="soap-tab active">S</button>
+            <button class="soap-tab">O</button>
+            <button class="soap-tab">A</button>
+            <button class="soap-tab">P</button>
+          </div>
+          <textarea class="soap-area" id="live-soap" placeholder="Subjective: Patient reported..."></textarea>
+          <button class="btn-primary btn-sm" style="margin-top:8px;width:100%" onclick="saveLiveNote()">Save Note</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DASHBOARD ══════════════ -->
+<div id="dashboard">
+  <aside id="sidebar">
+    <div class="sb-logo">
+      <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/wAARCAMeAxMDASIAAhEBAxEB/8QAHAABAQACAwEBAAAAAAAAAAAAAAEGBwIEBQMI/8QAVBAAAgEDAgMEBgUEDAsIAwEAAAECAwQRBQYSITEHQVFhEyJxgZGxFDJCocEjUnPRCBUWJDM2YnJ0krLhFyUmN0NTVFVjgqInNDVkZZPw8USDo0X/xAAbAQEAAgMBAQAAAAAAAAAAAAAAAQUCAwQGB//EADcRAQACAgEDAgUCBAUDBQEAAAABAgMRBBIhMQVBEyIyUXEzYRQjgaE0QlOx0VKRwRUkQ+Hw8f/aAAwDAQACEQMRAD8A/YYAAAAgAAAAAAAAA" alt="TKOH" class="sb-logo-img">
+      <div>
+        <div class="sb-logo-name">TKOH</div>
+        <div class="sb-logo-tag">Therapist</div>
+      </div>
+    </div>
+
+    <div class="sb-profile">
+      <div class="sb-av" id="sb-av">A</div>
+      <div>
+        <div class="sb-name" id="sb-name">Dr. Ananya Gupta</div>
+        <div class="sb-status"><span class="status-dot"></span>Online</div>
+      </div>
+    </div>
+
+    <nav class="sb-nav">
+      <div class="sb-nav-label">Main</div>
+      <button class="sbn active" data-mod="overview" onclick="switchModule(this,'overview')"><span class="sbn-icon">🏠</span><span>Dashboard</span></button>
+      <button class="sbn" data-mod="sessions" onclick="switchModule(this,'sessions')"><span class="sbn-icon">📅</span><span>Sessions</span><span class="sbn-badge" id="badge-sessions">3</span></button>
+      <button class="sbn" data-mod="patients" onclick="switchModule(this,'patients')"><span class="sbn-icon">👥</span><span>Patients</span></button>
+      <button class="sbn" data-mod="notes" onclick="switchModule(this,'notes')"><span class="sbn-icon">📋</span><span>Clinical Notes</span></button>
+      <button class="sbn" data-mod="risk" onclick="switchModule(this,'risk')"><span class="sbn-icon">⚠️</span><span>Risk &amp; Alerts</span><span class="sbn-badge danger" id="badge-risk">2</span></button>
+      <div class="sb-nav-label">Tools</div>
+      <button class="sbn" data-mod="ai" onclick="switchModule(this,'ai')"><span class="sbn-icon">🤖</span><span>AI Assistant</span></button>
+      <button class="sbn" data-mod="docs" onclick="switchModule(this,'docs')"><span class="sbn-icon">📁</span><span>Documents</span></button>
+      <button class="sbn" data-mod="analytics" onclick="switchModule(this,'analytics')"><span class="sbn-icon">📊</span><span>Analytics</span></button>
+      <div class="sb-nav-label">Account</div>
+      <button class="sbn" data-mod="billing" onclick="switchModule(this,'billing')"><span class="sbn-icon">💰</span><span>Earnings</span></button>
+      <button class="sbn" data-mod="availability" onclick="switchModule(this,'availability')"><span class="sbn-icon">🗓️</span><span>Availability</span></button>
+      <button class="sbn" data-mod="privacy" onclick="switchModule(this,'privacy')"><span class="sbn-icon">🔐</span><span>Privacy &amp; Consent</span></button>
+    </nav>
+    <button class="sb-logout" onclick="doLogout()">↩ Logout</button>
+  </aside>
+
+  <main id="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="topbar-title" id="topbar-title">Dashboard Overview</div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-search"><span>🔍</span><input placeholder="Search patients, notes..."></div>
+        <button class="topbar-icon-btn" onclick="switchModule(document.querySelector('.sbn[data-mod=risk]'),'risk')" title="Alerts">⚠️<span class="tb-badge">2</span></button>
+        <button class="topbar-icon-btn" title="Messages">💬<span class="tb-badge">5</span></button>
+        <div class="topbar-theme">
+          <button class="theme-tog" onclick="toggleDashTheme()" id="dash-theme-btn" title="Toggle theme"><div class="theme-tog-knob"></div></button>
+        </div>
+        <div class="topbar-av" id="top-av">A</div>
+      </div>
+    </header>
+
+    <div class="module-area">
+
+      <!-- ══ 1. OVERVIEW ══ -->
+      <div class="module active" id="mod-overview">
+        <div class="mod-header">
+          <div>
+            <h1 class="mod-h1" id="greeting">Good morning, Doctor 👋</h1>
+            <p class="mod-sub">Here is your clinical summary for today.</p>
+          </div>
+          <button class="btn-primary" onclick="switchModule(document.querySelector('.sbn[data-mod=sessions]'),'sessions')">View All Sessions →</button>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-icon" style="background:rgba(91,74,232,.18)">📅</div><div class="stat-val">3</div><div class="stat-label">Sessions Today</div><div class="stat-trend up">↑ 1 from yesterday</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:rgba(16,185,129,.15)">👥</div><div class="stat-val">14</div><div class="stat-label">Active Patients</div><div class="stat-trend up">↑ 2 this week</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:rgba(239,68,68,.15)">⚠️</div><div class="stat-val">2</div><div class="stat-label">Risk Alerts</div><div class="stat-trend down">Needs attention</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:rgba(245,158,11,.15)">💰</div><div class="stat-val">₹38,400</div><div class="stat-label">Month Earnings</div><div class="stat-trend up">↑ 12%</div></div>
+        </div>
+        <div class="ov-grid">
+          <div class="card">
+            <div class="card-header"><span class="card-title">📅 Today's Sessions</span><button class="card-action" onclick="switchModule(document.querySelector('.sbn[data-mod=sessions]'),'sessions')">View all</button></div>
+            <div class="session-list" id="ov-sessions"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">⚠️ Active Risk Alerts</span><button class="card-action danger" onclick="switchModule(document.querySelector('.sbn[data-mod=risk]'),'risk')">Manage</button></div>
+            <div id="ov-alerts"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">🤖 AI Suggestions</span></div>
+            <div class="ai-suggestions">
+              <div class="ai-chip">💡 3 patients due for follow-up this week</div>
+              <div class="ai-chip">📝 2 SOAP notes pending completion</div>
+              <div class="ai-chip">📊 Arjun M. showing mood improvement trend</div>
+              <div class="ai-chip">⚠️ Priya S. — consider crisis plan review</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">📋 Quick Note</span></div>
+            <textarea class="quick-note" placeholder="Jot a quick clinical note..."></textarea>
+            <button class="btn-primary btn-sm" style="margin-top:10px" onclick="showToast('success','Note saved.')">Save Note</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ 2. SESSIONS ══ -->
+      <div class="module" id="mod-sessions">
+        <div class="mod-header">
+          <div><h1 class="mod-h1">Session Management</h1><p class="mod-sub">View, manage, and join your therapy sessions.</p></div>
+          <div style="display:flex;gap:10px">
+            <select class="filter-sel"><option>Today</option><option>This Week</option><option>This Month</option></select>
+          </div>
+        </div>
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="sessTab(this,'upcoming')">Upcoming</button>
+          <button class="tab-btn" onclick="sessTab(this,'completed')">Completed</button>
+          <button class="tab-btn" onclick="sessTab(this,'cancelled')">Cancelled / No-Show</button>
+        </div>
+        <div id="sessions-list"></div>
+      </div>
+
+      <!-- ══ 3. PATIENTS ══ -->
+      <div class="module" id="mod-patients">
+        <div class="mod-header">
+          <div><h1 class="mod-h1">Patient Management</h1><p class="mod-sub">Complete client database and profiles.</p></div>
+          <button class="btn-primary">+ Add Patient</button>
+        </div>
+        <div class="search-filter-bar">
+          <div class="search-wrap"><span>🔍</span><input id="patient-search" placeholder="Search by name, diagnosis..." oninput="filterPatients(this.value)"></div>
+          <select class="filter-sel"><option>All Diagnoses</option><option>Anxiety</option><option>Depression</option><option>PTSD</option><option>Relationships</option></select>
+          <select class="filter-sel"><option>All Status</option><option>Active</option><option>On Hold</option><option>Discharged</option></select>
+        </div>
+        <div class="patient-grid" id="patient-grid"></div>
+      </div>
+
+      <!-- ══ 4. NOTES ══ -->
+      <div class="module" id="mod-notes">
+        <div class="mod-header">
+          <div><h1 class="mod-h1">Clinical Notes</h1><p class="mod-sub">SOAP documentation and session summaries.</p></div>
+          <button class="btn-primary" onclick="openNoteEditor()">+ New Note</button>
+        </div>
+        <div class="notes-layout">
+          <div class="notes-list-col"><div id="notes-list"></div></div>
+          <div class="notes-editor-col" id="note-editor">
+            <div class="editor-header">
+              <select class="filter-sel" id="note-patient-sel"><option>-- Select Patient --</option><option>Arjun Mehta</option><option>Priya Sharma</option><option>Rahul Kapoor</option></select>
+              <input class="ai" id="note-date" type="date" style="max-width:160px">
+            </div>
+            <div class="soap-section"><div class="soap-label accent">S — Subjective</div><textarea class="soap-full" id="soap-s" placeholder="Patient's subjective experience..."></textarea></div>
+            <div class="soap-section"><div class="soap-label">O — Objective</div><textarea class="soap-full" id="soap-o" placeholder="Observed behaviour, affect..."></textarea></div>
+            <div class="soap-section"><div class="soap-label">A — Assessment</div><textarea class="soap-full" id="soap-a" placeholder="Clinical assessment, diagnosis..."></textarea></div>
+            <div class="soap-section"><div class="soap-label">P — Plan</div><textarea class="soap-full" id="soap-p" placeholder="Treatment plan, homework..."></textarea></div>
+            <div class="soap-section"><div class="soap-label private">🔒 Private Therapist Notes</div><textarea class="soap-full" id="soap-private" placeholder="Private observations..."></textarea></div>
+            <div class="editor-actions">
+              <button class="btn-outline">AI Generate Draft 🤖</button>
+              <button class="btn-primary" onclick="showToast('success','Note saved and signed.')">Save &amp; Sign Note</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ 5. RISK ══ -->
+      <div class="module" id="mod-risk">
+        <div class="mod-header">
+          <div><h1 class="mod-h1">Risk &amp; Alerts</h1><p class="mod-sub">AI-flagged risk indicators and emergency protocols.</p></div>
+          <button class="btn-danger">🆘 Emergency Protocol</button>
+        </div>
+        <div class="risk-grid" id="risk-grid"></div>
+      </div>
+
+      <!-- ══ 6. AI ASSISTANT ══ -->
+      <div class="module" id="mod-ai">
+        <div class="mod-header"><div><h1 class="mod-h1">AI Clinical Assistant</h1><p class="mod-sub">Auto-generate notes, summaries, and clinical insights.</p></div></div>
+        <div class="ai-layout">
+          <div class="ai-tools-grid">
+            <div class="ai-tool-card" onclick="aiAction('soap')"><div class="aitc-icon">📝</div><div class="aitc-title">Generate SOAP Note</div><div class="aitc-desc">AI drafts a SOAP note from session keywords</div></div>
+            <div class="ai-tool-card" onclick="aiAction('summary')"><div class="aitc-icon">📋</div><div class="aitc-title">Session Summary</div><div class="aitc-desc">Auto-summarise last session in clinical language</div></div>
+            <div class="ai-tool-card" onclick="aiAction('risk')"><div class="aitc-icon">⚠️</div><div class="aitc-title">Risk Assessment</div><div class="aitc-desc">Detect distress signals in session notes</div></div>
+            <div class="ai-tool-card" onclick="aiAction('plan')"><div class="aitc-icon">🎯</div><div class="aitc-title">Treatment Plan</div><div class="aitc-desc">Suggest next steps based on progress data</div></div>
+            <div class="ai-tool-card" onclick="aiAction('template')"><div class="aitc-icon">📄</div><div class="aitc-title">Note Templates</div><div class="aitc-desc">CBT, DBT, mindfulness note frameworks</div></div>
+            <div class="ai-tool-card" onclick="aiAction('insight')"><div class="aitc-icon">💡</div><div class="aitc-title">Patient Insights</div><div class="aitc-desc">AI-generated trend analysis for selected patient</div></div>
+          </div>
+          <div class="ai-chat-panel">
+            <div class="ai-chat-header">🤖 AI Clinical Chat</div>
+            <div class="ai-chat-msgs" id="ai-msgs">
+              <div class="ai-msg bot"><div class="ai-msg-bub">Hello Doctor! I can help you generate SOAP notes, analyse patient trends, detect risk signals, or suggest therapy plans. What would you like to do?</div></div>
+            </div>
+            <div class="ai-quick-chips">
+              <span class="ai-chip-btn" onclick="aiQuick('Generate SOAP for last session')">Generate SOAP</span>
+              <span class="ai-chip-btn" onclick="aiQuick('Analyse Arjun mood trend')">Mood Analysis</span>
+              <span class="ai-chip-btn" onclick="aiQuick('Risk check for all patients')">Risk Check</span>
+            </div>
+            <div class="ai-input-bar">
+              <input class="ai-inp" id="ai-input" placeholder="Ask the AI assistant..." onkeydown="if(event.key==='Enter')sendAiMsg()">
+              <button class="ai-send" onclick="sendAiMsg()">→</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ 7. DOCUMENTS ══ -->
+      <div class="module" id="mod-docs">
+        <div class="mod-header">
+          <div><h1 class="mod-h1">Documents &amp; Resources</h1><p class="mod-sub">Worksheets, PDFs, and clinical resources for patients.</p></div>
+          <button class="btn-primary">+ Upload Resource</button>
+        </div>
+        <div class="docs-grid" id="docs-grid"></div>
+      </div>
+
+      <!-- ══ 8. ANALYTICS ══ -->
+      <div class="module" id="mod-analytics">
+        <div class="mod-header"><div><h1 class="mod-h1">Dashboard Analytics</h1><p class="mod-sub">Clinical metrics, workload, and patient outcomes.</p></div></div>
+        <div class="analytics-grid">
+          <div class="stat-card"><div class="stat-icon" style="background:rgba(91,74,232,.18)">👥</div><div class="stat-val">14</div><div class="stat-label">Active Patients</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:rgba(16,185,129,.15)">✅</div><div class="stat-val">48</div><div class="stat-label">Sessions This Month</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:rgba(245,158,11,.15)">📈</div><div class="stat-val">76%</div><div class="stat-label">Improvement Rate</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:rgba(239,68,68,.15)">🚫</div><div class="stat-val">8%</div><div class="stat-label">No-Show Rate</div></div>
+        </div>
+        <div class="ov-grid">
+          <div class="card">
+            <div class="card-header"><span class="card-title">📊 Weekly Session Load</span></div>
+            <div class="bar-chart" id="weekly-chart"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">📈 Patient Mood Trend</span></div>
+            <div class="mood-chart">
+              <svg width="100%" height="140" viewBox="0 0 400 140" preserveAspectRatio="none">
+                <defs><linearGradient id="mg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5B4AE8" stop-opacity="0.35"/><stop offset="100%" stop-color="#5B4AE8" stop-opacity="0.03"/></linearGradient></defs>
+                <path d="M0,110 L55,90 L110,70 L165,80 L220,45 L275,55 L330,30 L385,40 L400,35 L400,140 L0,140 Z" fill="url(#mg2)"/>
+                <path d="M0,110 L55,90 L110,70 L165,80 L220,45 L275,55 L330,30 L385,40 L400,35" fill="none" stroke="#7C6FF0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="220" cy="45" r="5" fill="#fff" stroke="#5B4AE8" stroke-width="2"/>
+                <circle cx="330" cy="30" r="5" fill="#fff" stroke="#5B4AE8" stroke-width="2"/>
+              </svg>
+              <div class="chart-labels"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">🥧 Diagnosis Breakdown</span></div>
+            <div class="diagnosis-list">
+              <div class="diag-row"><span>Anxiety &amp; Stress</span><div class="diag-bar"><div style="width:45%;background:var(--accent)"></div></div><span>45%</span></div>
+              <div class="diag-row"><span>Depression</span><div class="diag-bar"><div style="width:28%;background:#10B981"></div></div><span>28%</span></div>
+              <div class="diag-row"><span>PTSD</span><div class="diag-bar"><div style="width:15%;background:#F59E0B"></div></div><span>15%</span></div>
+              <div class="diag-row"><span>Relationships</span><div class="diag-bar"><div style="width:12%;background:#EF4444"></div></div><span>12%</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">📅 Monthly Overview</span></div>
+            <div class="monthly-stats">
+              <div class="ms-row"><span>Total Sessions</span><strong>48</strong></div>
+              <div class="ms-row"><span>Completed</span><strong class="text-success">44</strong></div>
+              <div class="ms-row"><span>No-Shows</span><strong class="text-danger">4</strong></div>
+              <div class="ms-row"><span>New Patients</span><strong>3</strong></div>
+              <div class="ms-row"><span>Avg Session Length</span><strong>52 min</strong></div>
+              <div class="ms-row"><span>SOAP Notes Filed</span><strong>41</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ 9. BILLING ══ -->
+      <div class="module" id="mod-billing">
+        <div class="mod-header">
+          <div><h1 class="mod-h1">Earnings &amp; Billing</h1><p class="mod-sub">Track your payouts, invoices, and session earnings.</p></div>
+          <button class="btn-primary">Download Statement</button>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-icon" style="background:rgba(16,185,129,.15)">💰</div><div class="stat-val">₹38,400</div><div class="stat-label">This Month</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:rgba(91,74,232,.18)">📊</div><div class="stat-val">₹1,92,000</div><div class="stat-label">This Year</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:rgba(245,158,11,.15)">⏳</div><div class="stat-val">₹6,400</div><div class="stat-label">Pending Payout</div></div>
+          <div class="stat-card"><div class="stat-icon" style="background:rgba(239,68,68,.15)">🧾</div><div class="stat-val">44</div><div class="stat-label">Sessions Billed</div></div>
+        </div>
+        <div class="card" style="margin-top:20px">
+          <div class="card-header"><span class="card-title">🧾 Invoice History</span></div>
+          <div class="invoice-table">
+            <div class="inv-header"><span>Patient</span><span>Date</span><span>Duration</span><span>Amount</span><span>Status</span></div>
+            <div id="invoice-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ 10. AVAILABILITY (Full Calendar) ══ -->
+      <div class="module" id="mod-availability">
+        <div class="mod-header">
+          <div><h1 class="mod-h1">Availability &amp; Scheduling</h1><p class="mod-sub">Manage your calendar, set time slots, and view booked sessions.</p></div>
+          <button class="btn-primary" onclick="saveAvailability()">💾 Save Availability</button>
+        </div>
+
+        <div class="avail-layout">
+          <!-- Calendar -->
+          <div class="avail-calendar-col">
+            <div class="card">
+              <div class="cal-nav">
+                <button class="cal-nav-btn" onclick="calNav(-1)">‹</button>
+                <span class="cal-month-label" id="cal-month-label">June 2026</span>
+                <button class="cal-nav-btn" onclick="calNav(1)">›</button>
+              </div>
+              <div class="cal-grid" id="cal-grid"></div>
+              <div class="cal-legend">
+                <span class="leg-item"><span class="leg-dot avail"></span>Available</span>
+                <span class="leg-item"><span class="leg-dot booked"></span>Booked</span>
+                <span class="leg-item"><span class="leg-dot blocked"></span>Blocked</span>
+                <span class="leg-item"><span class="leg-dot today"></span>Today</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right panel -->
+          <div class="avail-right-col">
+            <!-- Selected date slots -->
+            <div class="card" id="avail-day-card">
+              <div class="card-header">
+                <span class="card-title" id="avail-day-title">Select a date</span>
+                <button class="btn-primary btn-sm" onclick="addCustomSlot()">+ Add Slot</button>
+              </div>
+              <div id="avail-day-slots">
+                <p style="color:var(--text-3);font-size:13px;padding:12px 0">Click a date on the calendar to manage slots.</p>
+              </div>
+            </div>
+
+            <!-- Weekly template -->
+            <div class="card">
+              <div class="card-header"><span class="card-title">📋 Weekly Template</span></div>
+              <p style="font-size:12px;color:var(--text-2);margin-bottom:12px">Your recurring weekly availability (from registration)</p>
+              <div class="weekly-template-grid" id="weekly-template-grid"></div>
+            </div>
+
+            <!-- Settings -->
+            <div class="card">
+              <div class="card-header"><span class="card-title">⚙️ Session Settings</span></div>
+              <div class="sched-settings">
+                <div class="ss-row"><label>Session Duration</label><select class="filter-sel" id="sess-duration"><option>50 minutes</option><option>60 minutes</option><option>30 minutes</option></select></div>
+                <div class="ss-row"><label>Buffer Time</label><select class="filter-sel"><option>10 minutes</option><option>15 minutes</option><option>5 minutes</option></select></div>
+                <div class="ss-row"><label>Time Zone</label><select class="filter-sel"><option>IST (UTC+5:30)</option><option>UTC</option><option>EST</option></select></div>
+                <div class="ss-row"><label>Max Sessions/Day</label><select class="filter-sel"><option>6 sessions</option><option>4 sessions</option><option>8 sessions</option></select></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ 11. PRIVACY ══ -->
+      <div class="module" id="mod-privacy">
+        <div class="mod-header"><div><h1 class="mod-h1">Privacy &amp; Consent</h1><p class="mod-sub">HIPAA-compliant consent records, access logs, and data controls.</p></div></div>
+        <div class="privacy-grid">
+          <div class="card">
+            <div class="card-header"><span class="card-title">📋 Consent Records</span></div>
+            <div id="consent-list"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">🔍 Access Logs</span></div>
+            <div class="access-log" id="access-log"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">⚙️ Data Controls</span></div>
+            <div class="data-controls">
+              <div class="dc-item"><span>Session Recording</span><div class="toggle-sw active" onclick="this.classList.toggle('active')"><div></div></div></div>
+              <div class="dc-item"><span>AI Note Assistance</span><div class="toggle-sw active" onclick="this.classList.toggle('active')"><div></div></div></div>
+              <div class="dc-item"><span>Data Analytics</span><div class="toggle-sw active" onclick="this.classList.toggle('active')"><div></div></div></div>
+              <div class="dc-item"><span>Third Party Sharing</span><div class="toggle-sw" onclick="this.classList.toggle('active')"><div></div></div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">🛡️ Compliance Status</span></div>
+            <div class="compliance-list">
+              <div class="comp-row ok"><span>✅</span><span>HIPAA Compliance</span><strong>Active</strong></div>
+              <div class="comp-row ok"><span>✅</span><span>Data Encryption (AES-256)</span><strong>Enabled</strong></div>
+              <div class="comp-row ok"><span>✅</span><span>Audit Logging</span><strong>Active</strong></div>
+              <div class="comp-row ok"><span>✅</span><span>2FA Authentication</span><strong>Enabled</strong></div>
+              <div class="comp-row warn"><span>⚠️</span><span>Backup Verification</span><strong>Due Soon</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<div id="toast-area"></div>
+<script src="therapist-app.js"></script>
+</body>
+</html>
