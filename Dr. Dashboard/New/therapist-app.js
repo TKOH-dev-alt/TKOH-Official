@@ -1,5 +1,5 @@
 /* ============================================================
-   TKOH WELLNESS — therapist-app.js  v2.0  COMPLETE
+   TKHO WELLNESS — therapist-app.js  v2.0  COMPLETE
    ============================================================ */
 'use strict';
 
@@ -10,7 +10,7 @@ const THERAPIST = {
   name: 'Dr. Ananya Gupta',
   initial: 'A',
   specialty: 'Anxiety & Stress',
-  email: 'ananya@tkohwellness.com'
+  email: 'ananya@tkhowellness.com'
 };
 
 const SESSIONS = [
@@ -165,13 +165,13 @@ function toggleDashTheme(){
   const isDark = html.getAttribute('data-theme') === 'dark';
   html.setAttribute('data-theme', isDark ? 'light' : 'dark');
   STATE.theme = isDark ? 'light' : 'dark';
-  try { localStorage.setItem('tkoh-dash-theme', STATE.theme); } catch(e){}
+  try { localStorage.setItem('tkho-dash-theme', STATE.theme); } catch(e){}
   showToast('info', isDark ? '☀️ Light mode activated.' : '🌙 Dark mode activated.');
 }
 
 function initTheme(){
   try {
-    const saved = localStorage.getItem('tkoh-dash-theme');
+    const saved = localStorage.getItem('tkho-dash-theme');
     if(saved){ document.documentElement.setAttribute('data-theme', saved); STATE.theme = saved; }
   } catch(e){}
 }
@@ -1020,7 +1020,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* Pre-fill demo hint */
   const em = $('login-email'), pw = $('login-password');
-  if(em) em.placeholder = 'doc@tkoh.com';
+  if(em) em.placeholder = 'doc@tkho.com';
   if(pw) pw.placeholder  = 'pass123';
 });
 

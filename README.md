@@ -1,6 +1,6 @@
-# TKOH Wellness
+# TKHO Wellness
 
-TKOH Wellness is a static mental wellness website with patient tools, therapist discovery, and a separate therapist dashboard.
+TKHO Wellness is a static mental wellness website with patient tools, therapist discovery, and a separate therapist dashboard.
 
 ## Run locally
 
@@ -17,7 +17,7 @@ This project is suitable for Azure Static Web Apps. The repository includes a Gi
 ### Azure Static Web Apps setup
 
 1. In the Azure portal, create a **Static Web App** using the **Free** plan.
-2. Select GitHub and choose `TKOH-dev-alt/TKOH-Official`.
+2. Select GitHub and choose `TKHO-dev-alt/TKHO-Official`.
 3. Set the branch to `master`, app location to `/`, and leave the API and output locations empty.
 4. Azure will create the `AZURE_STATIC_WEB_APPS_API_TOKEN` GitHub secret. If you create the resource manually, copy its deployment token into that repository secret.
 5. After the first deployment, open **Custom domains** in the Static Web App and add your Get.tech domain.

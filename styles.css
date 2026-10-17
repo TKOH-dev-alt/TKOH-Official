@@ -1,7 +1,7 @@
 /* ============================================================
-   TKOH WELLNESS — styles.css   v3.0
+   TKHO WELLNESS — styles.css   v3.0
    Light (Sky-Blue / White) + Dark (Black / Blue / Gold / Violet)
-   Analysed from Wellzy.io structure — redesigned for TKOH brand
+   Analysed from Wellzy.io structure — redesigned for TKHO brand
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Lora:ital@0;1&display=swap');
@@ -853,7 +853,7 @@ img { max-width:100%; display:block; }
 [data-theme="dark"] .session-timer-display { color:var(--accent2); }
 
 /* ════════════════════════════════════════════
-   FOOTER — TKOH branded dark footer
+   FOOTER — TKHO branded dark footer
 ════════════════════════════════════════════ */
 footer { background:#071322; color:rgba(255,255,255,.6); padding:64px 0 0; transition:background .3s ease; }
 [data-theme="dark"] footer { background:#050508; border-top:1px solid rgba(91,74,232,.12); }

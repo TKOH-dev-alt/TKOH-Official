@@ -1,5 +1,5 @@
 /* ============================================================
-   TKOH WELLNESS — app.js  v3.0  COMPLETE
+   TKHO WELLNESS — app.js  v3.0  COMPLETE
    Theme toggle · Logo · All 16 components · Dark/Light
    ============================================================ */
 'use strict';
@@ -30,8 +30,8 @@ const DATA = {
     {
       label: 'GENERAL',
       items: [
-        { q:'What is TKOH Wellness?',          a:'TKOH Wellness (The Key of Happiness) is a telehealth mental health platform connecting users with trained, supervised psychiatry professionals via secure video sessions. We also offer AI-powered wellness tools including mood tracking, guided breathing, and a 24/7 support chatbot — all free to get started.' },
-        { q:'Is TKOH Wellness free to use?',   a:'TKOH operates on a freemium model. The AI chatbot, mood tracker, and daily mindfulness tools are completely free. Human therapy sessions start at ₹900/hr. Students and low-income users may qualify for subsidised rates through our compassion fund.' },
+        { q:'What is TKHO Wellness?',          a:'TKHO Wellness (The Key Happiness Outlet) is a telehealth mental health platform connecting users with trained, supervised psychiatry professionals via secure video sessions. We also offer AI-powered wellness tools including mood tracking, guided breathing, and a 24/7 support chatbot — all free to get started.' },
+        { q:'Is TKHO Wellness free to use?',   a:'TKHO operates on a freemium model. The AI chatbot, mood tracker, and daily mindfulness tools are completely free. Human therapy sessions start at ₹900/hr. Students and low-income users may qualify for subsidised rates through our compassion fund.' },
         { q:'Is my data private and secure?',  a:"Absolutely. All sessions are end-to-end encrypted using AES-256. Your clinical data is never sold or shared with advertisers. You may request complete deletion of your account data at any time. We comply fully with India's DPDP Act 2023 and international GDPR standards." },
       ]
     },
@@ -41,7 +41,7 @@ const DATA = {
         { q:'How does the AI chatbot work?',                               a:'Our AI companion uses a large language model fine-tuned on mental wellness content. It provides empathetic responses, coping strategies, and psychoeducation. It is available 24/7 and automatically escalates to human support when crisis signals are detected in conversation.' },
         { q:'Will the AI replace human therapists?',                      a:'No. Our AI is a supportive companion and first point of contact — not a replacement for clinical care. For diagnosis, medication, trauma therapy, or complex mental health needs, our licensed human professionals are always the recommended path forward.' },
         { q:'What therapeutic approaches do your therapists use?',        a:'Our therapists are trained across CBT (Cognitive Behavioural Therapy), DBT (Dialectical Behaviour Therapy), EMDR, Mindfulness-Based Therapy, Somatic Therapy, Narrative Therapy, and Person-Centred approaches depending on individual client needs.' },
-        { q:'What makes TKOH different from ChatGPT or other AI chatbots?', a:'TKOH is purpose-built for mental wellness with trauma-informed guardrails, clinical supervision protocols, and seamless escalation to human therapists. We do not use generic AI — our model is continuously refined and validated by licensed clinicians.' },
+        { q:'What makes TKHO different from ChatGPT or other AI chatbots?', a:'TKHO is purpose-built for mental wellness with trauma-informed guardrails, clinical supervision protocols, and seamless escalation to human therapists. We do not use generic AI — our model is continuously refined and validated by licensed clinicians.' },
       ]
     },
     {
@@ -98,7 +98,7 @@ function toggleTheme() {
   const next   = isDark ? 'light' : 'dark';
   html.setAttribute('data-theme', next);
   STATE.theme = next;
-  try { localStorage.setItem('tkoh-theme', next); } catch(e) {}
+  try { localStorage.setItem('tkho-theme', next); } catch(e) {}
   showToast('info', isDark
     ? '☀️ Light mode activated — clean, bright, and clear.'
     : '🌙 Dark mode activated — elegant, focused, and premium.');
@@ -106,7 +106,7 @@ function toggleTheme() {
 
 function initTheme() {
   try {
-    const saved = localStorage.getItem('tkoh-theme');
+    const saved = localStorage.getItem('tkho-theme');
     if (saved === 'dark' || saved === 'light') {
       document.documentElement.setAttribute('data-theme', saved);
       STATE.theme = saved;
@@ -261,7 +261,7 @@ function doSignup() {
   };
   applyLoggedIn();
   closeModal('auth-modal');
-  showToast('success', `✅ Welcome to TKOH, ${fname}! Your wellness journey begins now. 🌟`);
+  showToast('success', `✅ Welcome to TKHO, ${fname}! Your wellness journey begins now. 🌟`);
   navigate('dashboard');
 }
 
@@ -509,7 +509,7 @@ function openArticle(idx) {
     <p>${b.summary}</p>
     <p>Mental health is not a luxury — it is a fundamental pillar of human flourishing. Scientific research over the past three decades has transformed our understanding of how emotional wellbeing shapes everything from immune function to creative capacity, from relationship quality to professional performance across every domain of life.</p>
     <p>The evidence points to a compelling conclusion: investing in your psychological health is one of the highest-leverage actions you can take. Whether through professional therapy, daily mindfulness practice, social connection, or simply tracking your mood — every intentional act of self-care compounds into remarkable resilience and emotional intelligence over time.</p>
-    <p>At TKOH Wellness, we are committed to making this journey accessible to every person. Our platform combines the warmth of human therapeutic connection with the accessibility of digital tools — meeting you wherever you are, at any hour of the day or night, with zero judgment.</p>
+    <p>At TKHO Wellness, we are committed to making this journey accessible to every person. Our platform combines the warmth of human therapeutic connection with the accessibility of digital tools — meeting you wherever you are, at any hour of the day or night, with zero judgment.</p>
     <p>We hope this article has offered both insight and encouragement. Your mental health matters immensely — and you do not have to navigate any of it alone. Our community, our therapists, and your AI companion are here whenever you reach out.</p>
   `;
   $('article-modal').classList.remove('hidden');
@@ -852,7 +852,7 @@ const BOT_REPLIES = {
   'anxious':   "I hear you — anxiety is really tough. Try our Mindful Breathing tool on the homepage for immediate relief. Box breathing calms your nervous system in 2 minutes. Would you like me to connect you with one of our anxiety therapists? 💙",
   'depress':   "Thank you for sharing that with me. Depression is real and very treatable. Our therapists specialise in compassionate, evidence-based support. You are absolutely not alone in this. 💙",
   'therapist': "We have 120+ certified therapists specialising in anxiety, depression, relationships, trauma, and career coaching. All are verified and under clinical supervision. Visit the Therapists page to browse! 👩‍⚕️",
-  'tkoh':      "TKOH stands for The Key of Happiness! We're a telehealth platform connecting people with mental health professionals through secure video sessions, plus free AI wellness tools to support your daily journey. 🌟",
+  'tkho':      "TKHO stands for The Key Happiness Outlet! We're a telehealth platform connecting people with mental health professionals through secure video sessions, plus free AI wellness tools to support your daily journey. 🌟",
   'price':     "Therapy sessions start at ₹900/hr. Our AI chatbot, mood tracker, and daily mindfulness tools are completely free. Students may qualify for subsidised rates through our compassion fund. 💰",
   'crisis':    "If you are in immediate danger, please call emergency services (112) or a crisis helpline right now. iCall: 9152987821 · Vandrevala Foundation: 1860-2662-345. You matter deeply. 🚨",
   'sleep':     "Sleep and mental health are deeply connected. Poor sleep amplifies anxiety and depression. Try our Meditation Timer with the 'Sleep' preset tonight — many users report falling asleep within 15 minutes. 🌙",
@@ -1022,7 +1022,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* 9. Welcome toast */
   setTimeout(() => {
-    showToast('info', '👋 Welcome to TKOH Wellness! Toggle ☀️/🌙 in the header to switch themes.');
+    showToast('info', '👋 Welcome to TKHO Wellness! Toggle ☀️/🌙 in the header to switch themes.');
   }, 1800);
 
   /* 10. Nav scroll shadow on initial load */
