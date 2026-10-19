@@ -2,7 +2,7 @@
   "name": "tkho-api",
   "version": "1.0.0",
   "private": true,
-  "description": "TKHO Wellness Azure Functions API",
+  "description": "TKHO therapist booking and AI companion Azure Functions API",
   "main": "src/functions/*.js",
   "scripts": {
     "start": "func start",

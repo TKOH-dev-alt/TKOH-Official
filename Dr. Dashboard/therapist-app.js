@@ -179,8 +179,21 @@ function doAuthLogin() {
   const email = $('login-email').value.trim();
   const pass  = $('login-password').value.trim();
   if (!email || !pass) { showToast('danger', '⚠️ Please enter your credentials.'); return; }
+  if (email.toLowerCase() !== 'doc@tkho.com' || pass !== 'pass123') {
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem('tkho-therapist-application') || 'null'); } catch (error) {}
+    if (!saved || saved.email.toLowerCase() !== email.toLowerCase() || saved.password !== pass) {
+      showToast('danger', '⚠️ Invalid credentials. Use the demo account or submit a therapist application first.');
+      return;
+    }
+  }
   STATE.loggedIn = true;
-  STATE.therapist = { ...THERAPIST };
+  try {
+    const saved = JSON.parse(localStorage.getItem('tkho-therapist-application') || 'null');
+    STATE.therapist = saved && saved.email.toLowerCase() === email.toLowerCase()
+      ? { name: saved.name, initial: saved.initial, specialty: saved.specialty, email: saved.email }
+      : { ...THERAPIST };
+  } catch (error) { STATE.therapist = { ...THERAPIST }; }
   enterDashboard();
 }
 
@@ -189,10 +202,33 @@ function doAuthRegister() {
   const lname = $('reg-lname').value.trim();
   const email = $('reg-email').value.trim();
   const pass  = $('reg-pass').value.trim();
-  if (!fname || !lname || !email || !pass) { showToast('danger', '⚠️ Please fill all fields.'); return; }
+  const resume = $('reg-resume').files[0];
+  if (!fname || !lname || !email || !pass || !resume) { showToast('danger', '⚠️ Please complete all fields and attach your PDF resume.'); return; }
+  if (resume.type !== 'application/pdf' && !resume.name.toLowerCase().endsWith('.pdf')) {
+    showToast('danger', '⚠️ Resume must be a PDF file.');
+    return;
+  }
+  if (resume.size > 5 * 1024 * 1024) {
+    showToast('danger', '⚠️ Please keep the resume under 5 MB.');
+    return;
+  }
+  const application = {
+    name: `Dr. ${fname} ${lname}`, initial: fname[0].toUpperCase(), specialty: $('reg-specialty').value,
+    email, password: pass, resumeName: resume.name, resumeSize: resume.size,
+    status: 'under_review', submittedAt: new Date().toISOString()
+  };
+  localStorage.setItem('tkho-therapist-application', JSON.stringify(application));
+  fetch('/api/therapist-applications', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ name: application.name, email, specialty: application.specialty, resumeName: resume.name, resumeSize: resume.size })
+  }).catch(() => {});
+  const notice = $('review-notice');
+  if (notice) notice.style.display = 'flex';
+  showToast('success', '✅ Application received. We are reviewing your profile and will contact you through your email.');
   STATE.loggedIn = true;
-  STATE.therapist = { name: `Dr. ${fname} ${lname}`, initial: fname[0].toUpperCase(), specialty: $('reg-specialty').value, email };
-  enterDashboard();
+  STATE.therapist = { name: application.name, initial: application.initial, specialty: application.specialty, email };
+  setTimeout(enterDashboard, 900);
 }
 
 function enterDashboard() {

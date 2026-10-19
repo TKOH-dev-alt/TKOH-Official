@@ -30,8 +30,8 @@ const DATA = {
     {
       label: 'GENERAL',
       items: [
-        { q:'What is TKHO Wellness?',          a:'TKHO (The Key Happiness Outlet) is an early-stage mental wellness platform with guided exercises, mood reflection, educational content, and therapist discovery. Digital tools are not a replacement for qualified clinical care.' },
-        { q:'Is TKHO Wellness free to use?',   a:'TKHO operates on a freemium model. The AI chatbot, mood tracker, and daily mindfulness tools are completely free. Human therapy sessions start at ₹900/hr. Students and low-income users may qualify for subsidised rates through our compassion fund.' },
+        { q:'What is TKHO?',                   a:'TKHO — The Key of Happiness & Openness — is an early-stage therapist booking platform with thoughtful AI guidance, reflection tools, mood tracking, and breathing exercises. Digital tools are not a replacement for qualified clinical care.' },
+        { q:'Is TKHO free to use?',             a:'You can explore the AI companion, mood tracker, and guided practices while the therapist booking experience is being built. Session pricing and availability are shown by each provider.' },
         { q:'Is my data private and secure?',  a:"TKHO is still configuring its production privacy and account systems. Do not enter sensitive clinical information into this early-stage prototype; the final data practices will be documented before clinical workflows are enabled." },
       ]
     },
@@ -238,11 +238,19 @@ function doLogin() {
   const email = $('login-email').value.trim();
   const pass  = $('login-pass').value.trim();
   if (!email || !pass) { showToast('danger', '⚠️ Please enter your email and password.'); return; }
+  const stored = readStoredAccount();
+  const isDemo = email.toLowerCase() === 'user@test.com' && pass === 'pass123';
+  if (!isDemo && (!stored || stored.email.toLowerCase() !== email.toLowerCase() || stored.password !== pass)) {
+    showToast('danger', '⚠️ Invalid credentials. Use the demo account or create an account first.');
+    return;
+  }
   STATE.currentUser = {
-    name:    'Arjun Mehta',
+    name:    isDemo ? 'Arjun Mehta' : stored.name,
+    email,
     role:    'user',
-    initial:  'A',
+    initial:  (isDemo ? 'A' : stored.initial),
   };
+  persistSession();
   applyLoggedIn();
   closeModal('auth-modal');
   showToast('success', `✅ Welcome back, ${STATE.currentUser.name.split(' ')[0]}!`);
@@ -253,12 +261,17 @@ function doSignup() {
   const fname = $('su-fname').value.trim();
   const lname = $('su-lname').value.trim();
   const email = $('su-email').value.trim();
-  if (!fname || !lname || !email) { showToast('danger', '⚠️ Please fill in all required fields.'); return; }
+  const pass = $('su-pass').value.trim();
+  if (!fname || !lname || !email || !pass) { showToast('danger', '⚠️ Please fill in all required fields.'); return; }
   STATE.currentUser = {
     name:    `${fname} ${lname}`,
+    email,
+    password: pass,
     role:    'user',
     initial: fname[0].toUpperCase(),
   };
+  localStorage.setItem('tkho-account', JSON.stringify(STATE.currentUser));
+  persistSession();
   applyLoggedIn();
   closeModal('auth-modal');
   showToast('success', `✅ Welcome to TKHO, ${fname}! Your wellness journey begins now. 🌟`);
@@ -282,8 +295,49 @@ function applyLoggedIn() {
   $('mobile-nav-dashboard').style.display = '';
 }
 
+function readStoredAccount() {
+  try { return JSON.parse(localStorage.getItem('tkho-account') || 'null'); } catch (error) { return null; }
+}
+
+function persistSession() {
+  try { localStorage.setItem('tkho-session', JSON.stringify(STATE.currentUser)); } catch (error) {}
+  if (STATE.currentUser && STATE.currentUser.email) {
+    fetch('/api/profile', {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ name: STATE.currentUser.name })
+    }).catch(() => {});
+  }
+}
+
+function restoreSession() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('tkho-session') || 'null');
+    if (saved && saved.role === 'user' && saved.name) {
+      STATE.currentUser = saved;
+      applyLoggedIn();
+    }
+  } catch (error) {}
+  fetch('/.auth/me').then(response => response.ok ? response.json() : null).then(auth => {
+    const principal = auth && auth.clientPrincipal;
+    if (!principal) return;
+    const name = principal.userDetails || principal.claims?.find(c => c.typ === 'name')?.val || 'TKHO member';
+    STATE.currentUser = {
+      name, email: principal.userDetails || '', role: 'user',
+      initial: name.trim().charAt(0).toUpperCase() || 'T', provider: 'azure'
+    };
+    persistSession();
+    applyLoggedIn();
+  }).catch(() => {});
+}
+
+function startAzureLogin() {
+  window.location.href = '/.auth/login/aad?post_login_redirect_uri=/';
+}
+
 function logout() {
   STATE.currentUser = null;
+  try { localStorage.removeItem('tkho-session'); } catch (error) {}
   $('nav-auth-btns').style.display = 'flex';
   document.querySelectorAll('.btn-therapist').forEach(button => {
     button.style.display = '';
@@ -509,7 +563,7 @@ function openArticle(idx) {
     <p>${b.summary}</p>
     <p>Mental health is not a luxury — it is a fundamental pillar of human flourishing. Scientific research over the past three decades has transformed our understanding of how emotional wellbeing shapes everything from immune function to creative capacity, from relationship quality to professional performance across every domain of life.</p>
     <p>The evidence points to a compelling conclusion: investing in your psychological health is one of the highest-leverage actions you can take. Whether through professional therapy, daily mindfulness practice, social connection, or simply tracking your mood — every intentional act of self-care compounds into remarkable resilience and emotional intelligence over time.</p>
-    <p>At TKHO Wellness, we are committed to making this journey accessible to every person. Our platform combines the warmth of human therapeutic connection with the accessibility of digital tools — meeting you wherever you are, at any hour of the day or night, with zero judgment.</p>
+    <p>At TKHO, we are building a clearer path from self-reflection to human support. Our platform combines therapist discovery and booking with thoughtful AI guidance, so people can choose the kind of help that fits their next step.</p>
     <p>We hope this article has offered both insight and encouragement. Your mental health matters immensely — and you do not have to navigate any of it alone. Our community, our therapists, and your AI companion are here whenever you reach out.</p>
   `;
   $('article-modal').classList.remove('hidden');
@@ -852,7 +906,7 @@ const BOT_REPLIES = {
   'anxious':   "I hear you — anxiety is really tough. Try our Mindful Breathing tool on the homepage for immediate relief. Box breathing calms your nervous system in 2 minutes. Would you like me to connect you with one of our anxiety therapists? 💙",
   'depress':   "Thank you for sharing that with me. Depression is real and very treatable. Our therapists specialise in compassionate, evidence-based support. You are absolutely not alone in this. 💙",
   'therapist': "You can browse the professionals currently listed on TKHO and review their areas of focus. Please confirm credentials, availability, and suitability directly before beginning care.",
-  'tkho':      "TKHO stands for The Key Happiness Outlet! We're a telehealth platform connecting people with mental health professionals through secure video sessions, plus free AI wellness tools to support your daily journey. 🌟",
+  'tkho':      "TKHO stands for The Key of Happiness & Openness. We connect people with therapist support and thoughtful AI tools for reflection, preparation, and everyday wellbeing. 🌟",
   'price':     "Therapy sessions start at ₹900/hr. Our AI chatbot, mood tracker, and daily mindfulness tools are completely free. Students may qualify for subsidised rates through our compassion fund. 💰",
   'crisis':    "If you are in immediate danger, please call emergency services (112) or a crisis helpline right now. iCall: 9152987821 · Vandrevala Foundation: 1860-2662-345. You matter deeply. 🚨",
   'sleep':     "Sleep and mental health are deeply connected. Poor sleep can affect mood and stress. Try the Meditation Timer with the 'Sleep' preset as a gentle wind-down exercise; results vary from person to person. 🌙",
@@ -988,6 +1042,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* 1. Apply saved theme from localStorage */
   initTheme();
+  restoreSession();
 
   /* 2. Start on home page */
   navigate('home');
@@ -1018,7 +1073,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* 9. Welcome toast */
   setTimeout(() => {
-    showToast('info', '👋 Welcome to TKHO Wellness! Toggle ☀️/🌙 in the header to switch themes.');
+    showToast('info', '👋 Welcome to TKHO! Toggle ☀️/🌙 in the header to switch themes.');
   }, 1800);
 
   /* 10. Nav scroll shadow on initial load */
