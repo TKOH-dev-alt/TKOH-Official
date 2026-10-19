@@ -6,10 +6,16 @@ function getAuthenticatedUser(request) {
 
   try {
     const principal = JSON.parse(Buffer.from(encoded, 'base64').toString('utf8'));
-    const userId = principal.userId || principal.claims?.find(c => c.typ === 'http://schemas.microsoft.com/identity/claims/objectidentifier')?.val;
-    const name = principal.userDetails || principal.claims?.find(c => c.typ === 'name')?.val || '';
+    const claims = principal.claims || [];
+    const claim = (...types) => claims.find(c => types.includes(c.typ))?.val || '';
+    const userId = principal.userId || claim(
+      'http://schemas.microsoft.com/identity/claims/objectidentifier',
+      'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+    );
+    const name = principal.userDetails || claim('name', 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name') || '';
+    const email = claim('emails', 'email', 'preferred_username', 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress') || principal.userDetails || '';
     if (!userId) return null;
-    return { id: userId, name, roles: principal.userRoles || [] };
+    return { id: userId, name, email, roles: principal.userRoles || [] };
   } catch {
     return null;
   }

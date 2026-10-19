@@ -1,6 +1,6 @@
-# TKHO Wellness
+# TKHO — The Key of Happiness & Openness
 
-TKHO Wellness is a static mental wellness website with patient tools, therapist discovery, and a separate therapist dashboard.
+TKHO is a therapist discovery and booking product with an AI companion and a separate therapist dashboard.
 
 ## Run locally
 
@@ -31,6 +31,7 @@ The repository now includes an Azure Functions API under `api/` and a `staticweb
 - `GET/POST /api/moods` — authenticated mood entries
 - `GET/POST /api/bookings` — authenticated booking requests
 - `GET /api/therapists` — approved therapist directory
+- `POST /api/therapist-applications` — therapist application metadata and review status
 
 The API reads the authenticated Static Web Apps `x-ms-client-principal` header and never accepts a user ID from the browser. It stores records in Azure Cosmos DB using managed application configuration values.
 
@@ -38,8 +39,8 @@ The API reads the authenticated Static Web Apps `x-ms-client-principal` header a
 
 1. Create an Azure Cosmos DB account using a low-cost/serverless option.
 2. Create these Static Web App application settings: `COSMOS_ENDPOINT`, `COSMOS_KEY`, `COSMOS_DATABASE` (for example `tkho`), and `COSMOS_CONTAINER` (for example `app`).
-3. Configure a Microsoft Entra provider for Static Web Apps and keep patient API routes protected by `staticwebapp.config.json`.
-4. Replace the frontend demo login and signup handlers with redirects to the configured identity provider.
-5. Create therapist records with `approved: true` only after an administrator verifies credentials.
+3. Configure Microsoft Entra External ID (customer/consumer tenant) as the Static Web Apps authentication provider. The public app uses `/.auth/login/aad` and `/.auth/me`; do not use browser-side passwords for real accounts.
+4. Add the Static Web App authentication callback URL shown by Azure to the Entra application registration, then test sign-in and sign-out on the deployed custom domain.
+5. Create therapist records with `approved: true` only after an administrator verifies credentials and handles the application review.
 
-Do not place Cosmos keys or other secrets in frontend JavaScript, GitHub source files, or `local.settings.json`. Use Azure application settings or Key Vault references. The current login and sign-up screens remain frontend demo behavior until the identity provider is configured.
+Do not place Cosmos keys or other secrets in frontend JavaScript, GitHub source files, or `local.settings.json`. Use Azure application settings or Key Vault references. The demo patient account remains only for preview; production signup/login is delegated to Azure and no user password is stored by TKHO.

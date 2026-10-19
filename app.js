@@ -70,6 +70,8 @@ const DATA = {
 const STATE = {
   currentPage:     'home',
   currentUser:     null,
+  bookings:        [],
+  moods:           [],
   chatOpen:        false,
   breathRunning:   false,
   breathSeconds:   60,
@@ -238,17 +240,17 @@ function doLogin() {
   const email = $('login-email').value.trim();
   const pass  = $('login-pass').value.trim();
   if (!email || !pass) { showToast('danger', '⚠️ Please enter your email and password.'); return; }
-  const stored = readStoredAccount();
   const isDemo = email.toLowerCase() === 'user@test.com' && pass === 'pass123';
-  if (!isDemo && (!stored || stored.email.toLowerCase() !== email.toLowerCase() || stored.password !== pass)) {
-    showToast('danger', '⚠️ Invalid credentials. Use the demo account or create an account first.');
+  if (!isDemo) {
+    showToast('info', 'Use “Continue with Microsoft” for your TKHO account. The demo credentials are available for preview only.');
     return;
   }
   STATE.currentUser = {
-    name:    isDemo ? 'Arjun Mehta' : stored.name,
+    name:    'Arjun Mehta',
     email,
     role:    'user',
-    initial:  (isDemo ? 'A' : stored.initial),
+    initial:  'A',
+    provider: 'demo'
   };
   persistSession();
   applyLoggedIn();
@@ -258,24 +260,7 @@ function doLogin() {
 }
 
 function doSignup() {
-  const fname = $('su-fname').value.trim();
-  const lname = $('su-lname').value.trim();
-  const email = $('su-email').value.trim();
-  const pass = $('su-pass').value.trim();
-  if (!fname || !lname || !email || !pass) { showToast('danger', '⚠️ Please fill in all required fields.'); return; }
-  STATE.currentUser = {
-    name:    `${fname} ${lname}`,
-    email,
-    password: pass,
-    role:    'user',
-    initial: fname[0].toUpperCase(),
-  };
-  localStorage.setItem('tkho-account', JSON.stringify(STATE.currentUser));
-  persistSession();
-  applyLoggedIn();
-  closeModal('auth-modal');
-  showToast('success', `✅ Welcome to TKHO, ${fname}! Your wellness journey begins now. 🌟`);
-  navigate('dashboard');
+  startAzureLogin();
 }
 
 function applyLoggedIn() {
@@ -295,25 +280,15 @@ function applyLoggedIn() {
   $('mobile-nav-dashboard').style.display = '';
 }
 
-function readStoredAccount() {
-  try { return JSON.parse(localStorage.getItem('tkho-account') || 'null'); } catch (error) { return null; }
-}
-
 function persistSession() {
-  try { localStorage.setItem('tkho-session', JSON.stringify(STATE.currentUser)); } catch (error) {}
-  if (STATE.currentUser && STATE.currentUser.email) {
-    fetch('/api/profile', {
-      method: 'PUT',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ name: STATE.currentUser.name })
-    }).catch(() => {});
-  }
+  if (!STATE.currentUser || STATE.currentUser.provider !== 'demo') return;
+  try { localStorage.setItem('tkho-demo-session', JSON.stringify(STATE.currentUser)); } catch (error) {}
 }
 
 function restoreSession() {
   try {
-    const saved = JSON.parse(localStorage.getItem('tkho-session') || 'null');
-    if (saved && saved.role === 'user' && saved.name) {
+    const saved = JSON.parse(localStorage.getItem('tkho-demo-session') || 'null');
+    if (saved && saved.role === 'user' && saved.provider === 'demo' && saved.name) {
       STATE.currentUser = saved;
       applyLoggedIn();
     }
@@ -321,14 +296,29 @@ function restoreSession() {
   fetch('/.auth/me').then(response => response.ok ? response.json() : null).then(auth => {
     const principal = auth && auth.clientPrincipal;
     if (!principal) return;
-    const name = principal.userDetails || principal.claims?.find(c => c.typ === 'name')?.val || 'TKHO member';
-    STATE.currentUser = {
-      name, email: principal.userDetails || '', role: 'user',
-      initial: name.trim().charAt(0).toUpperCase() || 'T', provider: 'azure'
-    };
-    persistSession();
-    applyLoggedIn();
+    return hydrateAuthenticatedUser(principal);
   }).catch(() => {});
+}
+
+async function hydrateAuthenticatedUser(principal) {
+  const fallbackName = principal.userDetails || principal.claims?.find(c => c.typ === 'name')?.val || 'TKHO member';
+  const fallbackEmail = principal.claims?.find(c => /email|preferred_username/i.test(c.typ))?.val || principal.userDetails || '';
+  const profileResponse = await fetch('/api/profile');
+  const profile = profileResponse.ok ? await profileResponse.json() : {};
+  STATE.currentUser = {
+    name: profile.name || fallbackName,
+    email: profile.email || fallbackEmail,
+    role: profile.role || 'patient',
+    initial: (profile.name || fallbackName).trim().charAt(0).toUpperCase() || 'T',
+    provider: 'azure',
+    id: profile.authProviderId
+  };
+  await Promise.all([
+    fetch('/api/bookings').then(r => r.ok ? r.json() : []).then(data => { STATE.bookings = Array.isArray(data) ? data : []; }),
+    fetch('/api/moods').then(r => r.ok ? r.json() : []).then(data => { STATE.moods = Array.isArray(data) ? data : []; })
+  ]);
+  applyLoggedIn();
+  renderDashboard();
 }
 
 function startAzureLogin() {
@@ -337,7 +327,11 @@ function startAzureLogin() {
 
 function logout() {
   STATE.currentUser = null;
-  try { localStorage.removeItem('tkho-session'); } catch (error) {}
+  try { localStorage.removeItem('tkho-demo-session'); } catch (error) {}
+  if (STATE.currentUser && STATE.currentUser.provider === 'azure') {
+    window.location.href = '/.auth/logout?post_logout_redirect_uri=/';
+    return;
+  }
   $('nav-auth-btns').style.display = 'flex';
   document.querySelectorAll('.btn-therapist').forEach(button => {
     button.style.display = '';
@@ -361,6 +355,13 @@ function selectMood(btn, mood) {
   if (conf) {
     conf.textContent = `✓ Mood "${mood}" logged at ${ts}`;
     conf.classList.add('show');
+  }
+  if (STATE.currentUser?.provider === 'azure') {
+    fetch('/api/moods', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ mood })
+    }).catch(() => {});
   }
   showToast('success', `✅ Mood "<strong>${mood}</strong>" tracked at ${ts}.`);
 }
@@ -496,6 +497,7 @@ function openBooking(therapistId) {
   const t = DATA.therapists.find(x => x.id === therapistId);
   if (!t) return;
 
+  $('booking-modal').dataset.therapistId = therapistId;
   $('bk-av').textContent    = t.emoji;
   $('bk-name').textContent  = t.name;
   $('bk-meta').textContent  = `${t.title} · ⭐ ${t.rating}`;
@@ -527,8 +529,31 @@ function selectTimeSlot(btn) {
 }
 
 function confirmBooking() {
+  if (!STATE.currentUser) {
+    closeModal('booking-modal');
+    openAuth('login');
+    showToast('info', 'Sign in with Microsoft to request a therapist session.');
+    return;
+  }
+  const therapistId = $('booking-modal').dataset.therapistId || 'directory-selection';
+  const startTime = new Date().toISOString();
+  if (STATE.currentUser.provider === 'azure') {
+    fetch('/api/bookings', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ therapistId, startTime })
+    }).then(response => {
+      if (!response.ok) throw new Error('Booking request failed');
+      return response.json();
+    }).then(booking => {
+      STATE.bookings.unshift(booking);
+      renderDashboard();
+    }).catch(() => showToast('danger', 'We could not save that booking request. Please try again.'));
+  }
   closeModal('booking-modal');
-  showToast('success', '✅ Session booked successfully! Check your dashboard for the video link.');
+  showToast('success', STATE.currentUser.provider === 'azure'
+    ? '✅ Session request saved to your TKHO account.'
+    : '✅ Demo session booked. Sign in with Microsoft to save real bookings.');
 }
 
 /* ══════════════════════════════════════════════════
@@ -699,6 +724,10 @@ function renderDashboard() {
 /* ── User Dashboard Views ── */
 function buildUserDash() {
   const first = STATE.currentUser.name.split(' ')[0];
+  const upcoming = STATE.bookings.filter(b => b.status !== 'completed').slice(0, 3);
+  const next = upcoming[0];
+  const nextDate = next ? new Date(next.startTime).toLocaleString([], { weekday: 'short', month: 'short', day: 'numeric' }) : 'No session scheduled';
+  const moodCount = STATE.moods.length;
   return `
     <!-- OVERVIEW -->
     <div class="dash-view active" id="dv-overview">
@@ -709,41 +738,41 @@ function buildUserDash() {
       <div class="dash-stats-row">
         <div class="dash-stat-box">
           <div class="dsb-label">Next Session</div>
-          <div class="dsb-val" style="font-size:15px;margin-top:4px">Fri, Jun 6</div>
-          <div class="dsb-sub">Dr. Ananya · 3:00 PM</div>
+          <div class="dsb-val" style="font-size:15px;margin-top:4px">${nextDate}</div>
+          <div class="dsb-sub">${next ? next.status : 'Book a therapist when you are ready'}</div>
         </div>
         <div class="dash-stat-box">
           <div class="dsb-label">Sessions Done</div>
-          <div class="dsb-val">7</div>
-          <div class="dsb-sub">This month</div>
+          <div class="dsb-val">${STATE.bookings.length}</div>
+          <div class="dsb-sub">Saved sessions</div>
         </div>
         <div class="dash-stat-box">
           <div class="dsb-label">Mood Score</div>
-          <div class="dsb-val" style="color:var(--accent)">7.4/10</div>
-          <div class="dsb-sub">Weekly average</div>
+          <div class="dsb-val" style="color:var(--accent)">${moodCount}</div>
+          <div class="dsb-sub">Mood check-ins</div>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
         <div style="padding:16px;background:var(--bg-muted);border:1px solid var(--border);border-radius:12px">
           <div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:10px">📅 UPCOMING</div>
           <div class="booking-card">
-            <div class="booking-av">👩‍⚕️</div>
+            <div class="booking-av">🩺</div>
             <div class="booking-info">
-              <div class="booking-name">Dr. Ananya Gupta</div>
-              <div class="booking-time">Fri Jun 6 · 3:00 PM</div>
+              <div class="booking-name">${next ? next.therapistId : 'No upcoming therapist session'}</div>
+              <div class="booking-time">${next ? nextDate : 'Browse therapists to get started'}</div>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="navigate('video')">Join</button>
+            ${next ? '<button class="btn btn-primary btn-sm" onclick="navigate(&quot;video&quot;)">Join</button>' : ''}
           </div>
         </div>
         <div style="padding:16px;background:var(--bg-muted);border:1px solid var(--border);border-radius:12px">
           <div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:10px">📈 MOOD TREND</div>
-          ${[8,6,7,5,8,7,7].map((v,i)=>`
+          ${(STATE.moods.length ? STATE.moods.slice(0, 7).reverse().map(m => Math.min(10, Math.max(1, Number(m.score || 5)))) : [0,0,0,0,0,0,0]).map((v,i)=>`
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
               <span style="font-size:11px;color:var(--text-3);width:14px">${['M','T','W','T','F','S','S'][i]}</span>
               <div style="flex:1;height:7px;border-radius:4px;background:var(--border)">
                 <div style="height:100%;border-radius:4px;width:${v*10}%;background:var(--accent)"></div>
               </div>
-              <span style="font-size:11px;color:var(--text-3);min-width:10px">${v}</span>
+              <span style="font-size:11px;color:var(--text-3);min-width:10px">${v || '—'}</span>
             </div>`).join('')}
         </div>
       </div>
@@ -753,18 +782,15 @@ function buildUserDash() {
     <div class="dash-view" id="dv-bookings">
       <div class="disclaimer-box">⚡ <strong>Reminder:</strong> Sessions start 5 min before scheduled time. Check your email for video call links.</div>
       <h3 style="font-size:17px;font-weight:800;margin-bottom:16px">Upcoming Sessions</h3>
-      ${[
-        {e:'👩‍⚕️',n:'Dr. Ananya Gupta',t:'Fri Jun 6 · 3:00 PM'},
-        {e:'🧑‍⚕️',n:'Dr. Rohan Verma', t:'Mon Jun 9 · 11:00 AM'},
-      ].map(b=>`
+      ${upcoming.length ? upcoming.map(b=>`
         <div class="booking-card">
-          <div class="booking-av">${b.e}</div>
+          <div class="booking-av">🩺</div>
           <div class="booking-info">
-            <div class="booking-name">${b.n}</div>
-            <div class="booking-time">${b.t}</div>
+            <div class="booking-name">${b.therapistId}</div>
+            <div class="booking-time">${new Date(b.startTime).toLocaleString()}</div>
           </div>
           <button class="btn btn-outline btn-sm" onclick="navigate('video')">Join Video Call</button>
-        </div>`).join('')}
+        </div>`).join('') : '<div class="booking-card">No saved bookings yet. Browse therapists to request your first session.</div>'}
     </div>
 
     <!-- HISTORY -->
