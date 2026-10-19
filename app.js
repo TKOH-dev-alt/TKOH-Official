@@ -32,7 +32,7 @@ const DATA = {
       items: [
         { q:'What is TKHO Wellness?',          a:'TKHO (The Key Happiness Outlet) is an early-stage mental wellness platform with guided exercises, mood reflection, educational content, and therapist discovery. Digital tools are not a replacement for qualified clinical care.' },
         { q:'Is TKHO Wellness free to use?',   a:'TKHO operates on a freemium model. The AI chatbot, mood tracker, and daily mindfulness tools are completely free. Human therapy sessions start at ₹900/hr. Students and low-income users may qualify for subsidised rates through our compassion fund.' },
-        { q:'Is my data private and secure?',  a:"Absolutely. All sessions are end-to-end encrypted using AES-256. Your clinical data is never sold or shared with advertisers. You may request complete deletion of your account data at any time. We comply fully with India's DPDP Act 2023 and international GDPR standards." },
+        { q:'Is my data private and secure?',  a:"TKHO is still configuring its production privacy and account systems. Do not enter sensitive clinical information into this early-stage prototype; the final data practices will be documented before clinical workflows are enabled." },
       ]
     },
     {
@@ -871,10 +871,6 @@ function toggleChat() {
   STATE.chatOpen = !STATE.chatOpen;
   const panel = $('chat-panel');
   if (panel) panel.classList.toggle('hidden', !STATE.chatOpen);
-  if (STATE.chatOpen) {
-    const badge = qs('.chat-unread');
-    if (badge) badge.style.display = 'none';
-  }
 }
 
 function addChatMessage(text, isUser) {

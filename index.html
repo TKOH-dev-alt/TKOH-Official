@@ -165,18 +165,15 @@
               <div class="chat-demo-bot-av">🤖</div>
               <div>
                 <div class="chat-demo-bot-name">TKHO Wellness Bot</div>
-                <div class="chat-demo-status"><div class="online-dot"></div>Always available</div>
+                <div class="chat-demo-status"><div class="online-dot"></div>Wellness guidance</div>
               </div>
-              <span class="badge badge-blue" style="margin-left:auto">24/7</span>
+              <span class="badge badge-blue" style="margin-left:auto">GUIDE</span>
             </div>
 
-            <!-- Happiness Index -->
+            <!-- Product note -->
             <div style="padding:14px;background:var(--bg-muted);border:1px solid var(--border);border-radius:12px">
-              <div style="font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">🌍 Community Happiness Index</div>
-              <div style="height:8px;background:var(--border);border-radius:4px;margin-bottom:6px;overflow:hidden">
-                <div id="hero-progress-fill" style="height:100%;border-radius:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:width 1.5s ease"></div>
-              </div>
-              <div style="font-size:12px;color:var(--text-3)">78% — Flourishing Together</div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">🌱 A gentle place to start</div>
+              <div style="font-size:12px;color:var(--text-3)">Try a breathing exercise, write a reflection, or learn more about finding professional support.</div>
             </div>
 
             <!-- Chat bubbles -->
@@ -255,12 +252,12 @@
   </section>
 
 
-  <!-- ── SOCIAL PROOF (Wellzy pattern: stats + testimonials) ── -->
+  <!-- ── GETTING STARTED ── -->
   <section id="social-proof" class="section">
     <div class="container">
       <div class="text-center" style="margin-bottom:40px">
-        <div class="section-label">❤️ Community</div>
-        <h2 class="section-title">What People Are Saying</h2>
+        <div class="section-label">❤️ Getting started</div>
+        <h2 class="section-title">A thoughtful first step</h2>
       </div>
       <div class="trust-note">
         <strong>Built for a thoughtful first step.</strong>
@@ -537,18 +534,18 @@
       <!-- Pane 0 -->
       <div id="policy-pane-0" class="policy-card">
         <h3>Data Collection &amp; Privacy</h3>
-        <p>We collect only the minimum data required to provide mental healthcare services. Personal identifiers, session content, and clinical notes are never shared with third parties without explicit consent. We comply with India's DPDP Act 2023 and international GDPR standards.</p>
+        <p>TKHO is still configuring its production account, consent, and data-governance systems. Until those systems are formally documented, use the public wellness tools without entering sensitive clinical information.</p>
         <h3>End-to-End Encryption</h3>
-        <p>All video sessions use AES-256 encryption with ephemeral session keys. Your conversations, mood logs, and health data are encrypted at rest and in transit using industry-leading protocols. Not even TKHO staff can access your session content.</p>
+        <p>Do not treat this early-stage website as a secure clinical record or emergency channel. Security and privacy controls will be documented before sensitive care workflows are enabled.</p>
         <h3>Data Retention</h3>
         <p>Clinical session data will only be collected after the relevant account, consent, retention, and support systems are fully configured. Until then, do not submit sensitive clinical information through this early-stage website.</p>
       </div>
       <!-- Pane 1 -->
       <div id="policy-pane-1" class="policy-card" style="display:none">
         <h3>Scope of Services</h3>
-        <p>TKHO Wellness connects users with supervised psychiatry students under licensed clinical supervision. Sessions are supportive and therapeutic in nature and do not replace emergency psychiatric care or crisis intervention services from licensed hospitals.</p>
+        <p>TKHO currently provides general wellness tools and a directory prototype. Any professional relationship, credentials, availability, and scope of care must be confirmed before using a listed service.</p>
         <h3>Therapist Obligations</h3>
-        <p>All practitioners hold valid credentials, maintain professional liability insurance, and undergo regular clinical supervision. They are bound by applicable professional ethics codes, confidentiality obligations, and TKHO's clinical governance framework.</p>
+        <p>Practitioner verification and clinical governance workflows are not yet represented as complete on this public prototype. Do not rely on this page alone to assess a provider.</p>
         <h3>User Responsibilities</h3>
         <p>Users agree to engage in good faith, provide accurate health information relevant to their care, and respect the professional boundaries of their therapist. Misuse or abusive behaviour toward practitioners may result in immediate account suspension.</p>
       </div>
@@ -644,7 +641,7 @@
             <div class="vp-label">Session Details</div>
             <div class="vp-detail-row"><span class="vp-detail-label">Therapist</span><span class="vp-detail-val">Dr. Ananya Gupta</span></div>
             <div class="vp-detail-row"><span class="vp-detail-label">Specialty</span><span class="vp-detail-val">Anxiety &amp; Stress</span></div>
-            <div class="vp-detail-row"><span class="vp-detail-label">Encryption</span><span class="vp-detail-val" style="color:var(--accent2)">🔐 AES-256</span></div>
+            <div class="vp-detail-row"><span class="vp-detail-label">Mode</span><span class="vp-detail-val">Prototype preview</span></div>
             <div class="vp-detail-row"><span class="vp-detail-label">Status</span><span class="vp-detail-val" style="color:var(--success)">● Connecting...</span></div>
           </div>
           <div>
@@ -705,13 +702,7 @@
         <a class="footer-link" href="#" onclick="navigate('policy');return false">Privacy Policy</a>
         <a class="footer-link" href="#" onclick="navigate('policy');return false">Terms of Service</a>
         <a class="footer-link" href="#" onclick="switchPolicy(2,this);navigate('policy');return false">Crisis Resources</a>
-        <a class="footer-link" href="#" onclick="showToast('info','💌 Support team responds within 24 hours.');return false">Contact Support</a>
-      </div>
-
-      <!-- Contact -->
-      <div class="footer-col">
-        <h4>Contact Us</h4>
-        <div class="footer-contact-row"><span>Support channels coming soon</span></div>
+        <span class="footer-link footer-link-muted">Support channels coming soon</span>
       </div>
 
     </div>
@@ -835,7 +826,6 @@
 ═══════════════════════════════════════════════════════════ -->
 <button id="chat-toggle-btn" onclick="toggleChat()" aria-label="Open wellness chatbot">
   💬
-  <div class="chat-unread">3</div>
 </button>
 
 <div id="chat-panel" class="hidden">
