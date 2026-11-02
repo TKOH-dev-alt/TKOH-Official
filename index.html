@@ -104,13 +104,10 @@
         <div class="theme-toggle-knob"></div>
       </button>
 
-      <div class="nav-token-pill">🌱 Free Plan</div>
-
       <!-- Auth Buttons (logged out) -->
       <div id="nav-auth-btns" style="display:flex;gap:8px">
-        <button class="btn btn-therapist btn-sm" onclick="openTherapistPortal()">🩺 Join as a Therapist</button>
         <button class="btn btn-outline btn-sm" onclick="openAuth('login')">Log In</button>
-        <button class="btn btn-primary btn-sm" onclick="openAuth('signup')">Start Free →</button>
+        <button class="btn btn-primary btn-sm" onclick="openAuth('login')">Try the Demo →</button>
       </div>
 
       <!-- User Pill (logged in) -->
@@ -137,9 +134,8 @@
     <a href="#" id="mobile-nav-dashboard" style="display:none" onclick="mobileNav('dashboard')">Dashboard</a>
     <a href="#" onclick="mobileNav('policy')">Policy</a>
     <div class="mobile-auth">
-      <button class="btn btn-therapist" onclick="openTherapistPortal();toggleMobile()">🩺 Join as a Therapist</button>
       <button class="btn btn-outline" style="flex:1" onclick="openAuth('login');toggleMobile()">Log In</button>
-      <button class="btn btn-primary" style="flex:1" onclick="openAuth('signup');toggleMobile()">Start Free →</button>
+      <button class="btn btn-primary" style="flex:1" onclick="openAuth('login');toggleMobile()">Try the Demo →</button>
     </div>
   </div>
 </nav>
@@ -166,7 +162,7 @@
           </h1>
           <p class="hero-sub">TKHO turns everyday reflection into clear next steps with an AI wellness companion, guided practices, and human support when you choose it.</p>
           <div class="hero-ctas">
-            <button class="btn btn-primary btn-lg" onclick="openAuth('signup')">Start Free Today →</button>
+            <button class="btn btn-primary btn-lg" onclick="openAuth('login')">Try the Demo Today →</button>
             <button class="btn btn-outline btn-lg" onclick="navigate('therapists')">Browse Therapists</button>
           </div>
           <span class="scroll-hint" onclick="document.getElementById('mindfulness-anchor').scrollIntoView({behavior:'smooth'})">
@@ -282,10 +278,10 @@
       </div>
       <div class="trust-note">
         <strong>Built for a thoughtful first step.</strong>
-        <span>TKHO is an early-stage wellness product. Explore the free tools, learn at your own pace, and seek qualified professional or emergency support when you need care beyond self-guided resources.</span>
+        <span>TKHO is an early-stage wellness product. Explore the available tools, learn at your own pace, and seek qualified professional or emergency support when you need care beyond self-guided resources.</span>
       </div>
       <div class="cta-strip">
-        <button class="btn btn-primary btn-lg" onclick="openAuth('signup')">Start Chat Free →</button>
+        <button class="btn btn-primary btn-lg" onclick="openAuth('login')">Open the Demo →</button>
         <button class="btn btn-dark btn-lg" onclick="navigate('therapists')">📱 Book a Therapist</button>
       </div>
     </div>
@@ -604,7 +600,7 @@
           <p>Please log in to access your personal wellness dashboard and therapy sessions.</p>
           <div class="dash-guest-btns">
             <button class="btn btn-primary btn-lg" onclick="openAuth('login')">Login to Dashboard</button>
-            <button class="btn btn-outline btn-lg" onclick="openAuth('signup')">Create Free Account</button>
+            <button class="btn btn-outline btn-lg" onclick="openAuth('login')">Open the Demo</button>
           </div>
         </div>
       </div>
@@ -737,7 +733,7 @@
 
 
 <!-- ═══════════════════════════════════════════════════════════
-     MODAL: AUTHENTICATION (Login / Sign Up)
+     MODAL: AUTHENTICATION (Demo Login)
 ═══════════════════════════════════════════════════════════ -->
 <div class="modal-backdrop hidden" id="auth-modal">
   <div class="modal-box">
@@ -747,8 +743,7 @@
       <div style="font-size:14px;color:var(--text-3);margin-bottom:16px">Your journey to inner peace starts here.</div>
     </div>
     <div class="modal-tabs-bar">
-      <button class="m-tab active" id="auth-tab-login"  onclick="switchAuthTab('login')">Log In</button>
-      <button class="m-tab"        id="auth-tab-signup" onclick="switchAuthTab('signup')">Sign Up</button>
+      <button class="m-tab active" id="auth-tab-login">Log In</button>
     </div>
     <!-- LOGIN FORM -->
     <div class="modal-body" id="login-form-body">
@@ -766,22 +761,6 @@
       </div>
       <button class="btn btn-primary" style="width:100%;justify-content:center;padding:14px" onclick="doLogin()">
         Log In to TKHO →
-      </button>
-      <button class="therapist-auth-link" onclick="startAzureLogin()">
-        Continue with Microsoft →
-      </button>
-      <button class="therapist-auth-link" onclick="openTherapistPortal()">
-        🩺 Are you a therapist? Join the professional network →
-      </button>
-    </div>
-    <!-- SIGNUP FORM -->
-    <div class="modal-body" id="signup-form-body" style="display:none">
-      <p style="color:var(--text-2);line-height:1.6;margin-bottom:18px">Create your TKHO account with Microsoft. Your identity is handled by Azure and your profile, bookings, and check-ins are stored against your account.</p>
-      <button class="btn btn-primary" style="width:100%;justify-content:center;padding:14px" onclick="doSignup()">
-        Create Account with Microsoft →
-      </button>
-      <button class="therapist-auth-link" onclick="openTherapistPortal()">
-        🩺 Want to provide care? Join as a therapist →
       </button>
     </div>
   </div>

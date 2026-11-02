@@ -214,33 +214,6 @@ img { max-width:100%; display:block; }
 [data-theme="dark"] .btn-outline { border-color:rgba(91,74,232,.35); color:var(--text-1); }
 [data-theme="dark"] .btn-outline:hover { border-color:var(--accent2); color:var(--accent2); background:rgba(91,74,232,.12); }
 
-/* Therapist portal entry point */
-.btn-therapist {
-  background:linear-gradient(135deg,var(--gold),var(--gold-dark));
-  color:#fff;
-  border:1px solid rgba(200,150,42,.45);
-  box-shadow:0 4px 16px var(--gold-glow);
-}
-.btn-therapist:hover {
-  transform:translateY(-2px);
-  filter:brightness(1.06);
-  box-shadow:0 8px 24px var(--gold-glow);
-}
-.therapist-auth-link {
-  display:block;
-  width:100%;
-  margin-top:14px;
-  padding:0;
-  border:0;
-  background:none;
-  color:var(--accent-dark);
-  font:600 13px var(--font);
-  text-align:center;
-  cursor:pointer;
-}
-.therapist-auth-link:hover { color:var(--accent); text-decoration:underline; }
-[data-theme="dark"] .therapist-auth-link { color:var(--accent2); }
-
 /* Outline white (video room) */
 .btn-outline-white { background:transparent; color:#fff; border:2px solid rgba(255,255,255,.28); }
 .btn-outline-white:hover { background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.6); }
@@ -286,7 +259,7 @@ img { max-width:100%; display:block; }
 
 .nav-inner {
   display:flex; align-items:center; gap:8px;
-  padding:0 24px; height:72px; max-width:1340px; margin:0 auto;
+  padding:0 32px; height:72px; max-width:1440px; margin:0 auto;
 }
 
 /* ── Logo ── */
@@ -317,7 +290,7 @@ img { max-width:100%; display:block; }
 .logo-tag { font-size:10px; font-weight:500; color:var(--text-3); letter-spacing:.08em; text-transform:uppercase; }
 
 /* ── Nav links ── */
-.nav-links { display:flex; align-items:center; gap:2px; flex:1; list-style:none; }
+.nav-links { display:flex; align-items:center; justify-content:center; gap:4px; flex:1; list-style:none; }
 .nav-links a { display:block; padding:7px 13px; border-radius:8px; font-size:14px; font-weight:500; color:var(--text-2); transition:all var(--t); }
 .nav-links a:hover  { color:var(--accent);  background:var(--accent-glow); }
 .nav-links a.active { color:var(--accent);  font-weight:700; }
@@ -344,7 +317,8 @@ img { max-width:100%; display:block; }
 [data-theme="dark"] .dropdown-menu a:hover { background:rgba(91,74,232,.12); color:var(--accent2); }
 
 /* ── Nav right ── */
-.nav-right { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+.nav-right { display:flex; align-items:center; gap:12px; flex-shrink:0; }
+#nav-auth-btns { display:flex !important; align-items:center; gap:10px !important; }
 
 /* ── THEME TOGGLE ── */
 .theme-toggle {

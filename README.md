@@ -39,8 +39,7 @@ The API reads the authenticated Static Web Apps `x-ms-client-principal` header a
 
 1. Create an Azure Cosmos DB account using a low-cost/serverless option.
 2. Create these Static Web App application settings: `COSMOS_ENDPOINT`, `COSMOS_KEY`, `COSMOS_DATABASE` (for example `tkho`), and `COSMOS_CONTAINER` (for example `app`).
-3. Configure Microsoft Entra External ID (customer/consumer tenant) as the Static Web Apps authentication provider. The public app uses `/.auth/login/aad` and `/.auth/me`; do not use browser-side passwords for real accounts.
-4. Add the Static Web App authentication callback URL shown by Azure to the Entra application registration, then test sign-in and sign-out on the deployed custom domain.
-5. Create therapist records with `approved: true` only after an administrator verifies credentials and handles the application review.
+3. If production account authentication is re-enabled, configure an identity provider for the Static Web App and restore the corresponding frontend sign-in flow. The current public app intentionally uses only its local preview account and does not redirect visitors to an external identity provider.
+4. Create therapist records with `approved: true` only after an administrator verifies credentials and handles the application review.
 
-Do not place Cosmos keys or other secrets in frontend JavaScript, GitHub source files, or `local.settings.json`. Use Azure application settings or Key Vault references. The demo patient account remains only for preview; production signup/login is delegated to Azure and no user password is stored by TKHO.
+Do not place Cosmos keys or other secrets in frontend JavaScript, GitHub source files, or `local.settings.json`. Use Azure application settings or Key Vault references. The demo patient account remains preview-only; the current frontend does not provide production account signup/login.

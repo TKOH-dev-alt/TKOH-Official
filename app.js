@@ -31,7 +31,7 @@ const DATA = {
       label: 'GENERAL',
       items: [
         { q:'What is TKHO?',                   a:'TKHO — The Key of Happiness & Openness — is an early-stage therapist booking platform with thoughtful AI guidance, reflection tools, mood tracking, and breathing exercises. Digital tools are not a replacement for qualified clinical care.' },
-        { q:'Is TKHO free to use?',             a:'You can explore the AI companion, mood tracker, and guided practices while the therapist booking experience is being built. Session pricing and availability are shown by each provider.' },
+        { q:'What can I try in TKHO?',          a:'The preview includes the AI companion, mood tracker, guided practices, therapist directory, and demo booking flow. Session pricing and availability are shown by each provider.' },
         { q:'Is my data private and secure?',  a:"TKHO is still configuring its production privacy and account systems. Do not enter sensitive clinical information into this early-stage prototype; the final data practices will be documented before clinical workflows are enabled." },
       ]
     },
@@ -220,20 +220,14 @@ function openAuth(tab) {
   switchAuthTab(tab);
 }
 
-function openTherapistPortal() {
-  window.location.href = 'Dr. Dashboard/therapist-dashboard.html';
-}
-
 function closeModal(id) {
   const el = $(id);
   if (el) el.classList.add('hidden');
 }
 
 function switchAuthTab(tab) {
-  $('login-form-body').style.display  = tab === 'login'  ? 'block' : 'none';
-  $('signup-form-body').style.display = tab === 'signup' ? 'block' : 'none';
-  $('auth-tab-login').classList.toggle('active',  tab === 'login');
-  $('auth-tab-signup').classList.toggle('active', tab === 'signup');
+  $('login-form-body').style.display = 'block';
+  $('auth-tab-login').classList.add('active');
 }
 
 function doLogin() {
@@ -242,7 +236,7 @@ function doLogin() {
   if (!email || !pass) { showToast('danger', '⚠️ Please enter your email and password.'); return; }
   const isDemo = email.toLowerCase() === 'user@test.com' && pass === 'pass123';
   if (!isDemo) {
-    showToast('info', 'Use “Continue with Microsoft” for your TKHO account. The demo credentials are available for preview only.');
+    showToast('info', 'Use the preview credentials shown above to enter the demo.');
     return;
   }
   STATE.currentUser = {
@@ -259,16 +253,9 @@ function doLogin() {
   navigate('dashboard');
 }
 
-function doSignup() {
-  startAzureLogin();
-}
-
 function applyLoggedIn() {
   const u = STATE.currentUser;
   $('nav-auth-btns').style.display = 'none';
-  document.querySelectorAll('.btn-therapist').forEach(button => {
-    button.style.display = 'none';
-  });
   $('nav-user-pill').style.display = 'flex';
   $('nav-user-av').textContent     = u.initial;
   $('nav-user-av').style.background = u.role === 'therapist'
@@ -293,49 +280,12 @@ function restoreSession() {
       applyLoggedIn();
     }
   } catch (error) {}
-  fetch('/.auth/me').then(response => response.ok ? response.json() : null).then(auth => {
-    const principal = auth && auth.clientPrincipal;
-    if (!principal) return;
-    return hydrateAuthenticatedUser(principal);
-  }).catch(() => {});
-}
-
-async function hydrateAuthenticatedUser(principal) {
-  const fallbackName = principal.userDetails || principal.claims?.find(c => c.typ === 'name')?.val || 'TKHO member';
-  const fallbackEmail = principal.claims?.find(c => /email|preferred_username/i.test(c.typ))?.val || principal.userDetails || '';
-  const profileResponse = await fetch('/api/profile');
-  const profile = profileResponse.ok ? await profileResponse.json() : {};
-  STATE.currentUser = {
-    name: profile.name || fallbackName,
-    email: profile.email || fallbackEmail,
-    role: profile.role || 'patient',
-    initial: (profile.name || fallbackName).trim().charAt(0).toUpperCase() || 'T',
-    provider: 'azure',
-    id: profile.authProviderId
-  };
-  await Promise.all([
-    fetch('/api/bookings').then(r => r.ok ? r.json() : []).then(data => { STATE.bookings = Array.isArray(data) ? data : []; }),
-    fetch('/api/moods').then(r => r.ok ? r.json() : []).then(data => { STATE.moods = Array.isArray(data) ? data : []; })
-  ]);
-  applyLoggedIn();
-  renderDashboard();
-}
-
-function startAzureLogin() {
-  window.location.href = '/.auth/login/aad?post_login_redirect_uri=/';
 }
 
 function logout() {
   STATE.currentUser = null;
   try { localStorage.removeItem('tkho-demo-session'); } catch (error) {}
-  if (STATE.currentUser && STATE.currentUser.provider === 'azure') {
-    window.location.href = '/.auth/logout?post_logout_redirect_uri=/';
-    return;
-  }
   $('nav-auth-btns').style.display = 'flex';
-  document.querySelectorAll('.btn-therapist').forEach(button => {
-    button.style.display = '';
-  });
   $('nav-user-pill').style.display = 'none';
   $('nav-dashboard').style.display        = 'none';
   $('mobile-nav-dashboard').style.display = 'none';
@@ -355,13 +305,6 @@ function selectMood(btn, mood) {
   if (conf) {
     conf.textContent = `✓ Mood "${mood}" logged at ${ts}`;
     conf.classList.add('show');
-  }
-  if (STATE.currentUser?.provider === 'azure') {
-    fetch('/api/moods', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ mood })
-    }).catch(() => {});
   }
   showToast('success', `✅ Mood "<strong>${mood}</strong>" tracked at ${ts}.`);
 }
@@ -532,28 +475,15 @@ function confirmBooking() {
   if (!STATE.currentUser) {
     closeModal('booking-modal');
     openAuth('login');
-    showToast('info', 'Sign in with Microsoft to request a therapist session.');
+    showToast('info', 'Log in with the preview account to request a therapist session.');
     return;
   }
   const therapistId = $('booking-modal').dataset.therapistId || 'directory-selection';
   const startTime = new Date().toISOString();
-  if (STATE.currentUser.provider === 'azure') {
-    fetch('/api/bookings', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ therapistId, startTime })
-    }).then(response => {
-      if (!response.ok) throw new Error('Booking request failed');
-      return response.json();
-    }).then(booking => {
-      STATE.bookings.unshift(booking);
-      renderDashboard();
-    }).catch(() => showToast('danger', 'We could not save that booking request. Please try again.'));
-  }
+  STATE.bookings.unshift({ therapistId, startTime, status: 'requested' });
+  renderDashboard();
   closeModal('booking-modal');
-  showToast('success', STATE.currentUser.provider === 'azure'
-    ? '✅ Session request saved to your TKHO account.'
-    : '✅ Demo session booked. Sign in with Microsoft to save real bookings.');
+  showToast('success', '✅ Demo session booked.');
 }
 
 /* ══════════════════════════════════════════════════
@@ -933,7 +863,7 @@ const BOT_REPLIES = {
   'depress':   "Thank you for sharing that with me. Depression is real and very treatable. Our therapists specialise in compassionate, evidence-based support. You are absolutely not alone in this. 💙",
   'therapist': "You can browse the professionals currently listed on TKHO and review their areas of focus. Please confirm credentials, availability, and suitability directly before beginning care.",
   'tkho':      "TKHO stands for The Key of Happiness & Openness. We connect people with therapist support and thoughtful AI tools for reflection, preparation, and everyday wellbeing. 🌟",
-  'price':     "Therapy sessions start at ₹900/hr. Our AI chatbot, mood tracker, and daily mindfulness tools are completely free. Students may qualify for subsidised rates through our compassion fund. 💰",
+  'price':     "Therapy sessions start at ₹900/hr. Pricing and availability are shown by each provider. Students may qualify for subsidised rates through our compassion fund. 💰",
   'crisis':    "If you are in immediate danger, please call emergency services (112) or a crisis helpline right now. iCall: 9152987821 · Vandrevala Foundation: 1860-2662-345. You matter deeply. 🚨",
   'sleep':     "Sleep and mental health are deeply connected. Poor sleep can affect mood and stress. Try the Meditation Timer with the 'Sleep' preset as a gentle wind-down exercise; results vary from person to person. 🌙",
   'default':   "I'm here to support your wellness journey! Ask me about booking sessions, finding therapists, our tools, or just share what's on your mind. I'm always listening. 💙",
