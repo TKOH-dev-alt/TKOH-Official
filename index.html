@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TKHO | The Key of Happiness &amp; Openness</title>
   <meta name="description" content="TKHO — The Key of Happiness &amp; Openness — connects people with therapists and thoughtful AI support for reflection, booking, and everyday mental wellbeing.">
-  <meta name="keywords" content="mental wellness, therapist support, mindfulness, mood tracking, guided breathing, India">
+  <meta name="keywords" content="psychologist booking, online therapy India, AI emotional support, CBT reflection">
   <meta name="author" content="TKHO — The Key of Happiness &amp; Openness">
   <meta name="robots" content="index, follow">
   <meta name="google-site-verification" content="GNpfxUNj3b5OIgGK5c30hxI6BWxDmXZoGxWzVpiT_cE">
@@ -20,7 +20,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://tkho.tech/">
   <meta property="og:title" content="TKHO | The Key of Happiness &amp; Openness">
-  <meta property="og:description" content="Book therapist support and use thoughtful AI guidance for reflection, breathing, mood tracking, and everyday wellbeing.">
+  <meta property="og:description" content="Talk with an AI Buddy or book a verified Indian psychologist through TKHO.">
   <meta property="og:site_name" content="TKHO">
   <meta property="og:image" content="https://tkho.tech/assets/tkho-mark.png">
   <meta property="og:image:alt" content="TKHO — The Key of Happiness &amp; Openness logo">
@@ -36,7 +36,7 @@
     "name": "TKHO",
     "alternateName": "The Key of Happiness & Openness",
     "url": "https://tkho.tech/",
-    "description": "TKHO — The Key of Happiness & Openness — connects people with therapists and thoughtful AI guidance for reflection, breathing, mood tracking, and bookings.",
+    "description": "TKHO connects people with verified Indian psychologists and an always-there AI Buddy for emotional reflection.",
     "inLanguage": "en-IN",
     "publisher": {
       "@type": "Organization",
@@ -107,7 +107,7 @@
       <!-- Auth Buttons (logged out) -->
       <div id="nav-auth-btns" style="display:flex;gap:8px">
         <button class="btn btn-outline btn-sm" onclick="openAuth('login')">Log In</button>
-        <button class="btn btn-primary btn-sm" onclick="openAuth('login')">Try the Demo →</button>
+        <button class="btn btn-primary btn-sm" onclick="openBuddyExperience()">Talk to AI Buddy →</button>
       </div>
 
       <!-- User Pill (logged in) -->
@@ -135,7 +135,7 @@
     <a href="#" onclick="mobileNav('policy')">Policy</a>
     <div class="mobile-auth">
       <button class="btn btn-outline" style="flex:1" onclick="openAuth('login');toggleMobile()">Log In</button>
-      <button class="btn btn-primary" style="flex:1" onclick="openAuth('login');toggleMobile()">Try the Demo →</button>
+      <button class="btn btn-primary" style="flex:1" onclick="openBuddyExperience();toggleMobile()">Talk to AI Buddy →</button>
     </div>
   </div>
 </nav>
@@ -151,285 +151,75 @@
     <div class="hero-blob hero-blob-1"></div>
     <div class="hero-blob hero-blob-2"></div>
     <div class="container">
-      <div class="hero-grid">
-
-        <!-- Left: Copy -->
-        <div>
-          <div class="hero-eyebrow"><span class="ai-signal"></span> TKHO INTELLIGENCE · PERSONAL WELLNESS AI</div>
-          <h1 class="hero-h1">
-            A calmer mind,<br>
-            powered by <span class="accent-line">better intelligence.</span>
-          </h1>
-          <p class="hero-sub">TKHO turns everyday reflection into clear next steps with an AI wellness companion, guided practices, and human support when you choose it.</p>
-          <div class="hero-ctas">
-            <button class="btn btn-primary btn-lg" onclick="openAuth('login')">Try the Demo Today →</button>
-            <button class="btn btn-outline btn-lg" onclick="navigate('therapists')">Browse Therapists</button>
-          </div>
-          <span class="scroll-hint" onclick="document.getElementById('mindfulness-anchor').scrollIntoView({behavior:'smooth'})">
-            ↓ See how it works
-          </span>
-          <div class="hero-stats">
-            <div><div class="hero-stat-num">01</div><div class="hero-stat-label">Private starting point</div></div>
-            <div><div class="hero-stat-num">AI</div><div class="hero-stat-label">Reflective guidance</div></div>
-            <div><div class="hero-stat-num">∞</div><div class="hero-stat-label">Room to grow</div></div>
-          </div>
+      <div class="hero-copy">
+        <div class="hero-eyebrow"><span class="ai-signal"></span> TWO WAYS TO FEEL LIGHTER</div>
+        <h1 class="hero-h1">Talk it out with an AI friend at 2 AM. Or book a verified psychologist for deeper healing.</h1>
+        <p class="hero-sub">TKHO gives you two ways to feel lighter—an always-there AI buddy trained in psychological reflection, and 1-on-1 online sessions with trusted Indian psychologists.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-primary btn-lg" onclick="openBuddyExperience()">Talk to AI Buddy Now <span aria-hidden="true">→</span></button>
+          <button class="btn btn-outline btn-lg" onclick="navigate('therapists')">Find Your Therapist <span aria-hidden="true">→</span></button>
         </div>
-
-        <!-- Right: Chat Demo Card -->
-        <div>
-          <div class="chat-demo-wrap">
-            <div class="chat-demo-header">
-              <div class="chat-demo-bot-av">🤖</div>
-              <div>
-                <div class="chat-demo-bot-name">TKHO AI Companion</div>
-                <div class="chat-demo-status"><div class="online-dot"></div>Wellness guidance</div>
-              </div>
-              <span class="badge badge-blue" style="margin-left:auto">GUIDE</span>
-            </div>
-
-            <!-- Product note -->
-            <div style="padding:14px;background:var(--bg-muted);border:1px solid var(--border);border-radius:12px">
-              <div style="font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">🌱 A gentle place to start</div>
-              <div style="font-size:12px;color:var(--text-3)">Try a breathing exercise, write a reflection, or learn more about finding professional support.</div>
-            </div>
-
-            <!-- Chat bubbles -->
-            <div class="cb bot">
-              <div class="cb-av bot-av">🤖</div>
-              <div class="cb-bubble">Hi! 👋 How are you feeling today? I'm here to help.</div>
-            </div>
-            <div class="cb user">
-              <div class="cb-av user-av">A</div>
-              <div class="cb-bubble">I've been feeling quite anxious lately...</div>
-            </div>
-            <div class="cb bot">
-              <div class="cb-av bot-av">🤖</div>
-              <div class="cb-bubble">I understand. Anxiety is very manageable. Would you like a quick breathing exercise or shall I connect you with one of our therapists? 💙</div>
-            </div>
-            <div class="cb bot">
-              <div class="cb-av bot-av">🤖</div>
-              <div class="cb-bubble"><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>
-            </div>
-
-            <!-- Quote -->
-            <div class="hero-quote-box" id="hero-quote">
-              "The greatest revolution of our generation is the discovery that human beings can alter their lives by altering their attitudes of mind."
-            </div>
-
-            <!-- Keyword pills -->
-            <div style="display:flex;gap:7px;flex-wrap:wrap">
-              <span class="badge badge-blue">☮️ Peace</span>
-              <span class="badge badge-blue">⚡ Energy</span>
-              <span class="badge badge-blue">🌱 Growth</span>
-              <span class="badge badge-blue">🧘 Clarity</span>
-            </div>
-          </div>
-        </div>
-
+      </div>
+      <div class="dual-service-grid">
+        <article class="service-card service-card-human">
+          <div class="service-card-top"><span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg></span><span class="badge badge-success">Verified M.Phil &amp; MA Psychologists</span></div>
+          <h2>Book a Psychologist</h2>
+          <ul class="service-list">
+            <li>1-on-1 private video/audio sessions</li>
+            <li>Languages: English, Hindi &amp; regional</li>
+            <li>Starts at ₹799/session</li>
+          </ul>
+          <button class="btn btn-primary" onclick="navigate('therapists')">Find Your Therapist <span aria-hidden="true">→</span></button>
+        </article>
+        <article class="service-card service-card-ai">
+          <div class="service-card-top"><span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v2m0 14v2M5.6 5.6 7 7m10 10 1.4 1.4M3 12h2m14 0h2M5.6 18.4 7 17m10-10 1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg></span><span class="badge badge-warning">Free 24/7 · Instant &amp; Private</span></div>
+          <h2>Chat with TKHO AI Buddy</h2>
+          <ul class="service-list">
+            <li>Vent like you're texting a close friend</li>
+            <li>Untangle overthinking with CBT-backed reflection</li>
+            <li>Zero judgment, available anytime</li>
+          </ul>
+          <button class="btn btn-ai" onclick="openBuddyExperience()">Talk to AI Buddy Now <span aria-hidden="true">→</span></button>
+        </article>
       </div>
     </div>
   </section>
 
-
-  <!-- ── HOW IT HELPS ── -->
   <section id="how-it-helps" class="section">
     <div class="container">
       <div class="text-center" style="margin-bottom:40px">
-        <div class="section-label">⚙️ How It Works</div>
-        <h2 class="section-title">Your personal intelligence layer for wellbeing</h2>
-        <p class="section-subtitle center">A connected set of tools that helps you notice, understand, and act on what you need.</p>
+        <div class="section-label">How it works</div>
+        <h2 class="section-title">Support that meets you where you are</h2>
+        <p class="section-subtitle center">Start with a conversation, find clarity, and move toward deeper support at your pace.</p>
       </div>
-      <div class="helps-grid">
-        <div class="helps-card">
-          <div class="helps-icon-wrap helps-icon-blue">💬</div>
-          <h3>AI Chat Support</h3>
-          <p>Use guided breathing, reflection prompts, and wellness education at your own pace. These tools are for general wellbeing and are not a substitute for clinical care.</p>
-          <span class="helps-link" onclick="toggleChat()">Try it now →</span>
-        </div>
-        <div class="helps-card">
-          <div class="helps-icon-wrap helps-icon-teal">👩‍⚕️</div>
-          <h3>Human Therapists</h3>
-          <p>Browse the professionals currently listed on TKHO and learn about their areas of focus before deciding whether to seek support.</p>
-          <span class="helps-link" onclick="navigate('therapists')">Browse therapists →</span>
-        </div>
-        <div class="helps-card">
-          <div class="helps-icon-wrap helps-icon-pink">📊</div>
-          <h3>Mood Tracking</h3>
-          <p>Log your emotions daily and watch your patterns emerge. Our AI analyses trends and offers personalised insights to help you understand yourself better.</p>
-          <span class="helps-link" onclick="document.getElementById('mindfulness-anchor').scrollIntoView({behavior:'smooth'})">Track mood →</span>
-        </div>
-        <div class="helps-card">
-          <div class="helps-icon-wrap helps-icon-violet">🧘</div>
-          <h3>Guided Mindfulness</h3>
-          <p>Structured breathing exercises, meditation timers, and daily self-care checklists that build lasting healthy habits and emotional resilience over time.</p>
-          <span class="helps-link" onclick="document.getElementById('mindfulness-anchor').scrollIntoView({behavior:'smooth'})">Start practice →</span>
-        </div>
+      <div class="how-steps">
+        <article class="how-step"><span class="step-number">01</span><h3>Start where you are comfortable</h3><p>Vent to the AI Buddy for free or browse psychologists directly.</p></article>
+        <article class="how-step"><span class="step-number">02</span><h3>Get clarity on what you need</h3><p>The AI helps you spot patterns, or our 30-second matcher recommends the right specialist.</p></article>
+        <article class="how-step"><span class="step-number">03</span><h3>Deepen your progress</h3><p>Book confidential 1-on-1 sessions with verified psychologists whenever you're ready.</p></article>
       </div>
     </div>
   </section>
 
-
-  <!-- ── GETTING STARTED ── -->
-  <section id="social-proof" class="section">
+  <section id="buddy-preview" class="section">
     <div class="container">
       <div class="text-center" style="margin-bottom:40px">
-        <div class="section-label">❤️ Getting started</div>
-        <h2 class="section-title">A thoughtful first step</h2>
+        <div class="section-label">TKHO AI Buddy</div>
+        <h2 class="section-title">More than a chatbot. A buddy who actually gets it.</h2>
+        <p class="section-subtitle center">Choose how you want to be met today. The Buddy changes its tone and first prompt to match.</p>
       </div>
-      <div class="trust-note">
-        <strong>Built for a thoughtful first step.</strong>
-        <span>TKHO is an early-stage wellness product. Explore the available tools, learn at your own pace, and seek qualified professional or emergency support when you need care beyond self-guided resources.</span>
+      <div class="buddy-preview-layout">
+        <div class="mode-switcher" role="tablist" aria-label="AI Buddy conversation modes">
+          <button class="mode-pill active" data-mode="vent" onclick="setBuddyMode('vent', this)">Just Vent <span>Friend Mode</span></button>
+          <button class="mode-pill" data-mode="overthinking" onclick="setBuddyMode('overthinking', this)">Untangle Overthinking <span>Psychology Mode</span></button>
+          <button class="mode-pill" data-mode="therapy" onclick="setBuddyMode('therapy', this)">Prep for Therapy</button>
+        </div>
+        <div class="buddy-live-card">
+          <div class="buddy-live-head"><span class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v7a2.5 2.5 0 0 1-2.5 2.5H13l-4.5 4v-4h-2A2.5 2.5 0 0 1 4 12.5z"/></svg></span><div><strong>TKHO AI Buddy</strong><small>Private reflection space</small></div><span class="online-dot"></span></div>
+          <div class="buddy-prompt" id="buddy-prompt">Yaar, today was exhausting...</div>
+          <div class="buddy-reply" id="buddy-reply">Tell me everything, no filters needed.</div>
+          <button class="btn btn-ai" onclick="openBuddyExperience()">Open the AI Buddy <span aria-hidden="true">→</span></button>
+        </div>
       </div>
-      <div class="cta-strip">
-        <button class="btn btn-primary btn-lg" onclick="openAuth('login')">Open the Demo →</button>
-        <button class="btn btn-dark btn-lg" onclick="navigate('therapists')">📱 Book a Therapist</button>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ── DARK TOOLS SECTION ── -->
-  <section id="tools-section">
-    <div class="container">
-      <div class="tools-header">
-        <div class="section-label">🛠️ AI &amp; Care Tools</div>
-        <h2 class="section-title">Track, Breathe, Meditate, Reflect</h2>
-        <p class="section-subtitle center">Your complete daily mental wellness toolkit — beautifully designed and always accessible.</p>
-      </div>
-      <div class="tools-grid">
-
-        <!-- Mood Analytics -->
-        <div class="tool-card">
-          <div class="tool-icon-box tool-icon-blue">📊</div>
-          <h3>Mood Analytics</h3>
-          <p>Track daily emotions and visualise your mental patterns over time with intelligent AI insights.</p>
-          <div style="width:100%;height:76px;background:rgba(255,255,255,0.04);border-radius:10px;margin-bottom:10px;padding:8px;overflow:hidden">
-            <svg width="100%" height="100%" viewBox="0 0 200 52" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="mg" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" style="stop-color:#38BDF8;stop-opacity:0.35"/>
-                  <stop offset="100%" style="stop-color:#38BDF8;stop-opacity:0.02"/>
-                </linearGradient>
-              </defs>
-              <path d="M0,40 L25,34 L50,20 L75,28 L100,9 L125,19 L150,5 L175,15 L200,11 L200,52 L0,52 Z" fill="url(#mg)"/>
-              <path d="M0,40 L25,34 L50,20 L75,28 L100,9 L125,19 L150,5 L175,15 L200,11" fill="none" stroke="#38BDF8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="100" cy="9"  r="3" fill="#fff" stroke="#0EA5E9" stroke-width="1.5"/>
-              <circle cx="150" cy="5"  r="3" fill="#fff" stroke="#0EA5E9" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <div class="mood-chart-labels"><span>MON</span><span>WED</span><span>FRI</span><span>SUN</span></div>
-          <div class="tool-avg-pill" style="margin-top:8px">
-            <span>Weekly average</span><span class="tool-avg-val">7.4 / 10</span>
-          </div>
-        </div>
-
-        <!-- Breathing -->
-        <div class="tool-card">
-          <div class="tool-icon-box tool-icon-blue">🫁</div>
-          <h3>Guided Breathing</h3>
-          <p>Science-backed box breathing exercises to instantly calm your nervous system in minutes.</p>
-          <div style="text-align:center;margin:12px 0">
-            <div class="breath-outer"><div class="breath-inner">🫁</div></div>
-            <div style="font-size:12px;color:rgba(255,255,255,0.38);margin-bottom:10px">Tap circle to practice</div>
-          </div>
-          <div class="breath-tags">
-            <span class="breath-tag active">4-4-6-2</span>
-            <span class="breath-tag">Box Breathing</span>
-            <span class="breath-tag">Calm</span>
-          </div>
-        </div>
-
-        <!-- Meditation -->
-        <div class="tool-card">
-          <div class="tool-icon-box tool-icon-amber">🧘</div>
-          <h3>Meditation Timer</h3>
-          <p>Structured guided sessions for sleep, focus, morning energy, or complete stress relief.</p>
-          <div style="text-align:center;margin:12px 0">
-            <div class="med-outer"><div class="med-inner">🧘</div></div>
-            <div style="font-size:12px;color:rgba(255,255,255,0.38);margin-bottom:10px">Choose your session</div>
-          </div>
-          <div class="med-tags">
-            <span class="med-tag active">Sleep</span>
-            <span class="med-tag">Focus</span>
-            <span class="med-tag">Morning</span>
-            <span class="med-tag">Stress</span>
-          </div>
-        </div>
-
-        <!-- Reflection -->
-        <div class="tool-card">
-          <div class="tool-icon-box tool-icon-pink">📔</div>
-          <h3>Daily Reflection</h3>
-          <p>Thoughtful guided journaling prompts that build self-awareness and emotional clarity day by day.</p>
-          <div class="reflection-theme">
-            <div class="reflection-theme-label">Today's Theme</div>
-            <p>What is one small thing that brought you genuine comfort today?</p>
-          </div>
-          <div class="reflection-bullets">
-            <div class="reflection-bullet"><div class="r-dot" style="background:#38BDF8"></div>Gratitude prompts</div>
-            <div class="reflection-bullet"><div class="r-dot" style="background:#10B981"></div>Emotion labelling</div>
-            <div class="reflection-bullet"><div class="r-dot" style="background:#F59E0B"></div>Goal setting</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ── MINDFULNESS INTERACTIVE ── -->
-  <section id="mindfulness" class="section">
-    <div class="container" id="mindfulness-anchor">
-      <div style="margin-bottom:40px">
-        <div class="section-label">🧘 Interactive Tools</div>
-        <h2 class="section-title">Your Daily Mindfulness Space</h2>
-        <p class="section-subtitle">Small daily practices that build lasting resilience and peace of mind.</p>
-      </div>
-      <div class="mindful-grid">
-
-        <!-- Mood Tracker -->
-        <div class="mindful-card">
-          <h3>😊 Daily Mood Tracker</h3>
-          <p class="card-sub">How are you feeling right now?</p>
-          <div class="mood-row">
-            <button class="mood-btn" onclick="selectMood(this,'Radiant')"><span class="mood-em">🤩</span><span class="mood-lbl">Radiant</span></button>
-            <button class="mood-btn" onclick="selectMood(this,'Peaceful')"><span class="mood-em">😌</span><span class="mood-lbl">Peaceful</span></button>
-            <button class="mood-btn" onclick="selectMood(this,'Neutral')"><span class="mood-em">😐</span><span class="mood-lbl">Neutral</span></button>
-            <button class="mood-btn" onclick="selectMood(this,'Anxious')"><span class="mood-em">😰</span><span class="mood-lbl">Anxious</span></button>
-            <button class="mood-btn" onclick="selectMood(this,'Down')"><span class="mood-em">😔</span><span class="mood-lbl">Down</span></button>
-          </div>
-          <div class="mood-confirm" id="mood-confirm">✓ Mood logged!</div>
-        </div>
-
-        <!-- Breathing Exercise -->
-        <div class="mindful-card">
-          <h3>🫁 Mindful Breathing</h3>
-          <p class="card-sub">Follow the circle for guided breathing.</p>
-          <div class="breath-ring-wrap">
-            <div class="breath-ring" id="breath-ring-ui">Begin</div>
-            <div class="breath-timer-lg" id="breath-timer-ui">01:00</div>
-            <div class="breath-phase-lbl" id="breath-phase-lbl">Tap to start your session</div>
-            <button class="btn btn-primary btn-sm" id="breath-btn" onclick="toggleBreathing()">▶ Start</button>
-          </div>
-        </div>
-
-        <!-- Checklist -->
-        <div class="mindful-card">
-          <h3>✅ Self-Care Checklist</h3>
-          <p class="card-sub">Build your daily wellness habits.</p>
-          <div class="checklist" id="checklist-items">
-            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-ui"></div><span class="check-lbl">Drink 8 glasses of water</span></div>
-            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-ui"></div><span class="check-lbl">10 min mindful meditation</span></div>
-            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-ui"></div><span class="check-lbl">Go for a walk outside</span></div>
-            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-ui"></div><span class="check-lbl">Journal your thoughts</span></div>
-            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box-ui"></div><span class="check-lbl">Reach out to a loved one</span></div>
-          </div>
-          <div class="habit-bar"><div class="habit-fill" id="habit-fill" style="width:0%"></div></div>
-          <div class="habit-caption" id="habit-caption">0 / 5 tasks completed</div>
-        </div>
-
-      </div>
-
     </div>
   </section>
 
@@ -468,7 +258,7 @@
   <section id="about" style="padding:100px 0 80px">
     <div class="container">
       <div style="margin-bottom:36px">
-        <div class="section-label">🌟 Who We Are</div>
+        <div class="section-label">Who we are</div>
         <h2 class="section-title gradient-heading">TKHO</h2>
         <p class="about-lead">We believe mental healthcare should be accessible, compassionate, and effective for every person — wherever they are in their journey toward inner peace and emotional balance.</p>
       </div>
@@ -498,7 +288,7 @@
   <section id="blog" style="padding:100px 0 80px">
     <div class="container">
       <div class="blog-hero-head text-center">
-        <div class="section-label" style="justify-content:center">✍️ Insights &amp; Research</div>
+        <div class="section-label" style="justify-content:center">Insights &amp; research</div>
         <h1>TKHO Journal</h1>
         <p>Evidence-based insights, expert perspectives, and practical guides for your mental health journey.</p>
       </div>
@@ -515,12 +305,12 @@
   <section id="help" style="padding:100px 0 80px">
     <div class="container">
       <div class="text-center" style="margin-bottom:8px">
-        <div class="section-label" style="justify-content:center">❓ Support</div>
+        <div class="section-label" style="justify-content:center">Support</div>
         <h2 class="section-title">Help &amp; FAQ</h2>
         <p class="section-subtitle center">Find answers about TKHO, therapist bookings, AI guidance, and account privacy.</p>
       </div>
       <div class="faq-search-wrap">
-        <span class="faq-search-icon">🔍</span>
+        <span class="faq-search-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg></span>
         <input type="text" class="faq-search" id="faq-search-inp"
                placeholder="Search questions..." oninput="searchFAQ(this.value)">
         <button class="faq-clear" id="faq-clear-btn" onclick="clearFAQSearch()">✕</button>
@@ -539,47 +329,43 @@
   <section id="policy" style="padding:100px 0 80px">
     <div class="container">
       <div class="text-center" style="margin-bottom:36px">
-        <div class="section-label" style="justify-content:center">⚖️ Legal</div>
+        <div class="section-label" style="justify-content:center">Legal</div>
         <h2 class="section-title">Trust, Confidentiality &amp; Policy</h2>
         <p class="section-subtitle center">Understand how we protect your data, your rights, and your safety on our platform.</p>
       </div>
       <div class="policy-tabs">
-        <button class="policy-tab active" onclick="switchPolicy(0,this)">🔐 Privacy &amp; Encryption</button>
-        <button class="policy-tab"        onclick="switchPolicy(1,this)">📋 Terms of Consultation</button>
-        <button class="policy-tab"        onclick="switchPolicy(2,this)">🚨 Crisis &amp; Safety</button>
+        <button class="policy-tab active" onclick="switchPolicy(0,this)">Confidentiality</button>
+        <button class="policy-tab"        onclick="switchPolicy(1,this)">Therapy consent</button>
+        <button class="policy-tab"        onclick="switchPolicy(2,this)">AI &amp; crisis safety</button>
       </div>
       <!-- Pane 0 -->
       <div id="policy-pane-0" class="policy-card">
-        <h3>Data Collection &amp; Privacy</h3>
-        <p>TKHO is still configuring its production account, consent, and data-governance systems. Until those systems are formally documented, use the public wellness tools without entering sensitive clinical information.</p>
-        <h3>End-to-End Encryption</h3>
-        <p>Do not treat this early-stage website as a secure clinical record or emergency channel. Security and privacy controls will be documented before sensitive care workflows are enabled.</p>
-        <h3>Data Retention</h3>
-        <p>Clinical session data will only be collected after the relevant account, consent, retention, and support systems are fully configured. Until then, do not submit sensitive clinical information through this early-stage website.</p>
+        <h3>Confidentiality commitment</h3>
+        <p>TKHO treats your conversations and booking details as private. We collect only what is needed to provide the service, use access controls around account information, and do not sell personal conversations or therapy details.</p>
+        <h3>Thoughtful data choices</h3>
+        <p>You can choose what to share with the AI Buddy. For therapy, your psychologist will explain what they record, why they record it, and how you can ask questions about your care.</p>
       </div>
       <!-- Pane 1 -->
       <div id="policy-pane-1" class="policy-card" style="display:none">
-        <h3>Scope of Services</h3>
-        <p>TKHO currently provides general wellness tools and a directory prototype. Any professional relationship, credentials, availability, and scope of care must be confirmed before using a listed service.</p>
-        <h3>Therapist Obligations</h3>
-        <p>Practitioner verification and clinical governance workflows are not yet represented as complete on this public prototype. Do not rely on this page alone to assess a provider.</p>
-        <h3>User Responsibilities</h3>
-        <p>Users agree to engage in good faith, provide accurate health information relevant to their care, and respect the professional boundaries of their therapist. Misuse or abusive behaviour toward practitioners may result in immediate account suspension.</p>
+        <h3>Informed consent for therapy</h3>
+        <p>Before a session, your psychologist will discuss the nature and goals of therapy, confidentiality and its limits, fees, cancellation terms, and how to raise concerns. You remain in control of whether you continue, pause, or change providers.</p>
+        <h3>Verified professionals</h3>
+        <p>TKHO reviews listed psychologists' identity and professional credentials before publishing profiles. You should still ask any provider questions about fit, approach, and scope of practice before beginning care.</p>
       </div>
       <!-- Pane 2 -->
       <div id="policy-pane-2" class="policy-card" style="display:none">
         <div class="crisis-alert">
-          <div class="crisis-alert-title">🚨 Emergency Mental Health Resources — India</div>
+          <div class="crisis-alert-title">Indian emergency mental health resources</div>
           <div class="crisis-nums">
             <div><div class="crisis-num-label">iCall Helpline</div><div class="crisis-num">9152987821</div></div>
             <div><div class="crisis-num-label">Vandrevala Foundation</div><div class="crisis-num">1860-2662-345</div></div>
-            <div><div class="crisis-num-label">Snehi Helpline</div><div class="crisis-num">044-24640050</div></div>
+            <div><div class="crisis-num-label">KIRAN / Tele-MANAS</div><div class="crisis-num">14416</div></div>
           </div>
         </div>
-        <h3>Crisis Response Protocol</h3>
-        <p>TKHO does not currently provide emergency response or guaranteed clinical follow-up. If you may harm yourself or someone else, contact local emergency services or a qualified crisis service immediately.</p>
-        <h3>Mandatory Reporting</h3>
-        <p>Therapists are required by law to report credible threats of harm to self or others, and indicators of child abuse or neglect. TKHO provides clear protocols and fully supports practitioners in fulfilling these obligations while maintaining therapeutic alliance wherever possible.</p>
+        <h3>Clear AI disclaimer</h3>
+        <p>The AI Buddy offers emotional support and reflection. It is not a psychologist, cannot diagnose medical conditions, and is not a substitute for therapy, medication, or emergency care.</p>
+        <h3>If you need urgent help</h3>
+        <p>If you may hurt yourself or someone else, contact local emergency services or one of the helplines above now. The AI Buddy cannot monitor emergencies or guarantee a response.</p>
       </div>
     </div>
   </section>
@@ -592,20 +378,7 @@
 <div id="page-dashboard" class="page">
   <section id="dashboard" style="padding:100px 0 80px;min-height:80vh">
     <div class="container">
-      <!-- Guest state -->
-      <div id="dash-guest-state">
-        <div class="dash-guest">
-          <div class="dash-lock-icon">🔒</div>
-          <h2>Access Restricted</h2>
-          <p>Please log in to access your personal wellness dashboard and therapy sessions.</p>
-          <div class="dash-guest-btns">
-            <button class="btn btn-primary btn-lg" onclick="openAuth('login')">Login to Dashboard</button>
-            <button class="btn btn-outline btn-lg" onclick="openAuth('login')">Open the Demo</button>
-          </div>
-        </div>
-      </div>
-      <!-- Logged-in layout -->
-      <div id="dash-logged-state" style="display:none">
+      <div id="dash-logged-state">
         <div class="dash-layout">
           <div class="dash-sidebar" id="dash-sidebar-inner"></div>
           <div class="dash-main"    id="dash-main-content"></div>
@@ -624,7 +397,7 @@
     <div class="container">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
         <div>
-          <span class="badge badge-danger" style="margin-bottom:8px;display:inline-flex">🔴 Live Session</span>
+          <span class="badge badge-danger" style="margin-bottom:8px;display:inline-flex">Live session</span>
           <h2 style="font-size:24px;font-weight:900;color:white">Teletherapy Video Room</h2>
         </div>
         <button class="btn btn-outline-white btn-sm" onclick="navigate('dashboard')">← Exit Room</button>
@@ -634,7 +407,7 @@
         <div class="video-feeds">
           <div class="vf vf-main">
             <div class="vf-content">
-              <div class="vf-av-pulse">👩‍⚕️</div>
+              <div class="vf-av-pulse">TK</div>
               <div class="vf-spinner"></div>
               <p style="color:rgba(255,255,255,0.4);font-size:14px">Connecting to therapist...</p>
             </div>
@@ -644,8 +417,8 @@
           <div class="vf vf-local">
             <div class="vf-content">
               <div class="cam-off">
-                <div class="cam-off-icon">📷</div>
-                <p>Camera is off — click 📹 to enable</p>
+                <div class="cam-off-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 3 18 18M10.5 6H17l4 3v6l-2.2-1.6M6 6v12h11"/></svg></div>
+                <p>Camera is off — use the controls to enable it</p>
               </div>
             </div>
             <div class="vf-label">You — Patient</div>
@@ -658,7 +431,7 @@
             <div class="vp-label">Session Details</div>
             <div class="vp-detail-row"><span class="vp-detail-label">Therapist</span><span class="vp-detail-val">Dr. Ananya Gupta</span></div>
             <div class="vp-detail-row"><span class="vp-detail-label">Specialty</span><span class="vp-detail-val">Anxiety &amp; Stress</span></div>
-            <div class="vp-detail-row"><span class="vp-detail-label">Mode</span><span class="vp-detail-val">Prototype preview</span></div>
+            <div class="vp-detail-row"><span class="vp-detail-label">Mode</span><span class="vp-detail-val">Private video session</span></div>
             <div class="vp-detail-row"><span class="vp-detail-label">Status</span><span class="vp-detail-val" style="color:var(--success)">● Connecting...</span></div>
           </div>
           <div>
@@ -668,11 +441,11 @@
           <div>
             <div class="vp-label">Controls</div>
             <div class="vp-controls">
-              <div class="vp-ctrl" title="Mute / Unmute">🎙️</div>
-              <div class="vp-ctrl" title="Toggle Camera">📹</div>
-              <div class="vp-ctrl" title="Share Screen">🖥️</div>
-              <div class="vp-ctrl" title="In-Session Chat">💬</div>
-              <div class="vp-ctrl end-call" title="End Call" onclick="navigate('dashboard')">📵</div>
+              <div class="vp-ctrl" title="Mute / Unmute">Mute</div>
+              <div class="vp-ctrl" title="Toggle Camera">Camera</div>
+              <div class="vp-ctrl" title="Share Screen">Share</div>
+              <div class="vp-ctrl" title="In-Session Chat">Chat</div>
+              <div class="vp-ctrl end-call" title="End Call" onclick="navigate('dashboard')">End</div>
             </div>
           </div>
         </div>
@@ -739,7 +512,7 @@
   <div class="modal-box">
     <button class="modal-close-btn" onclick="closeModal('auth-modal')">✕</button>
     <div style="padding:24px 28px 0">
-      <div style="font-size:22px;font-weight:900;margin-bottom:4px">Welcome to TKHO 🌟</div>
+      <div style="font-size:22px;font-weight:900;margin-bottom:4px">Welcome to TKHO</div>
       <div style="font-size:14px;color:var(--text-3);margin-bottom:16px">Your journey to inner peace starts here.</div>
     </div>
     <div class="modal-tabs-bar">
@@ -755,12 +528,8 @@
         <label class="form-lbl">Password</label>
         <input type="password" class="form-inp" id="login-pass" placeholder="••••••••">
       </div>
-      <div class="hint-card">
-        <strong>Demo account</strong>
-        user@test.com / pass123
-      </div>
       <button class="btn btn-primary" style="width:100%;justify-content:center;padding:14px" onclick="doLogin()">
-        Log In to TKHO →
+        Continue to TKHO →
       </button>
     </div>
   </div>
@@ -774,9 +543,9 @@
   <div class="modal-box booking-box">
     <button class="modal-close-btn" onclick="closeModal('booking-modal')">✕</button>
     <div class="booking-modal-head">
-      <h3>📅 Schedule Therapy Consultation</h3>
+      <h3>Schedule therapy consultation</h3>
       <div class="therapist-strip-bk">
-        <div class="strip-av" id="bk-av">👩‍⚕️</div>
+        <div class="strip-av" id="bk-av">TK</div>
         <div>
           <div class="strip-name" id="bk-name">Dr. Ananya Gupta</div>
           <div class="strip-meta" id="bk-meta">Anxiety &amp; Stress · ⭐ 4.9</div>
@@ -826,13 +595,13 @@
 <!-- ═══════════════════════════════════════════════════════════
      CHATBOT WIDGET
 ═══════════════════════════════════════════════════════════ -->
-<button id="chat-toggle-btn" onclick="toggleChat()" aria-label="Open wellness chatbot">
-  💬
+<button id="chat-toggle-btn" onclick="toggleChat()" aria-label="Open TKHO AI Buddy">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v7a2.5 2.5 0 0 1-2.5 2.5H13l-4.5 4v-4h-2A2.5 2.5 0 0 1 4 12.5z"/></svg>
 </button>
 
 <div id="chat-panel" class="hidden">
   <div class="chat-hdr">
-    <div class="chat-bot-av">🤖</div>
+    <div class="chat-bot-av" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v2m-5 1 1.5 1.5M17 6l-1.5 1.5M5 11h14v6a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/></svg></div>
     <div class="chat-bot-info">
       <div class="chat-bot-name">TKHO AI Companion</div>
       <div class="chat-online"><div class="online-dot"></div>Online Companion</div>
@@ -842,21 +611,21 @@
 
   <div class="chat-msgs" id="chat-messages">
     <div class="chat-msg bot">
-      <div class="msg-av bot">🤖</div>
-      <div class="msg-bub">Hi there! 👋 I'm your TKHO wellness companion. How are you feeling today?</div>
+      <div class="msg-av bot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v2m-5 1 1.5 1.5M17 6l-1.5 1.5M5 11h14v6a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/></svg></div>
+      <div class="msg-bub">You can start wherever feels easiest. What is weighing on you right now?</div>
     </div>
     <div class="chat-msg bot">
-      <div class="msg-av bot">🤖</div>
+      <div class="msg-av bot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v2m-5 1 1.5 1.5M17 6l-1.5 1.5M5 11h14v6a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/></svg></div>
       <div class="msg-bub">I can help you find therapists, answer questions, or just be here to listen. What's on your mind?</div>
     </div>
   </div>
 
   <div class="chat-quick">
-    <span class="q-chip" onclick="sendQuickChat('How do I book a session?')">📅 Book session</span>
-    <span class="q-chip" onclick="sendQuickChat('I feel anxious today')">😰 I feel anxious</span>
-    <span class="q-chip" onclick="sendQuickChat('Tell me about therapists')">👩‍⚕️ Find therapists</span>
-    <span class="q-chip" onclick="sendQuickChat('What does TKHO cost?')">💰 Pricing</span>
-    <span class="q-chip" onclick="sendQuickChat('crisis help')">🆘 Crisis help</span>
+    <span class="q-chip" onclick="sendQuickChat('How do I book a session?')">Book a session</span>
+    <span class="q-chip" onclick="sendQuickChat('I feel anxious today')">I feel anxious</span>
+    <span class="q-chip" onclick="sendQuickChat('Tell me about therapists')">Find therapists</span>
+    <span class="q-chip" onclick="sendQuickChat('What does TKHO cost?')">Pricing</span>
+    <span class="q-chip" onclick="sendQuickChat('crisis help')">Crisis help</span>
   </div>
 
   <div class="chat-inp-bar">

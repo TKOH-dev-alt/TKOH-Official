@@ -9,47 +9,33 @@
 ══════════════════════════════════════════════════ */
 const DATA = {
   therapists: [
-    { id:1, emoji:'👩‍⚕️', name:'Dr. Ananya Gupta',  title:'Anxiety & Stress Specialist',  rating:4.9, reviews:142, tags:['Anxiety','Mindfulness','CBT'],       bio:'With a decade of clinical experience, Dr. Gupta specialises in evidence-based CBT and mindfulness techniques to help patients overcome chronic anxiety and reclaim lasting inner calm.',           price:'₹1,200', specialty:'anxiety'    },
-    { id:2, emoji:'🧑‍⚕️', name:'Dr. Rohan Verma',   title:'Depression & Mood Therapist',  rating:4.8, reviews:97,  tags:['Depression','Grief','DBT'],           bio:'Dr. Verma provides compassionate, non-judgmental support for individuals navigating depression, grief, and major life transitions using Dialectical Behaviour Therapy.',                          price:'₹1,400', specialty:'depression' },
-    { id:3, emoji:'👩‍🔬', name:'Dr. Meera Nair',    title:'Relationship Counsellor',      rating:4.7, reviews:203, tags:['Couples','Communication','Attachment'], bio:'A systemic therapist helping couples and individuals build deeper connections, resolve conflicts, and understand their attachment patterns in a safe, supportive environment.',           price:'₹1,100', specialty:'relations'  },
-    { id:4, emoji:'🧔',   name:'Vikram Singh',       title:'Career & Life Coach',          rating:4.6, reviews:78,  tags:['Career','Burnout','Identity'],         bio:'Combines psychological insight with practical coaching to help professionals navigate career crossroads, workplace stress, and personal identity challenges with clarity and confidence.',         price:'₹900',   specialty:'career'     },
-    { id:5, emoji:'👩‍💼', name:'Dr. Fatima Zaidi',  title:'Trauma & PTSD Specialist',     rating:4.9, reviews:116, tags:['Trauma','PTSD','EMDR'],               bio:'Trained in EMDR and somatic approaches, Dr. Zaidi specialises in helping trauma survivors rebuild safety, self-trust, and a renewed sense of personal identity and belonging over time.',  price:'₹1,600', specialty:'trauma'     },
-    { id:6, emoji:'🧑‍🏫', name:'Aryan Kapoor',      title:'Child & Adolescent Therapist', rating:4.7, reviews:89,  tags:['Teens','Family','Anxiety'],           bio:'Passionate about supporting young people through developmental challenges, school stress, and family dynamics using play therapy and narrative therapeutic approaches that resonate.',          price:'₹1,000', specialty:'anxiety'    },
+    { id:1, name:'Dr. Ananya Gupta',  title:'Anxiety & Stress Specialist',  rating:4.9, reviews:142, tags:['Anxiety','Mindfulness','CBT'],       bio:'With a decade of clinical experience, Dr. Gupta specialises in evidence-based CBT and mindfulness techniques to help patients overcome chronic anxiety and reclaim lasting inner calm.',           price:'₹1,200', specialty:'anxiety'    },
+    { id:2, name:'Dr. Rohan Verma',   title:'Depression & Mood Therapist',  rating:4.8, reviews:97,  tags:['Depression','Grief','DBT'],           bio:'Dr. Verma provides compassionate, non-judgmental support for individuals navigating depression, grief, and major life transitions using Dialectical Behaviour Therapy.',                          price:'₹1,400', specialty:'depression' },
+    { id:3, name:'Dr. Meera Nair',    title:'Relationship Counsellor',      rating:4.7, reviews:203, tags:['Couples','Communication','Attachment'], bio:'A systemic therapist helping couples and individuals build deeper connections, resolve conflicts, and understand their attachment patterns in a safe, supportive environment.',           price:'₹1,100', specialty:'relations'  },
+    { id:4, name:'Vikram Singh',       title:'Career & Life Coach',          rating:4.6, reviews:78,  tags:['Career','Burnout','Identity'],         bio:'Combines psychological insight with practical coaching to help professionals navigate career crossroads, workplace stress, and personal identity challenges with clarity and confidence.',         price:'₹900',   specialty:'career'     },
+    { id:5, name:'Dr. Fatima Zaidi',  title:'Trauma & PTSD Specialist',     rating:4.9, reviews:116, tags:['Trauma','PTSD','EMDR'],               bio:'Trained in EMDR and somatic approaches, Dr. Zaidi specialises in helping trauma survivors rebuild safety, self-trust, and a renewed sense of personal identity and belonging over time.',  price:'₹1,600', specialty:'trauma'     },
+    { id:6, name:'Aryan Kapoor',      title:'Child & Adolescent Therapist', rating:4.7, reviews:89,  tags:['Teens','Family','Anxiety'],           bio:'Passionate about supporting young people through developmental challenges, school stress, and family dynamics using play therapy and narrative therapeutic approaches that resonate.',          price:'₹1,000', specialty:'anxiety'    },
   ],
 
   blogs: [
-    { emoji:'🧠', category:'Mental Health',  date:'May 28, 2026',   title:'The Science Behind Mindfulness: What Research Actually Shows',        summary:'Decades of neuroscience research have revealed how mindfulness meditation literally reshapes neural pathways associated with stress and emotional regulation, improving well-being.',         author:'Dr. Priya Sharma'  },
-    { emoji:'💙', category:'Therapy',        date:'May 22, 2026',   title:'When to Seek Help: Signs You Would Benefit From Therapy',             summary:"Many people wait years before seeking professional support. Here's how to recognize the clear signs that talking to a therapist could genuinely transform your life for the better.",      author:'Dr. Rohan Verma'   },
-    { emoji:'🌙', category:'Wellness',       date:'May 15, 2026',   title:'Sleep and Mental Health: The Bidirectional Relationship',             summary:'Poor sleep worsens anxiety and depression, while mental health conditions disrupt sleep. Understanding this interconnected cycle is the first step to lasting recovery.',                author:'Leila Nazari'      },
-    { emoji:'🫁', category:'Breathwork',     date:'May 8, 2026',    title:'Box Breathing: A Navy SEAL Technique for Everyday Calm',             summary:'The tactical breathing technique used by elite military units directly activates your parasympathetic nervous system — and anyone can master it in under five focused minutes.',     author:'Arjun Mehta'       },
-    { emoji:'🌱', category:'Growth',         date:'April 30, 2026', title:'Post-Traumatic Growth: How Adversity Can Become Your Strength',      summary:'Research shows many trauma survivors not only recover but develop deeper meaning, closer relationships, and expanded personal capability through the healing journey.',              author:'Dr. Fatima Zaidi'  },
-    { emoji:'💬', category:'Relationships',  date:'April 22, 2026', title:'How to Have Difficult Conversations Without Damaging Relationships', summary:'The words we choose, the timing we select, and the emotional safety we create together can mean the difference between genuine connection and lasting irreparable conflict.',        author:'Dr. Meera Nair'    },
+    { category:'Mental Health',  date:'May 28, 2026',   title:'The Science Behind Mindfulness: What Research Actually Shows',        summary:'Decades of neuroscience research have revealed how mindfulness meditation literally reshapes neural pathways associated with stress and emotional regulation, improving well-being.',         author:'Dr. Priya Sharma'  },
+    { category:'Therapy',        date:'May 22, 2026',   title:'When to Seek Help: Signs You Would Benefit From Therapy',             summary:"Many people wait years before seeking professional support. Here's how to recognize the clear signs that talking to a therapist could genuinely transform your life for the better.",      author:'Dr. Rohan Verma'   },
+    { category:'Wellness',       date:'May 15, 2026',   title:'Sleep and Mental Health: The Bidirectional Relationship',             summary:'Poor sleep worsens anxiety and depression, while mental health conditions disrupt sleep. Understanding this interconnected cycle is the first step to lasting recovery.',                author:'Leila Nazari'      },
+    { category:'Breathwork',     date:'May 8, 2026',    title:'Box Breathing: A Navy SEAL Technique for Everyday Calm',             summary:'The tactical breathing technique used by elite military units directly activates your parasympathetic nervous system — and anyone can master it in under five focused minutes.',     author:'Arjun Mehta'       },
+    { category:'Growth',         date:'April 30, 2026', title:'Post-Traumatic Growth: How Adversity Can Become Your Strength',      summary:'Research shows many trauma survivors not only recover but develop deeper meaning, closer relationships, and expanded personal capability through the healing journey.',              author:'Dr. Fatima Zaidi'  },
+    { category:'Relationships',  date:'April 22, 2026', title:'How to Have Difficult Conversations Without Damaging Relationships', summary:'The words we choose, the timing we select, and the emotional safety we create together can mean the difference between genuine connection and lasting irreparable conflict.',        author:'Dr. Meera Nair'    },
   ],
 
   faqCategories: [
     {
-      label: 'GENERAL',
+      label: 'TKHO QUESTIONS',
       items: [
-        { q:'What is TKHO?',                   a:'TKHO — The Key of Happiness & Openness — is an early-stage therapist booking platform with thoughtful AI guidance, reflection tools, mood tracking, and breathing exercises. Digital tools are not a replacement for qualified clinical care.' },
-        { q:'What can I try in TKHO?',          a:'The preview includes the AI companion, mood tracker, guided practices, therapist directory, and demo booking flow. Session pricing and availability are shown by each provider.' },
-        { q:'Is my data private and secure?',  a:"TKHO is still configuring its production privacy and account systems. Do not enter sensitive clinical information into this early-stage prototype; the final data practices will be documented before clinical workflows are enabled." },
-      ]
-    },
-    {
-      label: 'AI THERAPY & FEATURES',
-      items: [
-        { q:'How does the AI chatbot work?',                               a:'The companion offers general wellness prompts and educational suggestions. It is not a therapist, does not monitor emergencies, and cannot guarantee clinical follow-up.' },
-        { q:'Will the AI replace human therapists?',                      a:'No. Our AI is a supportive companion and first point of contact — not a replacement for clinical care. For diagnosis, medication, trauma therapy, or complex mental health needs, our licensed human professionals are always the recommended path forward.' },
-        { q:'What therapeutic approaches do your therapists use?',        a:'Our therapists are trained across CBT (Cognitive Behavioural Therapy), DBT (Dialectical Behaviour Therapy), EMDR, Mindfulness-Based Therapy, Somatic Therapy, Narrative Therapy, and Person-Centred approaches depending on individual client needs.' },
-        { q:'What makes TKHO different from ChatGPT or other AI chatbots?', a:'TKHO is purpose-built for mental wellness with trauma-informed guardrails, clinical supervision protocols, and seamless escalation to human therapists. We do not use generic AI — our model is continuously refined and validated by licensed clinicians.' },
-      ]
-    },
-    {
-      label: 'BOOKINGS & SESSIONS',
-      items: [
-        { q:'How do I book a therapy session?',          a:"Browse our Therapist Directory, select a professional that resonates with you, and click 'Book Session'. Choose your preferred date and time slot, optionally add session focus notes, and confirm. You will receive a secure video call link via email and in your dashboard." },
-        { q:'Can I cancel or reschedule a session?',    a:'Yes. Cancellations or reschedules made at least 24 hours before the session incur no charge. Within 24 hours, a 50% cancellation fee applies to compensate the therapist for their reserved time slot and preparation.' },
-        { q:'What technology do I need for sessions?',  a:'Just a stable internet connection and a device with a camera and microphone — any modern smartphone, tablet, or laptop works perfectly. No downloads are required; sessions run entirely in your browser via our encrypted WebRTC video room.' },
+        { q:'Is the AI Buddy private?', a:'Your AI Buddy conversation is designed for private reflection. Avoid sharing passwords or information that could identify someone else, and review our confidentiality policy before using the service.' },
+        { q:'How are psychologists verified?', a:'TKHO reviews listed psychologists’ identity and professional credentials, including relevant M.Phil, MA Psychology, or equivalent qualifications, before publishing their profiles.' },
+        { q:'How much do sessions cost, and what is the refund policy?', a:'Each profile shows its current price before booking. Cancellations made at least 24 hours before a session are eligible for a full refund; later cancellations may be charged according to the provider’s policy.' },
+        { q:'What is the difference between the AI Buddy and human therapy?', a:'The AI Buddy offers instant emotional support and structured reflection. A psychologist provides confidential, personalised clinical care, including assessment and treatment when appropriate.' },
+        { q:'Which languages are supported?', a:'Therapist availability includes English, Hindi, and selected regional languages. Language options are shown on each profile and can be discussed before booking.' },
+        { q:'Can the AI Buddy diagnose me or handle an emergency?', a:'No. The AI Buddy is not a medical professional and cannot diagnose, prescribe, or monitor emergencies. If you are in immediate danger, contact local emergency services or an Indian crisis helpline listed in our safety policy.' },
       ]
     },
   ],
@@ -73,6 +59,8 @@ const STATE = {
   bookings:        [],
   moods:           [],
   chatOpen:        false,
+  activeSession:   false,
+  buddyMode:       'vent',
   breathRunning:   false,
   breathSeconds:   60,
   breathPhaseIdx:  0,
@@ -90,6 +78,9 @@ function $(id)    { return document.getElementById(id); }
 function $$(sel)  { return document.querySelectorAll(sel); }
 function pad2(n)  { return String(n).padStart(2, '0'); }
 function qs(sel)  { return document.querySelector(sel); }
+function getInitials(name) {
+  return String(name || 'TK').split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase();
+}
 
 /* ══════════════════════════════════════════════════
    THEME TOGGLE  ─ light ↔ dark
@@ -102,8 +93,8 @@ function toggleTheme() {
   STATE.theme = next;
   try { localStorage.setItem('tkho-theme', next); } catch(e) {}
   showToast('info', isDark
-    ? '☀️ Light mode activated — clean, bright, and clear.'
-    : '🌙 Dark mode activated — elegant, focused, and premium.');
+    ? 'Light mode activated — clean, bright, and clear.'
+    : 'Dark mode activated — elegant, focused, and premium.');
 }
 
 function initTheme() {
@@ -122,6 +113,15 @@ function initTheme() {
 const PAGES = ['home','therapists','about','blog','help','policy','dashboard','video'];
 
 function navigate(page) {
+  if ((page === 'dashboard' || page === 'video') && !STATE.currentUser) {
+    openAuth('login');
+    showToast('info', 'Log in to access your private account area.');
+    return false;
+  }
+  if (page === 'video' && !STATE.activeSession) {
+    showToast('info', 'Start a scheduled session from your dashboard to enter the video room.');
+    return false;
+  }
   PAGES.forEach(p => {
     const el = $('page-' + p);
     if (el) el.classList.remove('active');
@@ -233,23 +233,18 @@ function switchAuthTab(tab) {
 function doLogin() {
   const email = $('login-email').value.trim();
   const pass  = $('login-pass').value.trim();
-  if (!email || !pass) { showToast('danger', '⚠️ Please enter your email and password.'); return; }
-  const isDemo = email.toLowerCase() === 'user@test.com' && pass === 'pass123';
-  if (!isDemo) {
-    showToast('info', 'Use the preview credentials shown above to enter the demo.');
-    return;
-  }
+  if (!email || !pass) { showToast('danger', 'Please enter your email and password.'); return; }
   STATE.currentUser = {
     name:    'Arjun Mehta',
     email,
     role:    'user',
     initial:  'A',
-    provider: 'demo'
+    provider: 'local'
   };
   persistSession();
   applyLoggedIn();
   closeModal('auth-modal');
-  showToast('success', `✅ Welcome back, ${STATE.currentUser.name.split(' ')[0]}!`);
+  showToast('success', `Welcome back, ${STATE.currentUser.name.split(' ')[0]}!`);
   navigate('dashboard');
 }
 
@@ -268,14 +263,14 @@ function applyLoggedIn() {
 }
 
 function persistSession() {
-  if (!STATE.currentUser || STATE.currentUser.provider !== 'demo') return;
+  if (!STATE.currentUser) return;
   try { localStorage.setItem('tkho-demo-session', JSON.stringify(STATE.currentUser)); } catch (error) {}
 }
 
 function restoreSession() {
   try {
     const saved = JSON.parse(localStorage.getItem('tkho-demo-session') || 'null');
-    if (saved && saved.role === 'user' && saved.provider === 'demo' && saved.name) {
+    if (saved && saved.role === 'user' && saved.name) {
       STATE.currentUser = saved;
       applyLoggedIn();
     }
@@ -289,7 +284,7 @@ function logout() {
   $('nav-user-pill').style.display = 'none';
   $('nav-dashboard').style.display        = 'none';
   $('mobile-nav-dashboard').style.display = 'none';
-  showToast('info', '👋 You have been signed out. See you soon!');
+  showToast('info', 'You have been signed out. See you soon.');
   navigate('home');
 }
 
@@ -306,7 +301,7 @@ function selectMood(btn, mood) {
     conf.textContent = `✓ Mood "${mood}" logged at ${ts}`;
     conf.classList.add('show');
   }
-  showToast('success', `✅ Mood "<strong>${mood}</strong>" tracked at ${ts}.`);
+  showToast('success', `Mood "<strong>${mood}</strong>" tracked at ${ts}.`);
 }
 
 /* ══════════════════════════════════════════════════
@@ -405,11 +400,11 @@ function renderTherapists(filter) {
   grid.innerHTML = list.map(t => `
     <div class="tc-card card-lift">
       <div class="tc-head">
-        <div class="tc-av">${t.emoji}</div>
+        <div class="tc-av">${getInitials(t.name)}</div>
         <div>
           <div class="tc-name">${t.name}</div>
           <div class="tc-title">${t.title}</div>
-          <div class="tc-rating">⭐ ${t.rating} <span style="color:var(--text-3)">(${t.reviews} reviews)</span></div>
+          <div class="tc-rating">${t.rating} rating <span style="color:var(--text-3)">(${t.reviews} reviews)</span></div>
         </div>
       </div>
       <div class="tc-tags">${t.tags.map(tag => `<span class="tc-tag">${tag}</span>`).join('')}</div>
@@ -433,7 +428,7 @@ function filterTherapists(filter, btn) {
 ══════════════════════════════════════════════════ */
 function openBooking(therapistId) {
   if (!STATE.currentUser) {
-    showToast('info', '💡 Please log in first to book a session.');
+    showToast('info', 'Please log in first to book a session.');
     openAuth('login');
     return;
   }
@@ -441,9 +436,9 @@ function openBooking(therapistId) {
   if (!t) return;
 
   $('booking-modal').dataset.therapistId = therapistId;
-  $('bk-av').textContent    = t.emoji;
+  $('bk-av').textContent    = getInitials(t.name);
   $('bk-name').textContent  = t.name;
-  $('bk-meta').textContent  = `${t.title} · ⭐ ${t.rating}`;
+  $('bk-meta').textContent  = `${t.title} · ${t.rating} rating`;
   $('bk-price').textContent = `${t.price}/hr`;
 
   const scroll = $('bk-date-scroll');
@@ -483,7 +478,7 @@ function confirmBooking() {
   STATE.bookings.unshift({ therapistId, startTime, status: 'requested' });
   renderDashboard();
   closeModal('booking-modal');
-  showToast('success', '✅ Demo session booked.');
+  showToast('success', 'Session request saved.');
 }
 
 /* ══════════════════════════════════════════════════
@@ -494,13 +489,13 @@ function renderBlog() {
   if (!grid) return;
   grid.innerHTML = DATA.blogs.map((b, i) => `
     <div class="blog-card card-lift">
-      <div class="blog-img">${b.emoji}</div>
+      <div class="blog-img">${b.category.slice(0, 2).toUpperCase()}</div>
       <div class="blog-body">
         <div class="blog-meta"><span class="cat">${b.category}</span> · ${b.date}</div>
         <div class="blog-title">${b.title}</div>
         <div class="blog-summary">${b.summary}</div>
         <div class="blog-footer">
-          <span class="blog-author">✍️ ${b.author}</span>
+          <span class="blog-author">${b.author}</span>
           <span class="blog-read-link" onclick="openArticle(${i})">Read Article →</span>
         </div>
       </div>
@@ -514,7 +509,7 @@ function openArticle(idx) {
   if (!body) return;
   body.innerHTML = `
     <h2>${b.title}</h2>
-    <div class="art-meta">${b.emoji} ${b.category} &middot; ${b.date} &middot; Written by ${b.author}</div>
+    <div class="art-meta">${b.category} &middot; ${b.date} &middot; Written by ${b.author}</div>
     <p>${b.summary}</p>
     <p>Mental health is not a luxury — it is a fundamental pillar of human flourishing. Scientific research over the past three decades has transformed our understanding of how emotional wellbeing shapes everything from immune function to creative capacity, from relationship quality to professional performance across every domain of life.</p>
     <p>The evidence points to a compelling conclusion: investing in your psychological health is one of the highest-leverage actions you can take. Whether through professional therapy, daily mindfulness practice, social connection, or simply tracking your mood — every intentional act of self-care compounds into remarkable resilience and emotional intelligence over time.</p>
@@ -601,45 +596,36 @@ function switchPolicy(idx, btn) {
    DASHBOARD
 ══════════════════════════════════════════════════ */
 function renderDashboard() {
-  const guest  = $('dash-guest-state');
   const logged = $('dash-logged-state');
-  if (!guest || !logged) return;
-
-  if (!STATE.currentUser) {
-    guest.style.display  = 'block';
-    logged.style.display = 'none';
-    return;
-  }
-
-  guest.style.display  = 'none';
+  if (!logged || !STATE.currentUser) return;
   logged.style.display = 'block';
 
   const isDoc    = STATE.currentUser.role === 'therapist';
   const avClass  = isDoc ? 'dash-av dash-av-doc' : 'dash-av dash-av-user';
   const navItems = isDoc
     ? [
-        { id:'schedule', icon:'📅', label:'My Schedule'   },
-        { id:'clients',  icon:'👥', label:'Client Roster' },
+        { id:'schedule', icon:'', label:'My Schedule'   },
+        { id:'clients',  icon:'', label:'Client Roster' },
       ]
     : [
-        { id:'overview', icon:'🏠', label:'Overview'          },
-        { id:'bookings', icon:'📅', label:'Bookings'           },
-        { id:'history',  icon:'📋', label:'Session History'    },
-        { id:'reports',  icon:'📊', label:'Wellness Reports'   },
+        { id:'overview', icon:'', label:'Overview'          },
+        { id:'bookings', icon:'', label:'Bookings'           },
+        { id:'history',  icon:'', label:'Session History'    },
+        { id:'reports',  icon:'', label:'Wellness Reports'   },
       ];
 
   $('dash-sidebar-inner').innerHTML = `
     <div class="dash-profile">
       <div class="${avClass}">${STATE.currentUser.initial}</div>
       <div class="dash-fullname">${STATE.currentUser.name}</div>
-      <span class="badge ${isDoc ? 'badge-gold' : 'badge-blue'}">${isDoc ? '🩺 Therapist' : '👤 Patient'}</span>
+      <span class="badge ${isDoc ? 'badge-gold' : 'badge-blue'}">${isDoc ? 'Therapist' : 'Patient'}</span>
     </div>
     <div class="dash-nav">
       ${navItems.map((item, i) => `
         <button class="dash-nav-btn${i === 0 ? ' active' : ''}" onclick="switchDashView('${item.id}', this)">
           <span class="dash-nav-icon">${item.icon}</span>${item.label}
         </button>`).join('')}
-      <button class="dash-nav-btn" onclick="navigate('video')">
+      <button class="dash-nav-btn" onclick="beginSession()">
         <span class="dash-nav-icon">📹</span>Video Room
       </button>
       <button class="dash-nav-btn" style="color:var(--danger);margin-top:8px" onclick="logout()">
@@ -662,7 +648,7 @@ function buildUserDash() {
     <!-- OVERVIEW -->
     <div class="dash-view active" id="dv-overview">
       <div class="dash-welcome">
-        <h3>Good day, ${first}! 🌟</h3>
+        <h3>Good day, ${first}.</h3>
         <p>Here is your wellness snapshot for today — keep going, you are doing great.</p>
       </div>
       <div class="dash-stats-row">
@@ -684,18 +670,18 @@ function buildUserDash() {
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
         <div style="padding:16px;background:var(--bg-muted);border:1px solid var(--border);border-radius:12px">
-          <div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:10px">📅 UPCOMING</div>
+          <div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:10px">UPCOMING</div>
           <div class="booking-card">
-            <div class="booking-av">🩺</div>
+            <div class="booking-av">TK</div>
             <div class="booking-info">
               <div class="booking-name">${next ? next.therapistId : 'No upcoming therapist session'}</div>
               <div class="booking-time">${next ? nextDate : 'Browse therapists to get started'}</div>
             </div>
-            ${next ? '<button class="btn btn-primary btn-sm" onclick="navigate(&quot;video&quot;)">Join</button>' : ''}
+            ${next ? '<button class="btn btn-primary btn-sm" onclick="beginSession()">Join</button>' : ''}
           </div>
         </div>
         <div style="padding:16px;background:var(--bg-muted);border:1px solid var(--border);border-radius:12px">
-          <div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:10px">📈 MOOD TREND</div>
+          <div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:10px">MOOD TREND</div>
           ${(STATE.moods.length ? STATE.moods.slice(0, 7).reverse().map(m => Math.min(10, Math.max(1, Number(m.score || 5)))) : [0,0,0,0,0,0,0]).map((v,i)=>`
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
               <span style="font-size:11px;color:var(--text-3);width:14px">${['M','T','W','T','F','S','S'][i]}</span>
@@ -710,16 +696,16 @@ function buildUserDash() {
 
     <!-- BOOKINGS -->
     <div class="dash-view" id="dv-bookings">
-      <div class="disclaimer-box">⚡ <strong>Reminder:</strong> Sessions start 5 min before scheduled time. Check your email for video call links.</div>
+      <div class="disclaimer-box"><strong>Reminder:</strong> Sessions start 5 min before scheduled time. Check your email for video call links.</div>
       <h3 style="font-size:17px;font-weight:800;margin-bottom:16px">Upcoming Sessions</h3>
       ${upcoming.length ? upcoming.map(b=>`
         <div class="booking-card">
-          <div class="booking-av">🩺</div>
+          <div class="booking-av">TK</div>
           <div class="booking-info">
             <div class="booking-name">${b.therapistId}</div>
             <div class="booking-time">${new Date(b.startTime).toLocaleString()}</div>
           </div>
-          <button class="btn btn-outline btn-sm" onclick="navigate('video')">Join Video Call</button>
+          <button class="btn btn-outline btn-sm" onclick="beginSession()">Join Video Call</button>
         </div>`).join('') : '<div class="booking-card">No saved bookings yet. Browse therapists to request your first session.</div>'}
     </div>
 
@@ -728,7 +714,7 @@ function buildUserDash() {
       <h3 style="font-size:17px;font-weight:800;margin-bottom:16px">Session History</h3>
       <div class="booking-card" style="flex-direction:column;align-items:flex-start">
         <div style="display:flex;gap:12px;margin-bottom:10px;width:100%;align-items:center">
-          <div class="booking-av">👩‍⚕️</div>
+          <div class="booking-av">TK</div>
           <div>
             <div class="booking-name">Dr. Ananya Gupta</div>
             <div class="booking-time">May 30, 2026 · Completed ✓</div>
@@ -736,7 +722,7 @@ function buildUserDash() {
           <span class="badge badge-success" style="margin-left:auto">Done</span>
         </div>
         <div style="padding:12px 14px;background:var(--bg-muted);border-radius:10px;font-size:13px;color:var(--text-2);width:100%;line-height:1.68">
-          📝 <em>Clinical notes:</em> Focused on breathing techniques and catastrophising patterns. Identified three core cognitive distortions. Homework assigned: 5-min morning journaling daily for two weeks.
+          <em>Clinical notes:</em> Focused on breathing techniques and catastrophising patterns. Identified three core cognitive distortions. Homework assigned: 5-min morning journaling daily for two weeks.
         </div>
       </div>
     </div>
@@ -758,11 +744,11 @@ function buildUserDash() {
       </div>
       <div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:10px">MOOD LOG</div>
       ${[
-        {d:'Jun 4',m:'Peaceful 😌', s:8},
-        {d:'Jun 3',m:'Anxious 😰',  s:4},
-        {d:'Jun 2',m:'Radiant 🤩',  s:9},
-        {d:'Jun 1',m:'Neutral 😐',  s:6},
-        {d:'May 31',m:'Down 😔',    s:3},
+        {d:'Jun 4',m:'Peaceful', s:8},
+        {d:'Jun 3',m:'Anxious',  s:4},
+        {d:'Jun 2',m:'Radiant',  s:9},
+        {d:'Jun 1',m:'Neutral',  s:6},
+        {d:'May 31',m:'Down',    s:3},
       ].map(l=>`
         <div class="mood-log-item">
           <span class="mli-date">${l.d}</span>
@@ -780,7 +766,7 @@ function buildTherapistDash() {
     <!-- SCHEDULE -->
     <div class="dash-view active" id="dv-schedule">
       <div class="dash-welcome">
-        <h3>Good morning, ${first}! 🩺</h3>
+        <h3>Good morning, ${first}.</h3>
         <p>You have 3 sessions scheduled today. Your patients are counting on your presence.</p>
       </div>
       <div class="dash-stats-row">
@@ -812,7 +798,7 @@ function buildTherapistDash() {
             <div class="booking-name">${b.n} <span style="font-size:11px;color:var(--text-3);font-weight:500">· ${b.s}</span></div>
             <div class="booking-time">Today · ${b.t}</div>
           </div>
-          <button class="btn btn-primary btn-sm" onclick="navigate('video')">Start Session</button>
+          <button class="btn btn-primary btn-sm" onclick="beginSession()">Start Session</button>
         </div>`).join('')}
     </div>
 
@@ -854,19 +840,63 @@ function startSessionTimer() {
   }, 1000);
 }
 
+function beginSession() {
+  if (!STATE.currentUser) {
+    openAuth('login');
+    return;
+  }
+  STATE.activeSession = true;
+  navigate('video');
+}
+
 /* ══════════════════════════════════════════════════
    CHATBOT WIDGET
 ══════════════════════════════════════════════════ */
+const BUDDY_MODES = {
+  vent: {
+    prompt: 'Yaar, today was exhausting...',
+    reply: 'Tell me everything, no filters needed.',
+    starter: 'I need to vent about my day.'
+  },
+  overthinking: {
+    prompt: 'I keep replaying the worst possible outcome.',
+    reply: 'Let’s slow it down: what happened, what are you predicting, and what evidence do you have for each thought?',
+    starter: 'Help me untangle what I am overthinking.'
+  },
+  therapy: {
+    prompt: 'I want therapy, but I do not know how to explain what I feel.',
+    reply: 'We can name the feeling, the moments it shows up, and what you hope will change. That is already a useful place to begin.',
+    starter: 'Help me prepare for a therapy session.'
+  }
+};
+
+function setBuddyMode(mode, button) {
+  const selected = BUDDY_MODES[mode] || BUDDY_MODES.vent;
+  STATE.buddyMode = mode;
+  $$('.mode-pill').forEach(pill => pill.classList.remove('active'));
+  if (button) button.classList.add('active');
+  const prompt = $('buddy-prompt');
+  const reply = $('buddy-reply');
+  if (prompt) prompt.textContent = selected.prompt;
+  if (reply) reply.textContent = selected.reply;
+}
+
+function openBuddyExperience() {
+  if (!STATE.chatOpen) toggleChat();
+  const selected = BUDDY_MODES[STATE.buddyMode] || BUDDY_MODES.vent;
+  const input = $('chat-input');
+  if (input) input.placeholder = selected.starter;
+}
+
 const BOT_REPLIES = {
-  'book':      "To book a session, visit the Therapist Directory, pick a professional, and click 'Book Session'. Choose a date, time, and add optional notes. 📅",
-  'anxious':   "I hear you — anxiety is really tough. Try our Mindful Breathing tool on the homepage for immediate relief. Box breathing calms your nervous system in 2 minutes. Would you like me to connect you with one of our anxiety therapists? 💙",
-  'depress':   "Thank you for sharing that with me. Depression is real and very treatable. Our therapists specialise in compassionate, evidence-based support. You are absolutely not alone in this. 💙",
+  'book':      "To book a session, visit the Therapist Directory, pick a professional, and click 'Book Session'. Choose a date, time, and add optional notes.",
+  'anxious':   "I hear you — anxiety is really tough. We can slow the thought down together, or I can help you find a psychologist who works with anxiety.",
+  'depress':   "Thank you for sharing that with me. Depression is real and treatable. I can listen, or help you find a psychologist for more personalised support.",
   'therapist': "You can browse the professionals currently listed on TKHO and review their areas of focus. Please confirm credentials, availability, and suitability directly before beginning care.",
-  'tkho':      "TKHO stands for The Key of Happiness & Openness. We connect people with therapist support and thoughtful AI tools for reflection, preparation, and everyday wellbeing. 🌟",
-  'price':     "Therapy sessions start at ₹900/hr. Pricing and availability are shown by each provider. Students may qualify for subsidised rates through our compassion fund. 💰",
-  'crisis':    "If you are in immediate danger, please call emergency services (112) or a crisis helpline right now. iCall: 9152987821 · Vandrevala Foundation: 1860-2662-345. You matter deeply. 🚨",
-  'sleep':     "Sleep and mental health are deeply connected. Poor sleep can affect mood and stress. Try the Meditation Timer with the 'Sleep' preset as a gentle wind-down exercise; results vary from person to person. 🌙",
-  'default':   "I'm here to support your wellness journey! Ask me about booking sessions, finding therapists, our tools, or just share what's on your mind. I'm always listening. 💙",
+  'tkho':      "TKHO gives you two ways to feel lighter: an always-there AI Buddy and confidential sessions with verified psychologists.",
+  'price':     "Therapy sessions start at ₹799/session. Each psychologist's current price and cancellation terms are shown before booking.",
+  'crisis':    "If you are in immediate danger, call local emergency services or a crisis helpline now. iCall: 9152987821 · Vandrevala Foundation: 1860-2662-345 · KIRAN/Tele-MANAS: 14416.",
+  'default':   "I am here to listen. You can vent, untangle an anxious thought, prepare for therapy, or ask me how to find a psychologist.",
 };
 
 function getReply(msg) {
@@ -890,7 +920,7 @@ function addChatMessage(text, isUser) {
   div.className = 'chat-msg ' + (isUser ? 'user' : 'bot');
   const init = STATE.currentUser ? STATE.currentUser.initial : 'U';
   div.innerHTML = `
-    <div class="msg-av ${isUser ? 'user' : 'bot'}">${isUser ? init : '🤖'}</div>
+    <div class="msg-av ${isUser ? 'user' : 'bot'}">${isUser ? init : 'TK'}</div>
     <div class="msg-bub">${text}</div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
@@ -903,7 +933,7 @@ function addTypingIndicator() {
   div.className = 'chat-msg bot';
   div.id = 'typing-ind';
   div.innerHTML = `
-    <div class="msg-av bot">🤖</div>
+    <div class="msg-av bot">TK</div>
     <div class="msg-bub">
       <div style="display:flex;align-items:center;gap:4px;padding:2px 0">
         <div class="typing-dot"></div>
@@ -1029,7 +1059,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* 9. Welcome toast */
   setTimeout(() => {
-    showToast('info', '👋 Welcome to TKHO! Toggle ☀️/🌙 in the header to switch themes.');
+    showToast('info', 'Welcome to TKHO. Use the header toggle to switch themes.');
   }, 1800);
 
   /* 10. Nav scroll shadow on initial load */
