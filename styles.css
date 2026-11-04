@@ -1103,6 +1103,17 @@ html[data-theme="light"] .chat-demo-wrap { background:rgba(255,255,255,.8); }
 .trust-note { max-width:760px; margin:0 auto; padding:26px 30px; border:1px solid var(--ai-line); border-radius:18px; background:var(--ai-panel); color:var(--ai-muted); backdrop-filter:blur(18px); }
 .trust-note strong { display:block; color:var(--text-1); font-size:18px; margin-bottom:5px; }
 .tool-card,.mindfulness-card,.about-card,.policy-card,.faq-card { background:var(--ai-panel); border-color:var(--ai-line); box-shadow:none; backdrop-filter:blur(18px); }
+html[data-theme="light"] .tool-card {
+  background:rgba(15,19,35,.78);
+  border-color:rgba(56,189,248,.22);
+  color:#fff;
+}
+html[data-theme="light"] .tool-card h3 { color:#fff; }
+html[data-theme="light"] .tool-card p,
+html[data-theme="light"] .reflection-theme p { color:rgba(255,255,255,.65); }
+html[data-theme="light"] .mood-chart-labels,
+html[data-theme="light"] .reflection-bullet { color:rgba(255,255,255,.55); }
+html[data-theme="light"] .tool-avg-pill { background:rgba(255,255,255,.07); color:rgba(255,255,255,.6); }
 .footer { background:#050710; border-top:1px solid var(--ai-line); }
 .footer-link-muted { color:var(--ai-muted); font-size:14px; }
 @media(max-width:900px) { .nav-inner { padding:0 18px; } .hero-grid { grid-template-columns:1fr; gap:58px; } #hero { min-height:auto; padding-top:140px; } .hero-h1 { max-width:650px; } }
