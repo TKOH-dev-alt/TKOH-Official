@@ -68,6 +68,9 @@ const STATE = {
   quoteIdx:        0,
   sessionSec:      0,
   theme:           'light',
+  chatPersona:     'buddy',
+  chatTurns:       0,
+  chatHandoffShown:false,
   therapistFilters: { concern:'all', language:'all', price:'all' },
   booking:         { sessionType:'full', sessionMode:'Video Call', selectedDate:'', selectedTime:'2:00 PM', shareAiContext:false },
 };
@@ -949,6 +952,27 @@ const BUDDY_MODES = {
   }
 };
 
+const CHAT_PERSONAS = {
+  buddy: {
+    status: 'Buddy Mode · here to listen',
+    starter: 'Tell me what is sitting heavy today...',
+  },
+  guide: {
+    status: 'Psych Guide Mode · gentle reflection',
+    starter: 'What thought or feeling would you like to untangle?',
+  },
+};
+
+function setChatPersona(persona, button) {
+  const selected = CHAT_PERSONAS[persona] || CHAT_PERSONAS.buddy;
+  STATE.chatPersona = persona;
+  $$('.chat-persona-btn').forEach(item => item.classList.toggle('active', item === button || item.dataset.persona === persona));
+  const status = $('chat-persona-status');
+  const input = $('chat-input');
+  if (status) status.textContent = selected.status;
+  if (input) input.placeholder = selected.starter;
+}
+
 function setBuddyMode(mode, button) {
   const selected = BUDDY_MODES[mode] || BUDDY_MODES.vent;
   STATE.buddyMode = mode;
@@ -964,26 +988,40 @@ function openBuddyExperience() {
   if (!STATE.chatOpen) toggleChat();
   const selected = BUDDY_MODES[STATE.buddyMode] || BUDDY_MODES.vent;
   const input = $('chat-input');
-  if (input) input.placeholder = selected.starter;
+  if (input) input.placeholder = CHAT_PERSONAS[STATE.chatPersona]?.starter || selected.starter;
+  setChatPersona(STATE.chatPersona);
 }
 
 const BOT_REPLIES = {
-  'book':      "To book a session, visit the Therapist Directory, pick a professional, and click 'Book Session'. Choose a date, time, and add optional notes.",
-  'anxious':   "I hear you — anxiety is really tough. We can slow the thought down together, or I can help you find a psychologist who works with anxiety.",
-  'depress':   "Thank you for sharing that with me. Depression is real and treatable. I can listen, or help you find a psychologist for more personalised support.",
-  'therapist': "You can browse the professionals currently listed on TKHO and review their areas of focus. Please confirm credentials, availability, and suitability directly before beginning care.",
-  'tkho':      "TKHO gives you two ways to feel lighter: an always-there AI Buddy and confidential sessions with verified psychologists.",
-  'price':     "Therapy sessions start at ₹799/session. Each psychologist's current price and cancellation terms are shown before booking.",
+  'therapist': "It makes sense to wonder about that. A psychologist can offer private, ongoing support when something keeps affecting your days, relationships, sleep, or sense of self. If you want, you can browse psychologists and take your time finding a good fit.",
   'crisis':    "If you are in immediate danger, call local emergency services or a crisis helpline now. iCall: 9152987821 · Vandrevala Foundation: 1860-2662-345 · KIRAN/Tele-MANAS: 14416.",
-  'default':   "I am here to listen. You can vent, untangle an anxious thought, prepare for therapy, or ask me how to find a psychologist.",
+  'default':   "I am with you. You can tell me what happened, what you are feeling in your body, or the thought that keeps looping. There is no need to make it sound neat.",
 };
 
 function getReply(msg) {
   const l = msg.toLowerCase();
-  for (const [key, reply] of Object.entries(BOT_REPLIES)) {
-    if (key !== 'default' && l.includes(key)) return reply;
+  if (l.includes('crisis') || l.includes('suicide') || l.includes('hurt myself') || l.includes('kill myself')) {
+    return BOT_REPLIES.crisis;
   }
-  return BOT_REPLIES.default;
+  if (l.includes('therapist') || l.includes('therapy') || l.includes('professional help') || l.includes('psychologist')) {
+    return BOT_REPLIES.therapist;
+  }
+  if (STATE.chatPersona === 'guide') {
+    if (l.includes('overthink') || l.includes('anxious') || l.includes('stuck')) {
+      return "Let us gently separate the moment from the story your mind is adding. What happened, what are you predicting, and what would you tell a close friend in the same situation?";
+    }
+    if (l.includes('burnout') || l.includes('exhaust') || l.includes('tired')) {
+      return "Before we solve anything, let us notice the signal. What has been taking the most out of you lately, and what is one responsibility you could make lighter this week?";
+    }
+    return "Let us slow this down together. What feeling is strongest right now, and where do you notice it showing up in your thoughts or body?";
+  }
+  if (l.includes('overthink') || l.includes('anxious')) {
+    return "That sounds exhausting, yaar. You do not have to untangle the whole future tonight. Tell me the one thought that is shouting the loudest.";
+  }
+  if (l.includes('burnout') || l.includes('stuck') || l.includes('exhaust')) {
+    return "That is a lot to carry. We can pause the pressure for a minute — what part of today drained you the most?";
+  }
+  return "I am here with you. You can say it exactly as it is — messy, repetitive, or unfinished.";
 }
 
 function toggleChat() {
@@ -1001,6 +1039,18 @@ function addChatMessage(text, isUser) {
   div.innerHTML = `
     <div class="msg-av ${isUser ? 'user' : 'bot'}">${isUser ? init : 'TK'}</div>
     <div class="msg-bub">${text}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showChatHandoff() {
+  if (STATE.chatHandoffShown) return;
+  const msgs = $('chat-messages');
+  if (!msgs) return;
+  STATE.chatHandoffShown = true;
+  const div = document.createElement('div');
+  div.className = 'chat-context-note';
+  div.innerHTML = 'If this feels bigger than a chat, <a href="#page-therapists" onclick="navigate(\'therapists\'); return false;">a psychologist can help you work through it with care <span aria-hidden="true">→</span></a>';
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
 }
@@ -1029,6 +1079,7 @@ function sendChat() {
   if (!inp) return;
   const msg = inp.value.trim();
   if (!msg) return;
+  STATE.chatTurns++;
   addChatMessage(msg, true);
   inp.value = '';
   addTypingIndicator();
@@ -1037,6 +1088,9 @@ function sendChat() {
     const ind = $('typing-ind');
     if (ind) ind.remove();
     addChatMessage(getReply(msg), false);
+    if (STATE.chatTurns > 1 || /therapist|therapy|psychologist|professional help|need help/i.test(msg)) {
+      showChatHandoff();
+    }
   }, delay);
 }
 

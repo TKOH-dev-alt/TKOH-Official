@@ -651,30 +651,30 @@
     <div class="chat-bot-av" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v2m-5 1 1.5 1.5M17 6l-1.5 1.5M5 11h14v6a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/></svg></div>
     <div class="chat-bot-info">
       <div class="chat-bot-name">TKHO AI Companion</div>
-      <div class="chat-online"><div class="online-dot"></div>Online Companion</div>
+      <div class="chat-online"><div class="online-dot"></div><span id="chat-persona-status">Buddy Mode · here to listen</span></div>
     </div>
     <button class="chat-x" onclick="toggleChat()" aria-label="Close chat">✕</button>
+  </div>
+  <div class="chat-persona-switch" role="tablist" aria-label="Choose the AI Companion style">
+    <button class="chat-persona-btn active" data-persona="buddy" onclick="setChatPersona('buddy', this)">Buddy Mode</button>
+    <button class="chat-persona-btn" data-persona="guide" onclick="setChatPersona('guide', this)">Psych Guide Mode</button>
   </div>
 
   <div class="chat-msgs" id="chat-messages">
     <div class="chat-msg bot">
       <div class="msg-av bot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v2m-5 1 1.5 1.5M17 6l-1.5 1.5M5 11h14v6a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/></svg></div>
-      <div class="msg-bub">You can start wherever feels easiest. What is weighing on you right now?</div>
-    </div>
-    <div class="chat-msg bot">
-      <div class="msg-av bot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v2m-5 1 1.5 1.5M17 6l-1.5 1.5M5 11h14v6a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/></svg></div>
-      <div class="msg-bub">I can help you find therapists, answer questions, or just be here to listen. What's on your mind?</div>
+      <div class="msg-bub">You do not need to have the right words. Start with whatever feels heaviest, and we will take it one thought at a time.</div>
     </div>
   </div>
 
   <div class="chat-quick">
-    <span class="q-chip" onclick="sendQuickChat('How do I book a session?')">Book a session</span>
-    <span class="q-chip" onclick="sendQuickChat('I feel anxious today')">I feel anxious</span>
-    <span class="q-chip" onclick="sendQuickChat('Tell me about therapists')">Find therapists</span>
-    <span class="q-chip" onclick="sendQuickChat('What does TKHO cost?')">Pricing</span>
-    <span class="q-chip" onclick="sendQuickChat('crisis help')">Crisis help</span>
+    <span class="q-chip" onclick="sendQuickChat('I am overthinking everything right now')">I'm overthinking everything right now</span>
+    <span class="q-chip" onclick="sendQuickChat('I just need a friend to vent to')">Just need a friend to vent to</span>
+    <span class="q-chip" onclick="sendQuickChat('I am feeling burnt out and stuck')">Feeling burnt out and stuck</span>
+    <span class="q-chip" onclick="sendQuickChat('Help me figure out if I need a therapist')">Do I need a therapist?</span>
   </div>
 
+  <a class="chat-handoff" href="#page-therapists" onclick="navigate('therapists'); return false;">Want deeper human support? <strong>Browse Psychologists <span aria-hidden="true">→</span></strong></a>
   <div class="chat-inp-bar">
     <input type="text" class="chat-inp" id="chat-input" placeholder="Type a message...">
     <button class="chat-send" onclick="sendChat()" aria-label="Send message">→</button>
