@@ -1082,20 +1082,25 @@ document.addEventListener('keydown', e => {
    SCROLL ANIMATIONS (Intersection Observer)
 ══════════════════════════════════════════════════ */
 function initScrollAnimations() {
-  if (!('IntersectionObserver' in window)) return;
+  const revealItems = $$('.section-title, .section-subtitle, .service-card, .how-step, .buddy-mode-panel, .buddy-live-card, .tc-card, .blog-card, .faq-item, .policy-card, .about-card, .team-card, .dash-welcome, .dash-stat-box');
+  if (!revealItems.length) return;
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+    revealItems.forEach(el => el.classList.add('is-visible'));
+    return;
+  }
+
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.12 });
 
-  $$('.tc-card, .blog-card, .helps-card, .testimonial-card, .stat-card, .tool-card, .team-card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(16px)';
-    el.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+  revealItems.forEach((el, index) => {
+    el.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 70}ms`);
     observer.observe(el);
   });
 }

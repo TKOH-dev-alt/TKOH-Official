@@ -1482,3 +1482,40 @@ footer { padding:56px 0 0; }
   .section-title { font-size:32px; }
   #chat-panel { width:calc(100vw - 24px); right:12px; }
 }
+
+/* Scroll reveals: quiet movement that supports the content rather than competing with it. */
+@media (prefers-reduced-motion: no-preference) {
+  .section-title,
+  .section-subtitle,
+  .service-card,
+  .how-step,
+  .buddy-mode-panel,
+  .buddy-live-card,
+  .tc-card,
+  .blog-card,
+  .faq-item,
+  .policy-card,
+  .about-card,
+  .team-card,
+  .dash-welcome,
+  .dash-stat-box {
+    opacity:0;
+    transform:translateY(18px);
+    transition:
+      opacity .6s cubic-bezier(.22,1,.36,1) var(--reveal-delay, 0ms),
+      transform .6s cubic-bezier(.22,1,.36,1) var(--reveal-delay, 0ms);
+    will-change:opacity, transform;
+  }
+  .is-visible {
+    opacity:1;
+    transform:translateY(0);
+  }
+  .service-card:hover,
+  .tc-card:hover,
+  .blog-card:hover {
+    transform:translateY(-3px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior:auto; }
+}
