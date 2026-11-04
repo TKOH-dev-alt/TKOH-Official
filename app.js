@@ -9,12 +9,12 @@
 ══════════════════════════════════════════════════ */
 const DATA = {
   therapists: [
-    { id:1, name:'Dr. Ananya Gupta',  title:'Anxiety & Stress Specialist',  rating:4.9, reviews:142, tags:['Anxiety','Mindfulness','CBT'],       bio:'With a decade of clinical experience, Dr. Gupta specialises in evidence-based CBT and mindfulness techniques to help patients overcome chronic anxiety and reclaim lasting inner calm.',           price:'₹1,200', specialty:'anxiety'    },
-    { id:2, name:'Dr. Rohan Verma',   title:'Depression & Mood Therapist',  rating:4.8, reviews:97,  tags:['Depression','Grief','DBT'],           bio:'Dr. Verma provides compassionate, non-judgmental support for individuals navigating depression, grief, and major life transitions using Dialectical Behaviour Therapy.',                          price:'₹1,400', specialty:'depression' },
-    { id:3, name:'Dr. Meera Nair',    title:'Relationship Counsellor',      rating:4.7, reviews:203, tags:['Couples','Communication','Attachment'], bio:'A systemic therapist helping couples and individuals build deeper connections, resolve conflicts, and understand their attachment patterns in a safe, supportive environment.',           price:'₹1,100', specialty:'relations'  },
-    { id:4, name:'Vikram Singh',       title:'Career & Life Coach',          rating:4.6, reviews:78,  tags:['Career','Burnout','Identity'],         bio:'Combines psychological insight with practical coaching to help professionals navigate career crossroads, workplace stress, and personal identity challenges with clarity and confidence.',         price:'₹900',   specialty:'career'     },
-    { id:5, name:'Dr. Fatima Zaidi',  title:'Trauma & PTSD Specialist',     rating:4.9, reviews:116, tags:['Trauma','PTSD','EMDR'],               bio:'Trained in EMDR and somatic approaches, Dr. Zaidi specialises in helping trauma survivors rebuild safety, self-trust, and a renewed sense of personal identity and belonging over time.',  price:'₹1,600', specialty:'trauma'     },
-    { id:6, name:'Aryan Kapoor',      title:'Child & Adolescent Therapist', rating:4.7, reviews:89,  tags:['Teens','Family','Anxiety'],           bio:'Passionate about supporting young people through developmental challenges, school stress, and family dynamics using play therapy and narrative therapeutic approaches that resonate.',          price:'₹1,000', specialty:'anxiety'    },
+    { id:1, name:'Dr. Ananya Gupta', qualification:'M.Phil Clinical Psychology', experience:'6+ yrs exp', pronouns:'she/her', languages:['English','Hindi'], concerns:['anxiety','family'], tags:['Anxiety','Overthinking','CBT'], quote:'I create a warm, practical space where we untangle anxiety without judgment.', next:'Today, 6:00 PM', price:999, discoveryPrice:299, approach:'CBT with mindfulness-based tools and gentle behavioural experiments. Sessions are collaborative, practical, and paced around what feels manageable for you.', rating:4.9, reviews:142, title:'Anxiety & Overthinking Psychologist', bio:'Dr. Gupta helps adults work through anxious thoughts, self-doubt, and family stress with evidence-based, everyday strategies.', specialty:'anxiety' },
+    { id:2, name:'Dr. Rohan Verma', qualification:'M.A. Clinical Psychology', experience:'8+ yrs exp', pronouns:'he/him', languages:['English','Hinglish'], concerns:['depression','anxiety'], tags:['Depression','Low Mood','ACT'], quote:'Healing can be steady and human; we will find the next small step together.', next:'Tomorrow, 11:00 AM', price:1199, discoveryPrice:299, approach:'Acceptance and Commitment Therapy (ACT) with person-centred counselling. Rohan focuses on emotional clarity, values, and rebuilding momentum without pressure.', rating:4.8, reviews:97, title:'Depression & Emotional Wellbeing Psychologist', bio:'Dr. Verma works with low mood, burnout, grief, and the feeling of being stuck in a difficult season.', specialty:'depression' },
+    { id:3, name:'Dr. Meera Nair', qualification:'M.Phil Clinical Psychology', experience:'7+ yrs exp', pronouns:'she/her', languages:['English','Hindi','Hinglish'], concerns:['relationship','family'], tags:['Relationships','Communication','Attachment'], quote:'We can make difficult conversations feel safer, clearer, and less lonely.', next:'Today, 8:00 PM', price:1299, discoveryPrice:399, approach:'Emotion-focused and attachment-informed therapy with communication practice. Meera supports individuals and couples who want healthier patterns and stronger boundaries.', rating:4.7, reviews:203, title:'Relationship & Family Psychologist', bio:'Dr. Nair supports relationship repair, family stress, boundaries, and communication in a warm, non-blaming space.', specialty:'relations' },
+    { id:4, name:'Dr. Vikram Singh', qualification:'M.A. Counselling Psychology', experience:'9+ yrs exp', pronouns:'he/him', languages:['English','Hindi'], concerns:['career','anxiety'], tags:['Career','Burnout','Self-esteem'], quote:'You do not have to choose between ambition and your wellbeing.', next:'Tomorrow, 4:00 PM', price:899, discoveryPrice:299, approach:'Integrative counselling using CBT, solution-focused therapy, and values work. Vikram helps professionals navigate burnout, career decisions, and workplace anxiety.', rating:4.6, reviews:78, title:'Career & Burnout Psychologist', bio:'Dr. Singh works with professionals facing burnout, career uncertainty, performance anxiety, and identity transitions.', specialty:'career' },
+    { id:5, name:'Dr. Fatima Zaidi', qualification:'M.Phil Clinical Psychology', experience:'10+ yrs exp', pronouns:'she/her', languages:['English','Hindi'], concerns:['trauma','anxiety'], tags:['Trauma','PTSD','EMDR'], quote:'Safety comes first; we will move at a pace that respects your story.', next:'Friday, 5:30 PM', price:1499, discoveryPrice:399, approach:'Trauma-informed therapy with EMDR-informed stabilisation, somatic grounding, and person-centred care. Fatima prioritises trust, consent, and emotional safety.', rating:4.9, reviews:116, title:'Trauma-Informed Psychologist', bio:'Dr. Zaidi helps adults process trauma, PTSD symptoms, difficult memories, and the impact of prolonged stress.', specialty:'trauma' },
+    { id:6, name:'Dr. Aryan Kapoor', qualification:'M.A. Psychology, RCI-aligned practice', experience:'6+ yrs exp', pronouns:'they/them', languages:['English','Hindi','Hinglish'], concerns:['family','anxiety','relationship'], tags:['Family Stress','Anxiety','Identity'], quote:'There is room for every part of you in this conversation.', next:'Saturday, 11:30 AM', price:999, discoveryPrice:299, approach:'Person-centred therapy with narrative and CBT techniques. Aryan works collaboratively with young adults and families around identity, stress, and changing relationships.', rating:4.7, reviews:89, title:'Family & Young Adult Psychologist', bio:'Dr. Kapoor supports young adults and families through anxiety, identity questions, transitions, and relationship stress.', specialty:'family' },
   ],
 
   blogs: [
@@ -68,6 +68,8 @@ const STATE = {
   quoteIdx:        0,
   sessionSec:      0,
   theme:           'light',
+  therapistFilters: { concern:'all', language:'all', price:'all' },
+  booking:         { sessionType:'full', sessionMode:'Video Call', selectedDate:'', selectedTime:'2:00 PM', shareAiContext:false },
 };
 
 let _breathTimer  = null;
@@ -385,12 +387,18 @@ function toggleCheck(item) {
 /* ══════════════════════════════════════════════════
    THERAPIST DIRECTORY
 ══════════════════════════════════════════════════ */
-function renderTherapists(filter) {
+function renderTherapists() {
   const grid = $('therapist-grid');
   if (!grid) return;
-  const list = filter === 'all'
-    ? DATA.therapists
-    : DATA.therapists.filter(t => t.specialty === filter);
+  const filters = STATE.therapistFilters;
+  const list = DATA.therapists.filter(t => {
+    const concernMatch = filters.concern === 'all' || t.concerns.includes(filters.concern);
+    const languageMatch = filters.language === 'all' || t.languages.includes(filters.language);
+    const priceMatch = filters.price === 'all'
+      || (filters.price === 'under1000' && t.price < 1000)
+      || (filters.price === '1000to1500' && t.price >= 1000 && t.price <= 1500);
+    return concernMatch && languageMatch && priceMatch;
+  });
 
   if (list.length === 0) {
     grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--text-3)">No therapists found for this specialty.</div>`;
@@ -398,29 +406,76 @@ function renderTherapists(filter) {
   }
 
   grid.innerHTML = list.map(t => `
-    <div class="tc-card card-lift">
+    <div class="tc-card therapist-profile-card card-lift">
       <div class="tc-head">
-        <div class="tc-av">${getInitials(t.name)}</div>
+        <div class="tc-avatar-wrap">
+          <div class="tc-av">${getInitials(t.name)}</div>
+          <span class="verified-badge" title="Verified Psychologist" aria-label="Verified Psychologist">✓</span>
+        </div>
         <div>
           <div class="tc-name">${t.name}</div>
-          <div class="tc-title">${t.title}</div>
-          <div class="tc-rating">${t.rating} rating <span style="color:var(--text-3)">(${t.reviews} reviews)</span></div>
+          <div class="tc-title">${t.qualification} · ${t.experience}</div>
+          <div class="tc-pronouns">${t.pronouns} · ${t.rating} rating <span style="color:var(--text-3)">(${t.reviews} reviews)</span></div>
         </div>
       </div>
+      <span class="verified-label">Verified Psychologist</span>
+      <span class="language-badge">Speaks: ${t.languages.join(', ')}</span>
       <div class="tc-tags">${t.tags.map(tag => `<span class="tc-tag">${tag}</span>`).join('')}</div>
-      <div class="tc-bio">${t.bio}</div>
+      <blockquote class="therapist-quote">“${t.quote}”</blockquote>
+      <p class="next-slot">Next available: <strong>${t.next}</strong></p>
       <div class="tc-footer">
-        <div class="tc-price">${t.price} <span>/ hour</span></div>
-        <button class="btn btn-primary btn-sm" onclick="openBooking(${t.id})">Book Session</button>
+        <div class="tc-price">₹${t.price} <span>/ 50 mins</span><small>15-min Intro Call: ₹${t.discoveryPrice}</small></div>
+        <div class="tc-actions"><button class="btn btn-outline btn-sm" onclick="openTherapistDrawer(${t.id})">View Approach</button><button class="btn btn-primary btn-sm" onclick="openBooking(${t.id})">Book Session</button></div>
       </div>
     </div>
   `).join('');
 }
 
-function filterTherapists(filter, btn) {
-  $$('.filter-chip').forEach(c => c.classList.remove('active'));
+function setTherapistFilter(group, value, btn) {
+  STATE.therapistFilters[group] = value;
+  $$(`.filter-chip[data-filter-group="${group}"]`).forEach(chip => chip.classList.remove('active'));
   btn.classList.add('active');
-  renderTherapists(filter);
+  renderTherapists();
+}
+
+function resetTherapistFilters() {
+  STATE.therapistFilters = { concern:'all', language:'all', price:'all' };
+  $$('.filter-chip').forEach(chip => chip.classList.toggle('active', chip.dataset.filterValue === 'all'));
+  renderTherapists();
+}
+
+function filterTherapists(filter, btn) {
+  const mapped = filter === 'relations' ? 'relationship' : filter;
+  setTherapistFilter('concern', mapped, btn && (btn.target || btn));
+}
+
+function openTherapistDrawer(therapistId) {
+  const therapist = DATA.therapists.find(item => item.id === therapistId);
+  const drawer = $('therapist-drawer');
+  const content = $('therapist-drawer-content');
+  if (!therapist || !drawer || !content) return;
+  content.innerHTML = `
+    <div class="drawer-avatar">${getInitials(therapist.name)}</div>
+    <span class="verified-label">Verified Psychologist</span>
+    <h2>${therapist.name}</h2>
+    <p class="drawer-meta">${therapist.qualification} · ${therapist.experience} · ${therapist.pronouns}</p>
+    <p class="drawer-quote">“${therapist.quote}”</p>
+    <h3>How I work</h3>
+    <p>${therapist.approach}</p>
+    <h3>Good fit for</h3>
+    <div class="tc-tags">${therapist.tags.map(tag => `<span class="tc-tag">${tag}</span>`).join('')}</div>
+    <button class="btn btn-primary" onclick="closeTherapistDrawer();openBooking(${therapist.id})">Book with ${therapist.name.split(' ').slice(-1)[0]} →</button>
+  `;
+  drawer.classList.remove('hidden');
+  drawer.setAttribute('aria-hidden', 'false');
+}
+
+function closeTherapistDrawer() {
+  const drawer = $('therapist-drawer');
+  if (drawer) {
+    drawer.classList.add('hidden');
+    drawer.setAttribute('aria-hidden', 'true');
+  }
 }
 
 /* ══════════════════════════════════════════════════
@@ -439,7 +494,15 @@ function openBooking(therapistId) {
   $('bk-av').textContent    = getInitials(t.name);
   $('bk-name').textContent  = t.name;
   $('bk-meta').textContent  = `${t.title} · ${t.rating} rating`;
-  $('bk-price').textContent = `${t.price}/hr`;
+  $('bk-price').textContent = `₹${t.price} / 50 mins`;
+  $('bk-full-price').textContent = `₹${t.price}`;
+  $('bk-discovery-price').textContent = `₹${t.discoveryPrice}`;
+  $$('input[name="session-type"]').forEach(input => { input.checked = input.value === 'full'; });
+  $$('input[name="session-mode"]').forEach(input => { input.checked = input.value === 'Video Call'; });
+  $$('.booking-choice').forEach(choice => choice.classList.toggle('active', choice.querySelector('input').value === 'full'));
+  $$('.mode-choice').forEach(choice => choice.classList.toggle('active', choice.querySelector('input').value === 'Video Call'));
+  STATE.booking.sessionType = 'full';
+  STATE.booking.sessionMode = 'Video Call';
 
   const scroll = $('bk-date-scroll');
   const days   = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
@@ -447,7 +510,7 @@ function openBooking(therapistId) {
   scroll.innerHTML = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(today);
     d.setDate(today.getDate() + i);
-    return `<div class="date-btn${i === 0 ? ' sel' : ''}" onclick="selectDate(this)">
+    return `<div class="date-btn${i === 0 ? ' sel' : ''}" data-date="${d.toISOString()}" onclick="selectDate(this)">
       <div class="date-day-lbl">${days[d.getDay()]}</div>
       <div class="date-num-lbl">${d.getDate()}</div>
     </div>`;
@@ -459,11 +522,26 @@ function openBooking(therapistId) {
 function selectDate(btn) {
   $$('.date-btn').forEach(b => b.classList.remove('sel'));
   btn.classList.add('sel');
+  STATE.booking.selectedDate = btn.dataset.date;
 }
 
 function selectTimeSlot(btn) {
   $$('.time-slot').forEach(b => b.classList.remove('sel'));
   btn.classList.add('sel');
+  STATE.booking.selectedTime = btn.textContent.trim();
+}
+
+function selectSessionType(input) {
+  STATE.booking.sessionType = input.value;
+  $$('.booking-choice').forEach(choice => choice.classList.toggle('active', choice.querySelector('input') === input));
+  const price = $('bk-price');
+  const therapist = DATA.therapists.find(item => String(item.id) === String($('booking-modal').dataset.therapistId));
+  if (price && therapist) price.textContent = input.value === 'discovery' ? `₹${therapist.discoveryPrice} / 15 mins` : `₹${therapist.price} / 50 mins`;
+}
+
+function selectSessionMode(input) {
+  STATE.booking.sessionMode = input.value;
+  $$('.mode-choice').forEach(choice => choice.classList.toggle('active', choice.querySelector('input') === input));
 }
 
 function confirmBooking() {
@@ -474,8 +552,9 @@ function confirmBooking() {
     return;
   }
   const therapistId = $('booking-modal').dataset.therapistId || 'directory-selection';
-  const startTime = new Date().toISOString();
-  STATE.bookings.unshift({ therapistId, startTime, status: 'requested' });
+  const startTime = STATE.booking.selectedDate || new Date().toISOString();
+  const shareAiContext = Boolean($('share-ai-context') && $('share-ai-context').checked);
+  STATE.bookings.unshift({ therapistId, startTime, status: 'requested', sessionType: STATE.booking.sessionType, sessionMode: STATE.booking.sessionMode, selectedTime: STATE.booking.selectedTime, shareAiContext });
   renderDashboard();
   closeModal('booking-modal');
   showToast('success', 'Session request saved.');

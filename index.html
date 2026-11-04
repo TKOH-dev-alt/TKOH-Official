@@ -233,17 +233,46 @@
   <section id="therapists" style="padding:100px 0 80px">
     <div class="container">
       <div style="margin-bottom:40px">
-        <div class="section-label">💼 Professionals</div>
+        <div class="section-label">Professionals</div>
         <h2 class="section-title">Find Your Perfect Therapist</h2>
-        <p class="section-subtitle">Explore the available professionals and find an approach that feels right for you.</p>
+        <p class="section-subtitle">Match with a verified psychologist by concern, language, availability, and budget.</p>
       </div>
-      <div class="filter-bar">
-        <button class="filter-chip active" onclick="filterTherapists('all',this)">All Specialties</button>
-        <button class="filter-chip" onclick="filterTherapists('anxiety',this)">Anxiety &amp; Stress</button>
-        <button class="filter-chip" onclick="filterTherapists('depression',this)">Depression</button>
-        <button class="filter-chip" onclick="filterTherapists('relations',this)">Relationships</button>
-        <button class="filter-chip" onclick="filterTherapists('career',this)">Career Coaching</button>
-        <button class="filter-chip" onclick="filterTherapists('trauma',this)">Trauma &amp; PTSD</button>
+      <div class="match-bar">
+        <div class="match-bar-heading">
+          <div><strong>Match me in 30 seconds</strong><span>Start with what feels most relevant today.</span></div>
+          <button class="match-reset" onclick="resetTherapistFilters()">Reset</button>
+        </div>
+        <div class="filter-group">
+          <span class="filter-group-label">Concern</span>
+          <div class="filter-options" id="concern-filters">
+            <button class="filter-chip active" data-filter-group="concern" data-filter-value="all" onclick="setTherapistFilter('concern','all',this)">All</button>
+            <button class="filter-chip" data-filter-group="concern" data-filter-value="anxiety" onclick="setTherapistFilter('concern','anxiety',this)">Anxiety &amp; Overthinking</button>
+            <button class="filter-chip" data-filter-group="concern" data-filter-value="relationship" onclick="setTherapistFilter('concern','relationship',this)">Relationship Issues</button>
+            <button class="filter-chip" data-filter-group="concern" data-filter-value="career" onclick="setTherapistFilter('concern','career',this)">Career &amp; Burnout</button>
+            <button class="filter-chip" data-filter-group="concern" data-filter-value="depression" onclick="setTherapistFilter('concern','depression',this)">Depression</button>
+            <button class="filter-chip" data-filter-group="concern" data-filter-value="family" onclick="setTherapistFilter('concern','family',this)">Family Stress</button>
+            <button class="filter-chip" data-filter-group="concern" data-filter-value="trauma" onclick="setTherapistFilter('concern','trauma',this)">Trauma</button>
+          </div>
+        </div>
+        <div class="filter-row-split">
+          <div class="filter-group">
+            <span class="filter-group-label">Language</span>
+            <div class="filter-options">
+              <button class="filter-chip active" data-filter-group="language" data-filter-value="all" onclick="setTherapistFilter('language','all',this)">All Languages</button>
+              <button class="filter-chip" data-filter-group="language" data-filter-value="English" onclick="setTherapistFilter('language','English',this)">English</button>
+              <button class="filter-chip" data-filter-group="language" data-filter-value="Hindi" onclick="setTherapistFilter('language','Hindi',this)">Hindi</button>
+              <button class="filter-chip" data-filter-group="language" data-filter-value="Hinglish" onclick="setTherapistFilter('language','Hinglish',this)">Hinglish</button>
+            </div>
+          </div>
+          <div class="filter-group">
+            <span class="filter-group-label">Price</span>
+            <div class="filter-options">
+              <button class="filter-chip active" data-filter-group="price" data-filter-value="all" onclick="setTherapistFilter('price','all',this)">All</button>
+              <button class="filter-chip" data-filter-group="price" data-filter-value="under1000" onclick="setTherapistFilter('price','under1000',this)">Under ₹1,000</button>
+              <button class="filter-chip" data-filter-group="price" data-filter-value="1000to1500" onclick="setTherapistFilter('price','1000to1500',this)">₹1,000–₹1,500</button>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="therapist-grid" id="therapist-grid"></div>
     </div>
@@ -548,37 +577,55 @@
         <div class="strip-av" id="bk-av">TK</div>
         <div>
           <div class="strip-name" id="bk-name">Dr. Ananya Gupta</div>
-          <div class="strip-meta" id="bk-meta">Anxiety &amp; Stress · ⭐ 4.9</div>
+          <div class="strip-meta" id="bk-meta">Anxiety &amp; Stress · 4.9 rating</div>
         </div>
-        <div class="strip-price" id="bk-price">₹1,200/hr</div>
+          <div class="strip-price" id="bk-price">₹999 / 50 mins</div>
       </div>
     </div>
     <div class="booking-modal-body">
+      <div class="booking-choice-block">
+          <div class="bk-section-lbl">Choose a session</div>
+          <div class="booking-choice-grid">
+            <label class="booking-choice active"><input type="radio" name="session-type" value="full" checked onchange="selectSessionType(this)"><span><strong>50-Min Full Session</strong><small>For ongoing support and focused work</small></span><b id="bk-full-price">₹999</b></label>
+            <label class="booking-choice"><input type="radio" name="session-type" value="discovery" onchange="selectSessionType(this)"><span><strong>15-Min Discovery Call</strong><small>First-time users · Find the right fit</small></span><b id="bk-discovery-price">₹299</b></label>
+          </div>
+      </div>
+      <div class="booking-choice-block">
+          <div class="bk-section-lbl">Session mode</div>
+          <div class="mode-choice-row">
+            <label class="mode-choice active"><input type="radio" name="session-mode" value="Video Call" checked onchange="selectSessionMode(this)">Video Call</label>
+            <label class="mode-choice"><input type="radio" name="session-mode" value="Audio Call" onchange="selectSessionMode(this)">Audio Call</label>
+            <label class="mode-choice"><input type="radio" name="session-mode" value="Chat Consultation" onchange="selectSessionMode(this)">Chat Consultation</label>
+          </div>
+      </div>
       <div class="bk-section-lbl">Select Date</div>
       <div class="date-scroll" id="bk-date-scroll"></div>
 
-      <div class="bk-section-lbl">Select Time Slot</div>
-      <div class="time-grid-bk">
-        <div class="time-slot"     onclick="selectTimeSlot(this)">9:00 AM</div>
-        <div class="time-slot"     onclick="selectTimeSlot(this)">11:00 AM</div>
-        <div class="time-slot sel" onclick="selectTimeSlot(this)">2:00 PM</div>
-        <div class="time-slot"     onclick="selectTimeSlot(this)">4:00 PM</div>
-        <div class="time-slot"     onclick="selectTimeSlot(this)">7:00 PM</div>
-      </div>
+      <div class="bk-section-lbl">Select time</div>
+      <div class="time-category"><span>Morning</span><div class="time-grid-bk"><div class="time-slot" onclick="selectTimeSlot(this)">9:00 AM</div><div class="time-slot" onclick="selectTimeSlot(this)">11:00 AM</div></div></div>
+      <div class="time-category"><span>Afternoon</span><div class="time-grid-bk"><div class="time-slot sel" onclick="selectTimeSlot(this)">2:00 PM</div><div class="time-slot" onclick="selectTimeSlot(this)">4:00 PM</div></div></div>
+      <div class="time-category"><span>Evening</span><div class="time-grid-bk"><div class="time-slot" onclick="selectTimeSlot(this)">6:00 PM</div><div class="time-slot" onclick="selectTimeSlot(this)">7:30 PM</div></div></div>
 
       <div class="bk-section-lbl">Session Notes (Optional)</div>
       <textarea class="notes-inp" placeholder="Describe your session focus, current concerns, or what you'd like to work on..."></textarea>
-
-      <div class="security-note">
-        🔐 Sessions are end-to-end encrypted and strictly confidential.
-      </div>
+      <label class="ai-context-check"><input type="checkbox" id="share-ai-context"> <span>Share a brief summary from my AI Buddy reflection so my therapist knows my context.</span></label>
+      <div class="security-note">Your session details are private and shared only with the professional you choose.</div>
     </div>
+
     <div class="booking-modal-foot">
       <button class="btn btn-outline" onclick="closeModal('booking-modal')">Cancel</button>
       <button class="btn btn-primary" onclick="confirmBooking()">Confirm Session →</button>
     </div>
   </div>
 </div>
+
+<aside class="detail-drawer hidden" id="therapist-drawer" aria-hidden="true">
+  <div class="detail-drawer-backdrop" onclick="closeTherapistDrawer()"></div>
+  <div class="detail-drawer-panel">
+    <button class="modal-close-btn" onclick="closeTherapistDrawer()" aria-label="Close therapist details">✕</button>
+    <div id="therapist-drawer-content"></div>
+  </div>
+</aside>
 
 
 <!-- ═══════════════════════════════════════════════════════════
