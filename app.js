@@ -1136,11 +1136,6 @@ document.addEventListener('DOMContentLoaded', () => {
   /* 8. Scroll animations (after short delay to let page paint) */
   setTimeout(initScrollAnimations, 300);
 
-  /* 9. Welcome toast */
-  setTimeout(() => {
-    showToast('info', 'Welcome to TKHO. Use the header toggle to switch themes.');
-  }, 1800);
-
-  /* 10. Nav scroll shadow on initial load */
+  /* 9. Nav scroll shadow on initial load */
   window.dispatchEvent(new Event('scroll'));
 });
