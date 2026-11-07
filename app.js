@@ -218,7 +218,7 @@ function animateHeroProgress() {
 }
 
 /* ══════════════════════════════════════════════════
-   AUTH SYSTEM
+   AUTH SYSTEM — Azure Static Web Apps identity
 ══════════════════════════════════════════════════ */
 function openAuth(tab) {
   $('auth-modal').classList.remove('hidden');
@@ -231,26 +231,21 @@ function closeModal(id) {
 }
 
 function switchAuthTab(tab) {
-  $('login-form-body').style.display = 'block';
-  $('auth-tab-login').classList.add('active');
+  const isSignup = tab === 'signup';
+  const title = $('auth-modal-title');
+  const subtitle = $('auth-modal-subtitle');
+  if (title) title.textContent = isSignup ? 'Create your TKHO account' : 'Welcome back to TKHO';
+  if (subtitle) subtitle.textContent = isSignup
+    ? 'Create an account securely with one of the options below.'
+    : 'Sign in securely to access your private TKHO space.';
+  $('auth-tab-login').classList.toggle('active', !isSignup);
+  $('auth-tab-signup').classList.toggle('active', isSignup);
 }
 
-function doLogin() {
-  const email = $('login-email').value.trim();
-  const pass  = $('login-pass').value.trim();
-  if (!email || !pass) { showToast('danger', 'Please enter your email and password.'); return; }
-  STATE.currentUser = {
-    name:    'Arjun Mehta',
-    email,
-    role:    'user',
-    initial:  'A',
-    provider: 'local'
-  };
-  persistSession();
-  applyLoggedIn();
-  closeModal('auth-modal');
-  showToast('success', `Welcome back, ${STATE.currentUser.name.split(' ')[0]}!`);
-  navigate('dashboard');
+function startProviderAuth(provider) {
+  if (!['google', 'github'].includes(provider)) return;
+  const redirect = `${window.location.pathname}${window.location.search}`;
+  window.location.assign(`/.auth/login/${provider}?post_login_redirect_uri=${encodeURIComponent(redirect)}`);
 }
 
 function applyLoggedIn() {
@@ -267,28 +262,51 @@ function applyLoggedIn() {
   $('mobile-nav-dashboard').style.display = '';
 }
 
-function persistSession() {
-  if (!STATE.currentUser) return;
-  try { localStorage.setItem('tkho-demo-session', JSON.stringify(STATE.currentUser)); } catch (error) {}
+function resetLoggedInUi() {
+  $('nav-auth-btns').style.display = 'flex';
+  $('nav-user-pill').style.display = 'none';
+  $('nav-dashboard').style.display = 'none';
+  $('mobile-nav-dashboard').style.display = 'none';
 }
 
-function restoreSession() {
+async function hydrateAuthSession() {
+  if (!/^https?:$/.test(window.location.protocol)) return;
   try {
-    const saved = JSON.parse(localStorage.getItem('tkho-demo-session') || 'null');
-    if (saved && saved.role === 'user' && saved.name) {
-      STATE.currentUser = saved;
-      applyLoggedIn();
+    const response = await fetch('/.auth/me', { credentials: 'include' });
+    if (!response.ok) return;
+    const data = await response.json();
+    const principal = data && data.clientPrincipal;
+    if (!principal || !principal.userId) {
+      resetLoggedInUi();
+      return;
     }
-  } catch (error) {}
+
+    const name = principal.userDetails || principal.userId;
+    const emailClaim = (principal.claims || []).find(claim =>
+      ['emails', 'email', 'preferred_username'].includes(claim.typ)
+    );
+    STATE.currentUser = {
+      id: principal.userId,
+      name,
+      email: emailClaim ? emailClaim.val : '',
+      role: (principal.userRoles || []).includes('therapist') ? 'therapist' : 'user',
+      initial: getInitials(name),
+      provider: principal.identityProvider || 'swa'
+    };
+    applyLoggedIn();
+    closeModal('auth-modal');
+  } catch (error) {
+    console.error('Unable to restore the authentication session.', error);
+  }
 }
 
 function logout() {
   STATE.currentUser = null;
-  try { localStorage.removeItem('tkho-demo-session'); } catch (error) {}
-  $('nav-auth-btns').style.display = 'flex';
-  $('nav-user-pill').style.display = 'none';
-  $('nav-dashboard').style.display        = 'none';
-  $('mobile-nav-dashboard').style.display = 'none';
+  resetLoggedInUi();
+  if (/^https?:$/.test(window.location.protocol)) {
+    window.location.assign('/.auth/logout?post_logout_redirect_uri=/');
+    return;
+  }
   showToast('info', 'You have been signed out. See you soon.');
   navigate('home');
 }
@@ -551,7 +569,7 @@ function confirmBooking() {
   if (!STATE.currentUser) {
     closeModal('booking-modal');
     openAuth('login');
-    showToast('info', 'Log in with the preview account to request a therapist session.');
+    showToast('info', 'Log in to request a therapist session.');
     return;
   }
   const therapistId = $('booking-modal').dataset.therapistId || 'directory-selection';
@@ -1166,7 +1184,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* 1. Apply saved theme from localStorage */
   initTheme();
-  restoreSession();
+  hydrateAuthSession();
 
   /* 2. Start on home page */
   navigate('home');

@@ -39,7 +39,7 @@ The API reads the authenticated Static Web Apps `x-ms-client-principal` header a
 
 1. Create an Azure Cosmos DB account using a low-cost/serverless option.
 2. Create these Static Web App application settings: `COSMOS_ENDPOINT`, `COSMOS_KEY`, `COSMOS_DATABASE` (for example `tkho`), and `COSMOS_CONTAINER` (for example `app`).
-3. If production account authentication is re-enabled, configure an identity provider for the Static Web App and restore the corresponding frontend sign-in flow. The current public app intentionally uses only its local preview account and does not redirect visitors to an external identity provider.
+3. Configure at least one Static Web Apps identity provider (Google and/or GitHub) in the Azure portal. The public app sends users to `/.auth/login/{provider}` for both account creation and login, then restores the authenticated session from `/.auth/me`. Sign-out uses `/.auth/logout`.
 4. Create therapist records with `approved: true` only after an administrator verifies credentials and handles the application review.
 
-Do not place Cosmos keys or other secrets in frontend JavaScript, GitHub source files, or `local.settings.json`. Use Azure application settings or Key Vault references. The demo patient account remains preview-only; the current frontend does not provide production account signup/login.
+Do not place Cosmos keys, OAuth client secrets, passwords, or other secrets in frontend JavaScript, GitHub source files, or `local.settings.json`. Use Azure application settings or Key Vault references. The frontend does not implement its own password form; provider-hosted authentication supplies signup, login, session cookies, and logout, while the API trusts only the Static Web Apps client-principal header.
