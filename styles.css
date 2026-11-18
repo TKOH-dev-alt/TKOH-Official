@@ -1354,6 +1354,12 @@ body {
 [data-theme="dark"] #nav { background:var(--bg-nav); border-bottom-color:var(--border); }
 .nav-inner { width:min(1200px, calc(100% - 48px)); height:76px; padding:0; }
 .nav-logo { margin-right:18px; }
+.nav-logo { flex-shrink:0; }
+.logo-img-wrap { width:46px; height:46px; }
+.logo-img { width:40px; height:40px; }
+.logo-text-wrap { min-width:156px; }
+.logo-name { font-size:17px; }
+.logo-tag { font-size:9px; line-height:1.25; letter-spacing:.07em; white-space:nowrap; }
 .nav-links { gap:2px; }
 .nav-links a { padding:8px 11px; font-size:13px; color:var(--text-2); }
 .nav-links a:hover, .nav-links a.active { color:var(--accent-dark); background:var(--accent-glow); }

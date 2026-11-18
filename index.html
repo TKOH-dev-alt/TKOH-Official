@@ -107,7 +107,7 @@
       <!-- Auth Buttons (logged out) -->
       <div id="nav-auth-btns" style="display:flex;gap:8px">
         <button class="btn btn-outline btn-sm" onclick="openAuth('login')">Log In</button>
-        <button class="btn btn-primary btn-sm" onclick="openBuddyExperience()">Talk to AI Buddy →</button>
+        <button class="btn btn-primary btn-sm" onclick="openAuth('signup')">Sign Up</button>
       </div>
 
       <!-- User Pill (logged in) -->
@@ -135,7 +135,7 @@
     <a href="#" onclick="mobileNav('policy')">Policy</a>
     <div class="mobile-auth">
       <button class="btn btn-outline" style="flex:1" onclick="openAuth('login');toggleMobile()">Log In</button>
-      <button class="btn btn-primary" style="flex:1" onclick="openBuddyExperience();toggleMobile()">Talk to AI Buddy →</button>
+      <button class="btn btn-primary" style="flex:1" onclick="openAuth('signup');toggleMobile()">Sign Up</button>
     </div>
   </div>
 </nav>
